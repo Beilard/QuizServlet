@@ -14,7 +14,7 @@ public class TeamMapper {
     private final GameMapper gameMapper = new GameMapper();
     private final UserMapper userMapper = new UserMapper();
 
-    public Team mapTeamEntityToTeam (TeamEntity teamEntity) {
+    public Team mapTeamEntityToTeam(TeamEntity teamEntity) {
         if (teamEntity == null) {
             return null;
         }
@@ -26,7 +26,7 @@ public class TeamMapper {
                 .build();
     }
 
-    public TeamEntity mapTeamToTeamEntity (Team team) {
+    public TeamEntity mapTeamToTeamEntity(Team team) {
         return TeamEntity.builder()
                 .withId(team.getId())
                 .withCaptainId(team.getCaptainId())
@@ -35,25 +35,25 @@ public class TeamMapper {
                 .build();
     }
 
-    private List<Game> gameEntityConverter(List<GameEntity> gameEntities){
+    private List<Game> gameEntityConverter(List<GameEntity> gameEntities) {
         return gameEntities.stream()
                 .map(gameMapper::mapGameEntityToGame)
                 .collect(Collectors.toList());
     }
 
-    private List<GameEntity> gameConverter(List<Game> games){
+    private List<GameEntity> gameConverter(List<Game> games) {
         return games.stream()
                 .map(gameMapper::mapGameToGameEntity)
                 .collect(Collectors.toList());
     }
 
-    private List<User> userEntityConverter(List<UserEntity> userEntities){
+    private List<User> userEntityConverter(List<UserEntity> userEntities) {
         return userEntities.stream()
                 .map(userMapper::mapUserEntityToUser)
                 .collect(Collectors.toList());
     }
 
-    private List<UserEntity> userConverter(List<User> users){
+    private List<UserEntity> userConverter(List<User> users) {
         return users.stream()
                 .map(userMapper::mapUserToUserEntity)
                 .collect(Collectors.toList());

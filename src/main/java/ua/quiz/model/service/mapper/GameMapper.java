@@ -41,6 +41,7 @@ public class GameMapper {
                 .map(questionMapper::mapQuestionEntityToQuestion)
                 .collect(Collectors.toList());
     }
+
     private List<QuestionEntity> questionConverter(List<Question> questions) {
         return questions.stream()
                 .map(questionMapper::mapQuestionToQuestionEntity)
