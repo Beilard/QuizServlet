@@ -11,6 +11,7 @@ public class Question {
     private final String hint;
     private final LocalDate startTime;
     private final LocalDate endTime;
+    private final LocalDate deadline;
 
     public Question(QuestionBuilder questionBuilder) {
         this.id = questionBuilder.id;
@@ -19,6 +20,7 @@ public class Question {
         this.hint = questionBuilder.hint;
         this.startTime = questionBuilder.startTime;
         this.endTime = questionBuilder.endTime;
+        this.deadline = questionBuilder.deadline;
     }
 
     public static QuestionBuilder builder(){
@@ -41,6 +43,10 @@ public class Question {
         return hint;
     }
 
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
     public LocalDate getStartTime() {
         return startTime;
     }
@@ -56,6 +62,7 @@ public class Question {
         private String hint;
         private LocalDate startTime;
         private LocalDate endTime;
+        private LocalDate deadline;
 
         private QuestionBuilder() {
         }
@@ -89,6 +96,11 @@ public class Question {
             return this;
         }
 
+        public QuestionBuilder withDeadline(LocalDate deadline) {
+            this.deadline = deadline;
+            return this;
+        }
+
         public QuestionBuilder withEndTime(LocalDate endTime) {
             this.endTime = endTime;
             return this;
@@ -106,6 +118,7 @@ public class Question {
         Question question = (Question) o;
         return id.equals(question.id) &&
                 Objects.equals(body, question.body) &&
+                Objects.equals(deadline, question.deadline) &&
                 Objects.equals(answers, question.answers) &&
                 Objects.equals(hint, question.hint) &&
                 Objects.equals(startTime, question.startTime) &&
@@ -114,7 +127,7 @@ public class Question {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, body, answers, hint, startTime, endTime);
+        return Objects.hash(id, body, answers, hint, startTime, endTime, deadline);
     }
 
     @Override
@@ -125,6 +138,7 @@ public class Question {
                 ", hint='" + hint + '\'' +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", deadline=" + deadline +
                 '}';
     }
 }

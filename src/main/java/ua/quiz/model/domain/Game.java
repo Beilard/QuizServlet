@@ -5,9 +5,10 @@ import java.util.Objects;
 
 public class Game {
     private final Long id;
+    private final List<Question> questions;
     private final Integer numberOfQuestions;
     private final Integer timePerQuestion;
-    private final List<Question> questions;
+    private final Long teamId;
     private final Status status;
 
     public Game(GameBuilder gameBuilder) {
@@ -16,6 +17,7 @@ public class Game {
         this.timePerQuestion = gameBuilder.timePerQuestion;
         this.questions = gameBuilder.questions;
         this.status = gameBuilder.status;
+        this.teamId = gameBuilder.teamId;
     }
 
     public static GameBuilder builder(){
@@ -42,11 +44,16 @@ public class Game {
         return status;
     }
 
+    public Long getTeamId() {
+        return teamId;
+    }
+
     public static class GameBuilder {
         private Long id;
+        private List<Question> questions;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
-        private List<Question> questions;
+        private Long teamId;
         private Status status;
 
         private GameBuilder() {
@@ -61,11 +68,6 @@ public class Game {
             return this;
         }
 
-        public GameBuilder withNumberOfQuestion(Integer numberOfQuestion) {
-            this.numberOfQuestions = numberOfQuestion;
-            return this;
-        }
-
         public GameBuilder withTimePerQuestion(Integer timePerQuestion) {
             this.timePerQuestion = timePerQuestion;
             return this;
@@ -76,10 +78,21 @@ public class Game {
             return this;
         }
 
+        public GameBuilder withNumberOfQuestions(Integer numberOfQuestions) {
+            this.numberOfQuestions = numberOfQuestions;
+            return this;
+        }
+
+        public GameBuilder withTeam(Long teamId) {
+            this.teamId = teamId;
+            return this;
+        }
+
         public GameBuilder withStatus(Status status) {
             this.status = status;
             return this;
         }
+
     }
 
     @Override

@@ -6,14 +6,14 @@ import java.util.Objects;
 public class Team {
     private final Long id;
     private final List<User> members;
-    private final List<Game> games;
+    private final String teamName;
     private final Long captainId;
 
     public Team(TeamBuilder teamBuilder) {
         this.id = teamBuilder.id;
         this.members = teamBuilder.members;
-        this.games = teamBuilder.games;
         this.captainId = teamBuilder.captainId;
+        this.teamName = teamBuilder.teamName;
     }
 
     public static TeamBuilder builder(){
@@ -32,15 +32,15 @@ public class Team {
         return captainId;
     }
 
-    public List<Game> getGames() {
-        return games;
+    public String getTeamName() {
+        return teamName;
     }
 
     public static class TeamBuilder {
         private Long id;
         private List<User> members;
-        private List<Game> games;
         private Long captainId;
+        private String teamName;
 
         private TeamBuilder() {
         }
@@ -59,8 +59,8 @@ public class Team {
             return this;
         }
 
-        public TeamBuilder withGames(List<Game> games) {
-            this.games = games;
+        public TeamBuilder withTeamName(String teamName) {
+            this.teamName = teamName;
             return this;
         }
 
@@ -81,20 +81,19 @@ public class Team {
         Team team = (Team) o;
         return id.equals(team.id) &&
                 Objects.equals(members, team.members) &&
-                Objects.equals(games, team.games) &&
+                Objects.equals(teamName, team.teamName) &&
                 Objects.equals(captainId, team.captainId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, members, games, captainId);
+        return Objects.hash(id, members, teamName, captainId);
     }
 
     @Override
     public String toString() {
         return  "id=" + id +
                 ", members=" + members +
-                ", games=" + games +
                 ", captainId=" + captainId +
                 '}';
     }
