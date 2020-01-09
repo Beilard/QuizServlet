@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Game {
     private final Long id;
-    private final List<Question> questions;
+    private final List<Phase> phases;
     private final Integer numberOfQuestions;
     private final Integer timePerQuestion;
     private final Long teamId;
@@ -15,12 +15,12 @@ public class Game {
         this.id = gameBuilder.id;
         this.numberOfQuestions = gameBuilder.numberOfQuestions;
         this.timePerQuestion = gameBuilder.timePerQuestion;
-        this.questions = gameBuilder.questions;
+        this.phases = gameBuilder.phases;
         this.status = gameBuilder.status;
         this.teamId = gameBuilder.teamId;
     }
 
-    public static GameBuilder builder(){
+    public static GameBuilder builder() {
         return new GameBuilder();
     }
 
@@ -36,8 +36,8 @@ public class Game {
         return timePerQuestion;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
+    public List<Phase> getPhases() {
+        return phases;
     }
 
     public Status getStatus() {
@@ -50,7 +50,7 @@ public class Game {
 
     public static class GameBuilder {
         private Long id;
-        private List<Question> questions;
+        private List<Phase> phases;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
         private Long teamId;
@@ -59,7 +59,7 @@ public class Game {
         private GameBuilder() {
         }
 
-        public Game build(){
+        public Game build() {
             return new Game(this);
         }
 
@@ -73,8 +73,8 @@ public class Game {
             return this;
         }
 
-        public GameBuilder withQuestions(List<Question> questions) {
-            this.questions = questions;
+        public GameBuilder withQuestions(List<Phase> phases) {
+            this.phases = phases;
             return this;
         }
 
@@ -92,7 +92,6 @@ public class Game {
             this.status = status;
             return this;
         }
-
     }
 
     @Override
@@ -107,21 +106,21 @@ public class Game {
         return id.equals(game.id) &&
                 Objects.equals(numberOfQuestions, game.numberOfQuestions) &&
                 Objects.equals(timePerQuestion, game.timePerQuestion) &&
-                Objects.equals(questions, game.questions) &&
+                Objects.equals(phases, game.phases) &&
                 status == game.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfQuestions, timePerQuestion, questions, status);
+        return Objects.hash(id, numberOfQuestions, timePerQuestion, phases, status);
     }
 
     @Override
     public String toString() {
-        return  "id=" + id +
+        return "id=" + id +
                 ", numberOfQuestion=" + numberOfQuestions +
                 ", timePerQuestion=" + timePerQuestion +
-                ", questions=" + questions +
+                ", questions=" + phases +
                 ", status=" + status +
                 '}';
     }

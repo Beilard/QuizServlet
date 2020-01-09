@@ -1,6 +1,5 @@
 package ua.quiz.model.domain;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,22 +7,18 @@ public class Question {
     private final Long id;
     private final String body;
     private final List<String> answers;
+    private final String correctAnswer;
     private final String hint;
-    private final LocalDate startTime;
-    private final LocalDate endTime;
-    private final LocalDate deadline;
 
     public Question(QuestionBuilder questionBuilder) {
         this.id = questionBuilder.id;
         this.body = questionBuilder.body;
         this.answers = questionBuilder.answers;
         this.hint = questionBuilder.hint;
-        this.startTime = questionBuilder.startTime;
-        this.endTime = questionBuilder.endTime;
-        this.deadline = questionBuilder.deadline;
+        this.correctAnswer = questionBuilder.correctAnswer;
     }
 
-    public static QuestionBuilder builder(){
+    public static QuestionBuilder builder() {
         return new QuestionBuilder();
     }
 
@@ -43,31 +38,21 @@ public class Question {
         return hint;
     }
 
-    public LocalDate getDeadline() {
-        return deadline;
-    }
-
-    public LocalDate getStartTime() {
-        return startTime;
-    }
-
-    public LocalDate getEndTime() {
-        return endTime;
+    public String getCorrectAnswer() {
+        return correctAnswer;
     }
 
     public static class QuestionBuilder {
         private Long id;
         private String body;
         private List<String> answers;
+        private String correctAnswer;
         private String hint;
-        private LocalDate startTime;
-        private LocalDate endTime;
-        private LocalDate deadline;
 
         private QuestionBuilder() {
         }
 
-        public Question build(){
+        public Question build() {
             return new Question(this);
         }
 
@@ -81,6 +66,11 @@ public class Question {
             return this;
         }
 
+        public QuestionBuilder withCorrectAnswer(String correctAnswer) {
+            this.correctAnswer = correctAnswer;
+            return this;
+        }
+
         public QuestionBuilder withAnswers(List<String> answers) {
             this.answers = answers;
             return this;
@@ -90,55 +80,32 @@ public class Question {
             this.hint = hint;
             return this;
         }
-
-        public QuestionBuilder withStartTime(LocalDate startTime) {
-            this.startTime = startTime;
-            return this;
-        }
-
-        public QuestionBuilder withDeadline(LocalDate deadline) {
-            this.deadline = deadline;
-            return this;
-        }
-
-        public QuestionBuilder withEndTime(LocalDate endTime) {
-            this.endTime = endTime;
-            return this;
-        }
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Question)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Question)) return false;
         Question question = (Question) o;
         return id.equals(question.id) &&
                 Objects.equals(body, question.body) &&
-                Objects.equals(deadline, question.deadline) &&
                 Objects.equals(answers, question.answers) &&
-                Objects.equals(hint, question.hint) &&
-                Objects.equals(startTime, question.startTime) &&
-                Objects.equals(endTime, question.endTime);
+                Objects.equals(correctAnswer, question.correctAnswer) &&
+                Objects.equals(hint, question.hint);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, body, answers, hint, startTime, endTime, deadline);
+        return Objects.hash(id, body, answers, correctAnswer, hint);
     }
 
     @Override
     public String toString() {
-        return  "id=" + id +
+        return "Question{" +
+                "id=" + id +
                 ", body='" + body + '\'' +
                 ", answers=" + answers +
                 ", hint='" + hint + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", deadline=" + deadline +
                 '}';
     }
 }

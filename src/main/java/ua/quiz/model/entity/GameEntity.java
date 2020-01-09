@@ -7,7 +7,7 @@ public class GameEntity {
     private final Long id;
     private final Integer numberOfQuestions;
     private final Integer timePerQuestion;
-    private final List<QuestionEntity> questionEntities;
+    private final List<PhaseEntity> questionEntities;
     private final StatusEntity statusEntity;
 
     public GameEntity(GameEntityBuilder gameEntityBuilder) {
@@ -34,7 +34,7 @@ public class GameEntity {
         return timePerQuestion;
     }
 
-    public List<QuestionEntity> getQuestionEntities() {
+    public List<PhaseEntity> getQuestionEntities() {
         return questionEntities;
     }
 
@@ -46,7 +46,7 @@ public class GameEntity {
         private Long id;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
-        private List<QuestionEntity> questionEntities;
+        private List<PhaseEntity> questionEntities;
         private StatusEntity statusEntity;
 
         private GameEntityBuilder() {
@@ -71,7 +71,7 @@ public class GameEntity {
             return this;
         }
 
-        public GameEntityBuilder withQuestions(List<QuestionEntity> questionEntities) {
+        public GameEntityBuilder withQuestions(List<PhaseEntity> questionEntities) {
             this.questionEntities = questionEntities;
             return this;
         }

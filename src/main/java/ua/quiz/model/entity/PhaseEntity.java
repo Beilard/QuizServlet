@@ -4,25 +4,24 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-public class QuestionEntity {
+public class PhaseEntity {
     private final Long id;
-    private final String body;
-    private final List<String> answers;
-    private final String hint;
+    private final Boolean hintUsed;
     private final LocalDate startTime;
     private final LocalDate endTime;
+    private final LocalDate deadline;
 
-    public QuestionEntity(QuestionBuilder questionBuilder) {
-        this.id = questionBuilder.id;
-        this.body = questionBuilder.body;
-        this.answers = questionBuilder.answers;
-        this.hint = questionBuilder.hint;
-        this.startTime = questionBuilder.startTime;
-        this.endTime = questionBuilder.endTime;
+    public PhaseEntity(PhaseEntityBuilder phaseEntityBuilder) {
+        this.id = phaseEntityBuilder.id;
+        this.body = phaseEntityBuilder.body;
+        this.answers = phaseEntityBuilder.answers;
+        this.hint = phaseEntityBuilder.hint;
+        this.startTime = phaseEntityBuilder.startTime;
+        this.endTime = phaseEntityBuilder.endTime;
     }
 
-    public static QuestionBuilder builder(){
-        return new QuestionBuilder();
+    public static PhaseEntityBuilder builder(){
+        return new PhaseEntityBuilder();
     }
 
     public Long getId() {
@@ -49,7 +48,7 @@ public class QuestionEntity {
         return endTime;
     }
 
-    public static class QuestionBuilder {
+    public static class PhaseEntityBuilder {
         private Long id;
         private String body;
         private List<String> answers;
@@ -57,39 +56,39 @@ public class QuestionEntity {
         private LocalDate startTime;
         private LocalDate endTime;
 
-        private QuestionBuilder() {
+        private PhaseEntityBuilder() {
         }
 
-        public QuestionEntity build(){
-            return new QuestionEntity(this);
+        public PhaseEntity build(){
+            return new PhaseEntity(this);
         }
 
-        public QuestionBuilder withId(Long id) {
+        public PhaseEntityBuilder withId(Long id) {
             this.id = id;
             return this;
         }
 
-        public QuestionBuilder withBody(String body) {
+        public PhaseEntityBuilder withBody(String body) {
             this.body = body;
             return this;
         }
 
-        public QuestionBuilder withAnswers(List<String> answers) {
+        public PhaseEntityBuilder withAnswers(List<String> answers) {
             this.answers = answers;
             return this;
         }
 
-        public QuestionBuilder withHint(String hint) {
+        public PhaseEntityBuilder withHint(String hint) {
             this.hint = hint;
             return this;
         }
 
-        public QuestionBuilder withStartTime(LocalDate startTime) {
+        public PhaseEntityBuilder withStartTime(LocalDate startTime) {
             this.startTime = startTime;
             return this;
         }
 
-        public QuestionBuilder withEndTime(LocalDate endTime) {
+        public PhaseEntityBuilder withEndTime(LocalDate endTime) {
             this.endTime = endTime;
             return this;
         }
@@ -100,16 +99,16 @@ public class QuestionEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof QuestionEntity)) {
+        if (!(o instanceof PhaseEntity)) {
             return false;
         }
-        QuestionEntity questionEntity = (QuestionEntity) o;
-        return id.equals(questionEntity.id) &&
-                Objects.equals(body, questionEntity.body) &&
-                Objects.equals(answers, questionEntity.answers) &&
-                Objects.equals(hint, questionEntity.hint) &&
-                Objects.equals(startTime, questionEntity.startTime) &&
-                Objects.equals(endTime, questionEntity.endTime);
+        PhaseEntity phaseEntity = (PhaseEntity) o;
+        return id.equals(phaseEntity.id) &&
+                Objects.equals(body, phaseEntity.body) &&
+                Objects.equals(answers, phaseEntity.answers) &&
+                Objects.equals(hint, phaseEntity.hint) &&
+                Objects.equals(startTime, phaseEntity.startTime) &&
+                Objects.equals(endTime, phaseEntity.endTime);
     }
 
     @Override
