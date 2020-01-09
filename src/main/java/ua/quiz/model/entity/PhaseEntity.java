@@ -1,26 +1,31 @@
 package ua.quiz.model.entity;
 
+import ua.quiz.model.domain.Question;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 public class PhaseEntity {
     private final Long id;
+    private final Question question;
     private final Boolean hintUsed;
+    private final Boolean isCorrect;
     private final LocalDate startTime;
     private final LocalDate endTime;
     private final LocalDate deadline;
 
-    public PhaseEntity(PhaseEntityBuilder phaseEntityBuilder) {
-        this.id = phaseEntityBuilder.id;
-        this.body = phaseEntityBuilder.body;
-        this.answers = phaseEntityBuilder.answers;
-        this.hint = phaseEntityBuilder.hint;
-        this.startTime = phaseEntityBuilder.startTime;
-        this.endTime = phaseEntityBuilder.endTime;
+    public PhaseEntity(PhaseEntityBuilder phaseBuilder) {
+        this.id = phaseBuilder.id;
+        this.question = phaseBuilder.question;
+        this.startTime = phaseBuilder.startTime;
+        this.endTime = phaseBuilder.endTime;
+        this.deadline = phaseBuilder.deadline;
+        this.hintUsed = phaseBuilder.hintUsed;
+        this.isCorrect = phaseBuilder.isCorrect;
     }
 
-    public static PhaseEntityBuilder builder(){
+    public static PhaseEntityBuilder builder() {
         return new PhaseEntityBuilder();
     }
 
@@ -28,20 +33,24 @@ public class PhaseEntity {
         return id;
     }
 
-    public String getBody() {
-        return body;
+    public Boolean getHintUsed() {
+        return hintUsed;
     }
 
-    public List<String> getAnswers() {
-        return answers;
-    }
-
-    public String getHint() {
-        return hint;
+    public LocalDate getDeadline() {
+        return deadline;
     }
 
     public LocalDate getStartTime() {
         return startTime;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public Boolean getCorrect() {
+        return isCorrect;
     }
 
     public LocalDate getEndTime() {
@@ -50,11 +59,12 @@ public class PhaseEntity {
 
     public static class PhaseEntityBuilder {
         private Long id;
-        private String body;
-        private List<String> answers;
-        private String hint;
+        private Question question;
+        private Boolean hintUsed;
+        private Boolean isCorrect;
         private LocalDate startTime;
         private LocalDate endTime;
+        private LocalDate deadline;
 
         private PhaseEntityBuilder() {
         }
@@ -68,18 +78,18 @@ public class PhaseEntity {
             return this;
         }
 
-        public PhaseEntityBuilder withBody(String body) {
-            this.body = body;
+        public PhaseEntityBuilder withQuestion(Question question) {
+            this.question = question;
             return this;
         }
 
-        public PhaseEntityBuilder withAnswers(List<String> answers) {
-            this.answers = answers;
+        public PhaseEntityBuilder withHintUsed(Boolean hintUsed) {
+            this.hintUsed = hintUsed;
             return this;
         }
 
-        public PhaseEntityBuilder withHint(String hint) {
-            this.hint = hint;
+        public PhaseEntityBuilder withCorrect(Boolean correct) {
+            isCorrect = correct;
             return this;
         }
 
@@ -92,38 +102,42 @@ public class PhaseEntity {
             this.endTime = endTime;
             return this;
         }
+
+        public PhaseEntityBuilder withDeadline(LocalDate deadline) {
+            this.deadline = deadline;
+            return this;
+        }
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof PhaseEntity)) {
-            return false;
-        }
-        PhaseEntity phaseEntity = (PhaseEntity) o;
-        return id.equals(phaseEntity.id) &&
-                Objects.equals(body, phaseEntity.body) &&
-                Objects.equals(answers, phaseEntity.answers) &&
-                Objects.equals(hint, phaseEntity.hint) &&
-                Objects.equals(startTime, phaseEntity.startTime) &&
-                Objects.equals(endTime, phaseEntity.endTime);
+        if (this == o) return true;
+        if (!(o instanceof PhaseEntity)) return false;
+        PhaseEntity that = (PhaseEntity) o;
+        return id.equals(that.id) &&
+                Objects.equals(question, that.question) &&
+                Objects.equals(hintUsed, that.hintUsed) &&
+                Objects.equals(isCorrect, that.isCorrect) &&
+                Objects.equals(startTime, that.startTime) &&
+                Objects.equals(endTime, that.endTime) &&
+                Objects.equals(deadline, that.deadline);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, body, answers, hint, startTime, endTime);
+        return Objects.hash(id, question, hintUsed, isCorrect, startTime, endTime, deadline);
     }
 
     @Override
     public String toString() {
-        return  "id=" + id +
-                ", body='" + body + '\'' +
-                ", answers=" + answers +
-                ", hint='" + hint + '\'' +
+        return "PhaseEntity{" +
+                "id=" + id +
+                ", question=" + question +
+                ", hintUsed=" + hintUsed +
+                ", isCorrect=" + isCorrect +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", deadline=" + deadline +
                 '}';
     }
 }

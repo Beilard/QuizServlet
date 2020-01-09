@@ -6,9 +6,18 @@ import java.util.Set;
 
 public interface CrudDao<T, ID> {
     void save(T item);
+
     Optional<T> findById(ID id);
+
     List<T> findAll();
+
     void update(T item);
-    void deleteById(ID id);
-    void deleteAllById(Set<ID> ids);
+
+    default void deleteById(ID id) {
+        throw new UnsupportedOperationException("Deletion not allowed");
+    }
+
+    default void deleteAllById(Set<ID> ids) {
+        throw new UnsupportedOperationException("Deletion not allowed");
+    }
 }
