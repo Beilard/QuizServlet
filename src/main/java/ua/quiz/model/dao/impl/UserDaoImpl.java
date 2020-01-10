@@ -1,8 +1,7 @@
 package ua.quiz.model.dao.impl;
 
+import ua.quiz.model.dao.DBConnector;
 import ua.quiz.model.dao.UserDao;
-import ua.quiz.model.domain.Role;
-import ua.quiz.model.domain.User;
 import ua.quiz.model.entity.RoleEntity;
 import ua.quiz.model.entity.UserEntity;
 
@@ -20,8 +19,8 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
     private static final String FIND_BY_EMAIL_QUERY = "SELECT * FROM users INNER JOIN role ON role_id = role.id WHERE email = ?";
 
 
-    public UserDaoImpl() {
-        super(SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
+    public UserDaoImpl(DBConnector dbConnector) {
+        super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
     }
 
     @Override

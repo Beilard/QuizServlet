@@ -10,11 +10,12 @@ import java.util.ResourceBundle;
 
 public class DBConnector {
     private static final Logger LOGGER = Logger.getLogger(DBConnector.class);
-    private static BasicDataSource dataSource;
+    private static final BasicDataSource dataSource = new BasicDataSource();
 
-    static {
-        dataSource = new BasicDataSource();
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
+
+    public DBConnector(String configurationFileName) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(configurationFileName);
+
         dataSource.setDriverClassName(resourceBundle.getString("db.driver"));
         dataSource.setUrl(resourceBundle.getString("db.url"));
         dataSource.setUsername(resourceBundle.getString("db.user"));
@@ -24,10 +25,8 @@ public class DBConnector {
         dataSource.setMaxOpenPreparedStatements(Integer.parseInt(resourceBundle.getString("db.maxPreparedStatements")));
     }
 
-    public DBConnector() {
-    }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
