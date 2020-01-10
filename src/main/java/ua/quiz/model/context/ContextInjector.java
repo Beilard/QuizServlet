@@ -1,7 +1,8 @@
 package ua.quiz.model.context;
 
-import org.omg.PortableInterceptor.USER_EXCEPTION;
 import ua.quiz.controller.command.Command;
+import ua.quiz.controller.command.DefaultCommand;
+import ua.quiz.controller.command.authentication.*;
 import ua.quiz.model.dao.DBConnector;
 import ua.quiz.model.dao.UserDao;
 import ua.quiz.model.dao.impl.UserDaoImpl;
@@ -28,6 +29,21 @@ public class ContextInjector {
     private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, USER_VALIDATOR,
             PASSWORD_ENCODER, USER_MAPPER);
 
+    private static final LogInCommand LOG_IN_COMMAND = new LogInCommand(USER_SERVICE);
+
+    private static final LogInFormCommand LOG_IN_FORM_COMMAND = new LogInFormCommand();
+
+    private static final RegistrationCommand REGISTRATION_COMMAND = new RegistrationCommand(USER_SERVICE);
+
+    private static final RegistrationFormCommand REGISTRATION_FORM_COMMAND = new RegistrationFormCommand();
+
+    private static final LogOutCommand LOG_OUT_COMMAND = new LogOutCommand();
+
+    private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
+
+    private static final Map<String, Command> AUTHENTICATION_COMMAND_NAME_TO_COMMAND = mapAuthenticationCommand();
+
+
     private static ContextInjector contextInjector;
 
     private ContextInjector() {
@@ -44,8 +60,23 @@ public class ContextInjector {
         return contextInjector;
     }
 
-    private static Map<String, Command> mapAuthenticationCommand(){
+    private static Map<String, Command> mapAuthenticationCommand() {
         Map<String, Command> authenticationCommandToCommand = new HashMap<>();
+        authenticationCommandToCommand.put("login", LOG_IN_COMMAND);
+        authenticationCommandToCommand.put("register", REGISTRATION_COMMAND);
+        authenticationCommandToCommand.put("logout", LOG_OUT_COMMAND);
+        authenticationCommandToCommand.put("loginForm", LOG_IN_FORM_COMMAND);
+        authenticationCommandToCommand.put("registrationForm", REGISTRATION_FORM_COMMAND);
+        authenticationCommandToCommand.put("default", DEFAULT_COMMAND);
 
+        return authenticationCommandToCommand;
+    }
+
+    public Map<String, Command> getAuthenticationCommands() {
+        return AUTHENTICATION_COMMAND_NAME_TO_COMMAND;
+    }
+
+    public DefaultCommand getDefaultCommand() {
+        return DEFAULT_COMMAND;
     }
 }
