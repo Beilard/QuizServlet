@@ -71,7 +71,7 @@ public class Game {
             return this;
         }
 
-        public GameBuilder withTeam(Long teamId) {
+        public GameBuilder withTeamId(Long teamId) {
             this.teamId = teamId;
             return this;
         }

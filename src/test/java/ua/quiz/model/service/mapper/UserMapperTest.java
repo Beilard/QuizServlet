@@ -20,6 +20,8 @@ public class UserMapperTest {
 
     private static final String PASSWORD = "Qwerty123#";
 
+    private static final Long TEAM_ID = 0L;
+
     private static final UserMapper USER_MAPPER = new UserMapper();
 
     @Test
@@ -30,6 +32,7 @@ public class UserMapperTest {
                 .withPassword(PASSWORD)
                 .withName(NAME)
                 .withSurname(SURNAME)
+                .withTeamId(0L)
                 .withRole(RoleEntity.PLAYER)
                 .build();
 
@@ -39,6 +42,7 @@ public class UserMapperTest {
         assertThat("mapping surname has failed", user.getSurname(), is(SURNAME));
         assertThat("mapping email has failed", user.getEmail(), is(EMAIL));
         assertThat("mapping password has failed", user.getPassword(), is(PASSWORD));
+        assertThat("mapping teamId has failed", user.getTeamId(), is(TEAM_ID));
         assertThat("mapping roles has failed", user.getRole(), is(Role.PLAYER));
     }
 
@@ -52,12 +56,14 @@ public class UserMapperTest {
                 .withSurname(SURNAME)
                 .withRole(Role.PLAYER)
                 .build();
+
         final UserEntity userEntity = USER_MAPPER.mapUserToUserEntity(user);
         assertThat("mapping id has failed", userEntity.getId(), is(ID));
         assertThat("mapping name has failed", userEntity.getName(), is(NAME));
         assertThat("mapping surname has failed", userEntity.getSurname(), is(SURNAME));
         assertThat("mapping email has failed", userEntity.getEmail(), is(EMAIL));
         assertThat("mapping password has failed", userEntity.getPassword(), is(PASSWORD));
+        assertThat("mapping teamId has failed", userEntity.getTeamId(), is(TEAM_ID));
         assertThat("mapping roles has failed", userEntity.getRoleEntity(), is(Role.PLAYER));
     }
 }
