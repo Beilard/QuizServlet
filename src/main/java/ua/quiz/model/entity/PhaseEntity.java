@@ -7,12 +7,14 @@ import java.util.Objects;
 
 public class PhaseEntity {
     private final Long id;
-    private final Question question;
+    private final QuestionEntity question;
     private final Boolean hintUsed;
     private final Boolean isCorrect;
     private final LocalDate startTime;
     private final LocalDate endTime;
     private final LocalDate deadline;
+    private final String givenAnswer;
+    private final Long gameId;
 
     public PhaseEntity(PhaseEntityBuilder phaseBuilder) {
         this.id = phaseBuilder.id;
@@ -22,6 +24,8 @@ public class PhaseEntity {
         this.deadline = phaseBuilder.deadline;
         this.hintUsed = phaseBuilder.hintUsed;
         this.isCorrect = phaseBuilder.isCorrect;
+        this.givenAnswer = phaseBuilder.givenAnswer;
+        this.gameId = phaseBuilder.gameId;
     }
 
     public static PhaseEntityBuilder builder() {
@@ -44,7 +48,7 @@ public class PhaseEntity {
         return startTime;
     }
 
-    public Question getQuestion() {
+    public QuestionEntity getQuestion() {
         return question;
     }
 
@@ -56,14 +60,24 @@ public class PhaseEntity {
         return endTime;
     }
 
+    public String getGivenAnswer() {
+        return givenAnswer;
+    }
+
+    public Long getGameId() {
+        return gameId;
+    }
+
     public static class PhaseEntityBuilder {
         private Long id;
-        private Question question;
+        private QuestionEntity question;
         private Boolean hintUsed;
         private Boolean isCorrect;
         private LocalDate startTime;
         private LocalDate endTime;
         private LocalDate deadline;
+        private String givenAnswer;
+        private Long gameId;
 
         private PhaseEntityBuilder() {
         }
@@ -77,7 +91,7 @@ public class PhaseEntity {
             return this;
         }
 
-        public PhaseEntityBuilder withQuestion(Question question) {
+        public PhaseEntityBuilder withQuestion(QuestionEntity question) {
             this.question = question;
             return this;
         }
@@ -94,6 +108,16 @@ public class PhaseEntity {
 
         public PhaseEntityBuilder withStartTime(LocalDate startTime) {
             this.startTime = startTime;
+            return this;
+        }
+
+        public PhaseEntityBuilder withGivenAnswer(String givenAnswer) {
+            this.givenAnswer = givenAnswer;
+            return this;
+        }
+
+        public PhaseEntityBuilder withGameId(Long gameId) {
+            this.gameId = gameId;
             return this;
         }
 

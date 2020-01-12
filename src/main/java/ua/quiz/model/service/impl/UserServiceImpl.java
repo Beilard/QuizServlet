@@ -44,6 +44,8 @@ public class UserServiceImpl implements UserService {
                 .withPassword(encryptedPassword)
                 .withName(user.getName())
                 .withSurname(user.getSurname())
+                .withRole(user.getRole())
+                .withTeamId(user.getTeamId())
                 .build();
         final UserEntity userEntity = userMapper.mapUserToUserEntity(userWithEncryptedPassword);
 

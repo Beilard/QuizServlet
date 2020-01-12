@@ -1,4 +1,6 @@
 package ua.quiz.model.dao;
 
-public interface TeamDao {
+import ua.quiz.model.entity.TeamEntity;
+
+public interface TeamDao extends CrudDao<TeamEntity, Long>{
 }

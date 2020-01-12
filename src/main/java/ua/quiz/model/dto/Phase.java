@@ -58,6 +58,14 @@ public class Phase {
         return endTime;
     }
 
+    public String getGivenAnswer() {
+        return givenAnswer;
+    }
+
+    public Long getGameId() {
+        return gameId;
+    }
+
     public static class PhaseBuilder {
         private Long id;
         private Question question;

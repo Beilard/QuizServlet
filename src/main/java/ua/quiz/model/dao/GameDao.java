@@ -1,4 +1,6 @@
 package ua.quiz.model.dao;
 
-public interface GameDao {
+import ua.quiz.model.entity.GameEntity;
+
+public interface GameDao extends CrudDao<GameEntity, Long>{
 }
