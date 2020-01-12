@@ -1,4 +1,4 @@
-package ua.quiz.model.domain;
+package ua.quiz.model.dto;
 
 import java.util.Objects;
 

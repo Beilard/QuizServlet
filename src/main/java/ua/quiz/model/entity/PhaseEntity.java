@@ -1,9 +1,8 @@
 package ua.quiz.model.entity;
 
-import ua.quiz.model.domain.Question;
+import ua.quiz.model.dto.Question;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 public class PhaseEntity {

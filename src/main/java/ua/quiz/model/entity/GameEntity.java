@@ -7,18 +7,18 @@ public class GameEntity {
     private final Long id;
     private final Integer numberOfQuestions;
     private final Integer timePerQuestion;
-    private final List<PhaseEntity> questionEntities;
+    private final Long teamId;
     private final StatusEntity statusEntity;
 
     public GameEntity(GameEntityBuilder gameEntityBuilder) {
         this.id = gameEntityBuilder.id;
         this.numberOfQuestions = gameEntityBuilder.numberOfQuestions;
         this.timePerQuestion = gameEntityBuilder.timePerQuestion;
-        this.questionEntities = gameEntityBuilder.questionEntities;
         this.statusEntity = gameEntityBuilder.statusEntity;
+        this.teamId = gameEntityBuilder.teamId;
     }
 
-    public static GameEntityBuilder builder(){
+    public static GameEntityBuilder builder() {
         return new GameEntityBuilder();
     }
 
@@ -34,8 +34,8 @@ public class GameEntity {
         return timePerQuestion;
     }
 
-    public List<PhaseEntity> getQuestionEntities() {
-        return questionEntities;
+    public Long getTeamId() {
+        return teamId;
     }
 
     public StatusEntity getStatusEntity() {
@@ -46,13 +46,13 @@ public class GameEntity {
         private Long id;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
-        private List<PhaseEntity> questionEntities;
+        private Long teamId;
         private StatusEntity statusEntity;
 
         private GameEntityBuilder() {
         }
 
-        public GameEntity build(){
+        public GameEntity build() {
             return new GameEntity(this);
         }
 
@@ -61,22 +61,22 @@ public class GameEntity {
             return this;
         }
 
-        public GameEntityBuilder withNumberOfQuestion(Integer numberOfQuestion) {
-            this.numberOfQuestions = numberOfQuestion;
-            return this;
-        }
-
         public GameEntityBuilder withTimePerQuestion(Integer timePerQuestion) {
             this.timePerQuestion = timePerQuestion;
             return this;
         }
 
-        public GameEntityBuilder withQuestions(List<PhaseEntity> questionEntities) {
-            this.questionEntities = questionEntities;
+        public GameEntityBuilder withNumberOfQuestions(Integer numberOfQuestions) {
+            this.numberOfQuestions = numberOfQuestions;
             return this;
         }
 
-        public GameEntityBuilder withStatus(StatusEntity statusEntity) {
+        public GameEntityBuilder withTeamId(Long teamId) {
+            this.teamId = teamId;
+            return this;
+        }
+
+        public GameEntityBuilder withStatusEntity(StatusEntity statusEntity) {
             this.statusEntity = statusEntity;
             return this;
         }
@@ -90,26 +90,27 @@ public class GameEntity {
         if (!(o instanceof GameEntity)) {
             return false;
         }
-        GameEntity gameEntity = (GameEntity) o;
-        return id.equals(gameEntity.id) &&
-                Objects.equals(numberOfQuestions, gameEntity.numberOfQuestions) &&
-                Objects.equals(timePerQuestion, gameEntity.timePerQuestion) &&
-                Objects.equals(questionEntities, gameEntity.questionEntities) &&
-                statusEntity == gameEntity.statusEntity;
+        GameEntity that = (GameEntity) o;
+        return id.equals(that.id) &&
+                Objects.equals(numberOfQuestions, that.numberOfQuestions) &&
+                Objects.equals(timePerQuestion, that.timePerQuestion) &&
+                Objects.equals(teamId, that.teamId) &&
+                statusEntity == that.statusEntity;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfQuestions, timePerQuestion, questionEntities, statusEntity);
+        return Objects.hash(id, numberOfQuestions, timePerQuestion, teamId, statusEntity);
     }
 
     @Override
     public String toString() {
-        return  "id=" + id +
-                ", numberOfQuestion=" + numberOfQuestions +
+        return "GameEntity{" +
+                "id=" + id +
+                ", numberOfQuestions=" + numberOfQuestions +
                 ", timePerQuestion=" + timePerQuestion +
-                ", questions=" + questionEntities +
-                ", status=" + statusEntity +
+                ", teamId=" + teamId +
+                ", statusEntity=" + statusEntity +
                 '}';
     }
 }

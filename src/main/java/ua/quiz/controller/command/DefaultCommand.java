@@ -1,7 +1,7 @@
 package ua.quiz.controller.command;
 
-import ua.quiz.model.domain.Role;
-import ua.quiz.model.domain.User;
+import ua.quiz.model.dto.Role;
+import ua.quiz.model.dto.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

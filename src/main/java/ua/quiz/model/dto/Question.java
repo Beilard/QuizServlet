@@ -1,4 +1,4 @@
-package ua.quiz.model.domain;
+package ua.quiz.model.dto;
 
 import java.util.List;
 import java.util.Objects;
@@ -6,14 +6,12 @@ import java.util.Objects;
 public class Question {
     private final Long id;
     private final String body;
-    private final List<String> answers;
     private final String correctAnswer;
     private final String hint;
 
     public Question(QuestionBuilder questionBuilder) {
         this.id = questionBuilder.id;
         this.body = questionBuilder.body;
-        this.answers = questionBuilder.answers;
         this.hint = questionBuilder.hint;
         this.correctAnswer = questionBuilder.correctAnswer;
     }
@@ -30,10 +28,6 @@ public class Question {
         return body;
     }
 
-    public List<String> getAnswers() {
-        return answers;
-    }
-
     public String getHint() {
         return hint;
     }
@@ -45,7 +39,6 @@ public class Question {
     public static class QuestionBuilder {
         private Long id;
         private String body;
-        private List<String> answers;
         private String correctAnswer;
         private String hint;
 
@@ -71,11 +64,6 @@ public class Question {
             return this;
         }
 
-        public QuestionBuilder withAnswers(List<String> answers) {
-            this.answers = answers;
-            return this;
-        }
-
         public QuestionBuilder withHint(String hint) {
             this.hint = hint;
             return this;
@@ -89,14 +77,13 @@ public class Question {
         Question question = (Question) o;
         return id.equals(question.id) &&
                 Objects.equals(body, question.body) &&
-                Objects.equals(answers, question.answers) &&
                 Objects.equals(correctAnswer, question.correctAnswer) &&
                 Objects.equals(hint, question.hint);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, body, answers, correctAnswer, hint);
+        return Objects.hash(id, body, correctAnswer, hint);
     }
 
     @Override
@@ -104,7 +91,6 @@ public class Question {
         return "Question{" +
                 "id=" + id +
                 ", body='" + body + '\'' +
-                ", answers=" + answers +
                 ", hint='" + hint + '\'' +
                 '}';
     }

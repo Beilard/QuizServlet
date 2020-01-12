@@ -1,8 +1,8 @@
 package ua.quiz.controller.command.authentication;
 
 import ua.quiz.controller.command.Command;
-import ua.quiz.model.domain.Role;
-import ua.quiz.model.domain.User;
+import ua.quiz.model.dto.Role;
+import ua.quiz.model.dto.User;
 import ua.quiz.model.excpetion.InvalidCredentialsExcpetion;
 import ua.quiz.model.service.UserService;
 

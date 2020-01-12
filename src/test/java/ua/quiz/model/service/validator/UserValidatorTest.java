@@ -3,7 +3,7 @@ package ua.quiz.model.service.validator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ua.quiz.model.domain.User;
+import ua.quiz.model.dto.User;
 import ua.quiz.model.excpetion.InvalidCredentialsExcpetion;
 
 public class UserValidatorTest {

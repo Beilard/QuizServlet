@@ -1,11 +1,9 @@
-package ua.quiz.model.domain;
+package ua.quiz.model.dto;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Game {
     private final Long id;
-    private final List<Phase> phases;
     private final Integer numberOfQuestions;
     private final Integer timePerQuestion;
     private final Long teamId;
@@ -15,7 +13,6 @@ public class Game {
         this.id = gameBuilder.id;
         this.numberOfQuestions = gameBuilder.numberOfQuestions;
         this.timePerQuestion = gameBuilder.timePerQuestion;
-        this.phases = gameBuilder.phases;
         this.status = gameBuilder.status;
         this.teamId = gameBuilder.teamId;
     }
@@ -36,10 +33,6 @@ public class Game {
         return timePerQuestion;
     }
 
-    public List<Phase> getPhases() {
-        return phases;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -50,7 +43,6 @@ public class Game {
 
     public static class GameBuilder {
         private Long id;
-        private List<Phase> phases;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
         private Long teamId;
@@ -73,10 +65,6 @@ public class Game {
             return this;
         }
 
-        public GameBuilder withQuestions(List<Phase> phases) {
-            this.phases = phases;
-            return this;
-        }
 
         public GameBuilder withNumberOfQuestions(Integer numberOfQuestions) {
             this.numberOfQuestions = numberOfQuestions;
@@ -106,13 +94,12 @@ public class Game {
         return id.equals(game.id) &&
                 Objects.equals(numberOfQuestions, game.numberOfQuestions) &&
                 Objects.equals(timePerQuestion, game.timePerQuestion) &&
-                Objects.equals(phases, game.phases) &&
                 status == game.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfQuestions, timePerQuestion, phases, status);
+        return Objects.hash(id, numberOfQuestions, timePerQuestion, status);
     }
 
     @Override
@@ -120,7 +107,6 @@ public class Game {
         return "id=" + id +
                 ", numberOfQuestion=" + numberOfQuestions +
                 ", timePerQuestion=" + timePerQuestion +
-                ", questions=" + phases +
                 ", status=" + status +
                 '}';
     }

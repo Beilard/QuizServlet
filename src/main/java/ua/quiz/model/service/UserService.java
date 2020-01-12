@@ -1,6 +1,6 @@
 package ua.quiz.model.service;
 
-import ua.quiz.model.domain.User;
+import ua.quiz.model.dto.User;
 
 public interface UserService {
     void register(User user);

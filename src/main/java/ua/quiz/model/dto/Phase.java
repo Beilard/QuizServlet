@@ -1,4 +1,4 @@
-package ua.quiz.model.domain;
+package ua.quiz.model.dto;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -8,6 +8,8 @@ public class Phase {
     private final Question question;
     private final Boolean hintUsed;
     private final Boolean isCorrect;
+    private final String givenAnswer;
+    private final Long gameId;
     private final LocalDate startTime;
     private final LocalDate endTime;
     private final LocalDate deadline;
@@ -20,6 +22,8 @@ public class Phase {
         this.deadline = phaseBuilder.deadline;
         this.hintUsed = phaseBuilder.hintUsed;
         this.isCorrect = phaseBuilder.isCorrect;
+        this.givenAnswer = phaseBuilder.givenAnswer;
+        this.gameId = phaseBuilder.gameId;
     }
 
     public static PhaseBuilder builder() {
@@ -59,6 +63,8 @@ public class Phase {
         private Question question;
         private Boolean hintUsed;
         private Boolean isCorrect;
+        private String givenAnswer;
+        private Long gameId;
         private LocalDate startTime;
         private LocalDate endTime;
         private LocalDate deadline;
@@ -100,6 +106,16 @@ public class Phase {
             return this;
         }
 
+        public PhaseBuilder withGivenAnswer(String givenAnswer) {
+            this.givenAnswer = givenAnswer;
+            return this;
+        }
+
+        public PhaseBuilder withGameId(Long gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
         public PhaseBuilder withEndTime(LocalDate endTime) {
             this.endTime = endTime;
             return this;
@@ -116,14 +132,19 @@ public class Phase {
         }
         Phase phase = (Phase) o;
         return id.equals(phase.id) &&
-                Objects.equals(deadline, phase.deadline) &&
+                Objects.equals(question, phase.question) &&
+                Objects.equals(hintUsed, phase.hintUsed) &&
+                Objects.equals(isCorrect, phase.isCorrect) &&
+                Objects.equals(givenAnswer, phase.givenAnswer) &&
+                Objects.equals(gameId, phase.gameId) &&
                 Objects.equals(startTime, phase.startTime) &&
-                Objects.equals(endTime, phase.endTime);
+                Objects.equals(endTime, phase.endTime) &&
+                Objects.equals(deadline, phase.deadline);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startTime, endTime, deadline);
+        return Objects.hash(id, question, hintUsed, isCorrect, givenAnswer, gameId, startTime, endTime, deadline);
     }
 
     @Override
@@ -132,6 +153,9 @@ public class Phase {
                 "id=" + id +
                 ", question=" + question +
                 ", hintUsed=" + hintUsed +
+                ", isCorrect=" + isCorrect +
+                ", givenAnswer='" + givenAnswer + '\'' +
+                ", gameId=" + gameId +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", deadline=" + deadline +

@@ -2,14 +2,13 @@ package ua.quiz.model.service.impl;
 
 import org.apache.log4j.Logger;
 import ua.quiz.model.dao.UserDao;
-import ua.quiz.model.domain.User;
+import ua.quiz.model.dto.User;
 import ua.quiz.model.entity.UserEntity;
 import ua.quiz.model.excpetion.EmailAlreadyTakenException;
 import ua.quiz.model.excpetion.InvalidCredentialsExcpetion;
 import ua.quiz.model.service.UserService;
 import ua.quiz.model.service.encoder.PasswordEncoder;
 import ua.quiz.model.service.mapper.UserMapper;
-import ua.quiz.model.service.validator.UserValidator;
 import ua.quiz.model.service.validator.Validator;
 
 import java.util.Optional;

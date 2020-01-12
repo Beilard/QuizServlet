@@ -13,15 +13,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class AbstractServlet extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(AbstractServlet.class);
+public class MainServlet extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(MainServlet.class);
 
     private final Map<String, Command> commandNameToCommand;
     private final Command defaultCommand;
     private final List<String> redirectCommands;
     private final List<String> redirectPages;
 
-    public AbstractServlet(String commands) {
+    public MainServlet(String commands) {
         final ContextInjector injector = ContextInjector.getInstance();
 
         switch (commands) {

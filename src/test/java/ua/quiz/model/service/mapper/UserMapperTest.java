@@ -1,8 +1,8 @@
 package ua.quiz.model.service.mapper;
 
 import org.junit.Test;
-import ua.quiz.model.domain.Role;
-import ua.quiz.model.domain.User;
+import ua.quiz.model.dto.Role;
+import ua.quiz.model.dto.User;
 import ua.quiz.model.entity.RoleEntity;
 import ua.quiz.model.entity.UserEntity;
 

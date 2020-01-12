@@ -1,7 +1,7 @@
 package ua.quiz.model.service.validator;
 
 import org.apache.log4j.Logger;
-import ua.quiz.model.domain.User;
+import ua.quiz.model.dto.User;
 import ua.quiz.model.excpetion.InvalidCredentialsExcpetion;
 
 import java.util.regex.Matcher;

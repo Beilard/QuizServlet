@@ -1,4 +1,4 @@
-package ua.quiz.model.domain;
+package ua.quiz.model.dto;
 
 public enum Status {
     ONGOING, PENDING, REVIEWED;
