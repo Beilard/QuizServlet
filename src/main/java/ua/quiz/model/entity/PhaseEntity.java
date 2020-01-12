@@ -1,8 +1,6 @@
 package ua.quiz.model.entity;
 
-import ua.quiz.model.dto.Question;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class PhaseEntity {
@@ -10,9 +8,9 @@ public class PhaseEntity {
     private final QuestionEntity question;
     private final Boolean hintUsed;
     private final Boolean isCorrect;
-    private final LocalDate startTime;
-    private final LocalDate endTime;
-    private final LocalDate deadline;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
+    private final LocalDateTime deadline;
     private final String givenAnswer;
     private final Long gameId;
 
@@ -40,11 +38,11 @@ public class PhaseEntity {
         return hintUsed;
     }
 
-    public LocalDate getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    public LocalDate getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
@@ -56,7 +54,7 @@ public class PhaseEntity {
         return isCorrect;
     }
 
-    public LocalDate getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
@@ -73,9 +71,9 @@ public class PhaseEntity {
         private QuestionEntity question;
         private Boolean hintUsed;
         private Boolean isCorrect;
-        private LocalDate startTime;
-        private LocalDate endTime;
-        private LocalDate deadline;
+        private LocalDateTime startTime;
+        private LocalDateTime endTime;
+        private LocalDateTime deadline;
         private String givenAnswer;
         private Long gameId;
 
@@ -106,7 +104,7 @@ public class PhaseEntity {
             return this;
         }
 
-        public PhaseEntityBuilder withStartTime(LocalDate startTime) {
+        public PhaseEntityBuilder withStartTime(LocalDateTime startTime) {
             this.startTime = startTime;
             return this;
         }
@@ -121,12 +119,12 @@ public class PhaseEntity {
             return this;
         }
 
-        public PhaseEntityBuilder withEndTime(LocalDate endTime) {
+        public PhaseEntityBuilder withEndTime(LocalDateTime endTime) {
             this.endTime = endTime;
             return this;
         }
 
-        public PhaseEntityBuilder withDeadline(LocalDate deadline) {
+        public PhaseEntityBuilder withDeadline(LocalDateTime deadline) {
             this.deadline = deadline;
             return this;
         }

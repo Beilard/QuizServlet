@@ -5,10 +5,7 @@ import ua.quiz.model.dao.PhaseDao;
 import ua.quiz.model.entity.PhaseEntity;
 import ua.quiz.model.entity.QuestionEntity;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements PhaseDao {
@@ -35,9 +32,9 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
                         .withCorrectAnswer(resultSet.getString("correct_answer"))
                         .withHint("hint")
                         .build())
-                .withStartTime(resultSet.getDate("start_time").toLocalDate())
-                .withStartTime(resultSet.getDate("end_time").toLocalDate())
-                .withStartTime(resultSet.getDate("deadline").toLocalDate())
+                .withStartTime(resultSet.getTimestamp("start_time").toLocalDateTime())
+                .withStartTime(resultSet.getTimestamp("end_time").toLocalDateTime())
+                .withStartTime(resultSet.getTimestamp("deadline").toLocalDateTime())
                 .withHintUsed(resultSet.getBoolean("hint_used"))
                 .withCorrect(resultSet.getBoolean("is_correct"))
                 .withGivenAnswer(resultSet.getString("given_answer"))
@@ -48,9 +45,9 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
     @Override
     protected void insert(PreparedStatement preparedStatement, PhaseEntity entity) throws SQLException {
         preparedStatement.setLong(1, entity.getQuestion().getId());
-        preparedStatement.setDate(2, Date.valueOf(entity.getStartTime()));
-        preparedStatement.setDate(3, Date.valueOf(entity.getEndTime()));
-        preparedStatement.setDate(4, Date.valueOf(entity.getDeadline()));
+        preparedStatement.setTimestamp(2, Timestamp.valueOf(entity.getStartTime()));
+        preparedStatement.setTimestamp(3, Timestamp.valueOf(entity.getEndTime()));
+        preparedStatement.setTimestamp(4, Timestamp.valueOf(entity.getDeadline()));
         preparedStatement.setBoolean(5, entity.getHintUsed());
         preparedStatement.setBoolean(6, entity.getCorrect());
         preparedStatement.setString(7, entity.getGivenAnswer());

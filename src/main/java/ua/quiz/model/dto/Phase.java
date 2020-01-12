@@ -1,6 +1,6 @@
 package ua.quiz.model.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Phase {
@@ -10,9 +10,9 @@ public class Phase {
     private final Boolean isCorrect;
     private final String givenAnswer;
     private final Long gameId;
-    private final LocalDate startTime;
-    private final LocalDate endTime;
-    private final LocalDate deadline;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
+    private final LocalDateTime deadline;
 
     public Phase(PhaseBuilder phaseBuilder) {
         this.id = phaseBuilder.id;
@@ -38,11 +38,11 @@ public class Phase {
         return hintUsed;
     }
 
-    public LocalDate getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    public LocalDate getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
@@ -54,7 +54,7 @@ public class Phase {
         return isCorrect;
     }
 
-    public LocalDate getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
@@ -73,9 +73,9 @@ public class Phase {
         private Boolean isCorrect;
         private String givenAnswer;
         private Long gameId;
-        private LocalDate startTime;
-        private LocalDate endTime;
-        private LocalDate deadline;
+        private LocalDateTime startTime;
+        private LocalDateTime endTime;
+        private LocalDateTime deadline;
 
         private PhaseBuilder() {
         }
@@ -104,12 +104,12 @@ public class Phase {
             return this;
         }
 
-        public PhaseBuilder withStartTime(LocalDate startTime) {
+        public PhaseBuilder withStartTime(LocalDateTime startTime) {
             this.startTime = startTime;
             return this;
         }
 
-        public PhaseBuilder withDeadline(LocalDate deadline) {
+        public PhaseBuilder withDeadline(LocalDateTime deadline) {
             this.deadline = deadline;
             return this;
         }
@@ -124,7 +124,7 @@ public class Phase {
             return this;
         }
 
-        public PhaseBuilder withEndTime(LocalDate endTime) {
+        public PhaseBuilder withEndTime(LocalDateTime endTime) {
             this.endTime = endTime;
             return this;
         }
