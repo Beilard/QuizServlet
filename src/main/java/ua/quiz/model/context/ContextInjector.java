@@ -67,6 +67,7 @@ public class ContextInjector {
         authenticationCommandToCommand.put("logout", LOG_OUT_COMMAND);
         authenticationCommandToCommand.put("loginForm", LOG_IN_FORM_COMMAND);
         authenticationCommandToCommand.put("registrationForm", REGISTRATION_FORM_COMMAND);
+        authenticationCommandToCommand.put("user-start-game", REGISTRATION_FORM_COMMAND);
         authenticationCommandToCommand.put("default", DEFAULT_COMMAND);
 
         return authenticationCommandToCommand;

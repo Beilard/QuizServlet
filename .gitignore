@@ -4,7 +4,7 @@ lib/
 !**/src/test/**
 .log
 out/
-logs/
+log/
 
 ### IntelliJ IDEA ###
 .idea

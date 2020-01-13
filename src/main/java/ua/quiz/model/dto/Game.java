@@ -1,5 +1,6 @@
 package ua.quiz.model.dto;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Game {
@@ -8,6 +9,7 @@ public class Game {
     private final Integer timePerQuestion;
     private final Long teamId;
     private final Status status;
+    private final List<Phase> phases;
 
     public Game(GameBuilder gameBuilder) {
         this.id = gameBuilder.id;
@@ -15,6 +17,7 @@ public class Game {
         this.timePerQuestion = gameBuilder.timePerQuestion;
         this.status = gameBuilder.status;
         this.teamId = gameBuilder.teamId;
+        this.phases = gameBuilder.phases;
     }
 
     public static GameBuilder builder() {
@@ -41,12 +44,17 @@ public class Game {
         return teamId;
     }
 
+    public List<Phase> getPhases() {
+        return phases;
+    }
+
     public static class GameBuilder {
         private Long id;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
         private Long teamId;
         private Status status;
+        private List<Phase> phases;
 
         private GameBuilder() {
         }
@@ -65,6 +73,10 @@ public class Game {
             return this;
         }
 
+        public GameBuilder withPhases(List<Phase> phases) {
+            this.phases = phases;
+            return this;
+        }
 
         public GameBuilder withNumberOfQuestions(Integer numberOfQuestions) {
             this.numberOfQuestions = numberOfQuestions;

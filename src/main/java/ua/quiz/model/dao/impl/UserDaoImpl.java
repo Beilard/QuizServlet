@@ -20,12 +20,14 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
 
     private static final String UPDATE_QUERY = "UPDATE user SET email = ?, password = ?, name = ?, surname = ?, team_id =? WHERE user_id = ?";
 
+    private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM user";
+
     private static final String FIND_BY_EMAIL_QUERY = "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id WHERE email = ?";
 
     private static final String FIND_ALL_BY_TEAM_ID = "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id GROUP BY team_id ORDER by user_id DESC";
 
     public UserDaoImpl(DBConnector dbConnector) {
-        super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
+        super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
     }
 
     @Override
-    protected void insert(PreparedStatement preparedStatement, UserEntity entity) throws SQLException {
+    protected void mapForInsertStatement(PreparedStatement preparedStatement, UserEntity entity) throws SQLException {
         preparedStatement.setString(1, entity.getEmail());
         preparedStatement.setString(2,  entity.getPassword());
         preparedStatement.setString(3,  entity.getName());
@@ -47,8 +49,8 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
     }
 
     @Override
-    protected void updateValues(PreparedStatement preparedStatement, UserEntity entity) throws SQLException {
-        insert(preparedStatement, entity);
+    protected void mapForUpdateStatement(PreparedStatement preparedStatement, UserEntity entity) throws SQLException {
+        mapForInsertStatement(preparedStatement, entity);
         preparedStatement.setLong(6, entity.getId());
     }
 

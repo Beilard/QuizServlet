@@ -11,6 +11,8 @@ public interface CrudDao<T, ID> {
 
     List<T> findAll();
 
+    Long countEntries();
+
     void update(T item);
 
     default void deleteById(ID id) {

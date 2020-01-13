@@ -20,8 +20,10 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
 
     private static final String UPDATE_QUERY = "UPDATE game SET number_of_questions = ?, time_per_question = ?, team_id = ?, status_id = ?, WHERE game.game_id = ?";
 
+    private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM game";
+
     public GameDaoImpl(DBConnector dbConnector, String saveQuery, String findByIdQuery, String findAllQuery, String updateQuery) {
-        super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
+        super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
     }
 
     @Override
@@ -36,15 +38,15 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
     }
 
     @Override
-    protected void insert(PreparedStatement preparedStatement, GameEntity entity) throws SQLException {
+    protected void mapForInsertStatement(PreparedStatement preparedStatement, GameEntity entity) throws SQLException {
         preparedStatement.setInt(1, entity.getNumberOfQuestions());
         preparedStatement.setInt(2, entity.getTimePerQuestion());
         preparedStatement.setLong(3, entity.getTeamId());
     }
 
     @Override
-    protected void updateValues(PreparedStatement preparedStatement, GameEntity entity) throws SQLException {
-        insert(preparedStatement, entity);
+    protected void mapForUpdateStatement(PreparedStatement preparedStatement, GameEntity entity) throws SQLException {
+        mapForInsertStatement(preparedStatement, entity);
         preparedStatement.setLong(5, entity.getId());
     }
 }

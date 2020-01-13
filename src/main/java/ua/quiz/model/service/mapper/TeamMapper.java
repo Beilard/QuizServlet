@@ -6,16 +6,21 @@ import ua.quiz.model.entity.TeamEntity;
 public class TeamMapper {
 
     private final UserMapper userMapper = new UserMapper();
-
+//TODO: fix;
     public Team mapTeamEntityToTeam(TeamEntity teamEntity) {
         if (teamEntity == null) {
             return null;
         }
-        return new Team(teamEntity.getId(), teamEntity.getTeamName(), teamEntity.getCaptainId());
+        Team team = new Team(teamEntity.getTeamName(), teamEntity.getCaptainId());
+        team.setId(teamEntity.getId());
+        return team;
+
     }
 
     public TeamEntity mapTeamToTeamEntity(Team team) {
-        return new TeamEntity(team.getId(), team.getTeamName(), team.getCaptainId());
+        TeamEntity teamEntity = new TeamEntity(team.getTeamName(), team.getCaptainId());
+        teamEntity.setId(team.getId());
+        return teamEntity;
     }
 
 }

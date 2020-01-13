@@ -1,8 +1,8 @@
 package ua.quiz.model.entity;
 
-import java.util.List;
 import java.util.Objects;
 
+//TODO: add list of phaseEntities;
 public class GameEntity {
     private final Long id;
     private final Integer numberOfQuestions;

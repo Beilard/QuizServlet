@@ -18,7 +18,8 @@ public class TeamMapperTest {
 
     @Test
     public void mapEntityToTeamShouldReturnTeam() {
-        final TeamEntity teamEntity = new TeamEntity(ID, TEAM_NAME, CAPTAIN_ID);
+        final TeamEntity teamEntity = new TeamEntity(TEAM_NAME, CAPTAIN_ID);
+        teamEntity.setId(ID);
 
         final Team team = teamMapper.mapTeamEntityToTeam(teamEntity);
 
@@ -29,7 +30,8 @@ public class TeamMapperTest {
 
     @Test
     public void mapTeanToEntityShouldReturnEntity() {
-        final Team team = new Team(ID, TEAM_NAME, CAPTAIN_ID);
+        final Team team = new Team(TEAM_NAME, CAPTAIN_ID);
+        team.setId(ID);
 
         final TeamEntity teamEntity = teamMapper.mapTeamToTeamEntity(team);
 

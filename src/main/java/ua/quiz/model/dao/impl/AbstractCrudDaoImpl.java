@@ -16,6 +16,7 @@ import java.util.function.BiConsumer;
 
 public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
     private static final Logger LOGGER = Logger.getLogger(AbstractCrudDaoImpl.class);
+
     private static final BiConsumer<PreparedStatement, String> STRING_CONSUMER
             = (PreparedStatement pr, String param) -> {
         try {
@@ -39,14 +40,17 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
     private final String findByIdQuery;
     private final String findAllQuery;
     private final String updateQuery;
+    private final String countQuery;
 
     public AbstractCrudDaoImpl(DBConnector dbConnector, String saveQuery, String findByIdQuery,
-                               String findAllQuery, String updateQuery) {
+                               String findAllQuery, String updateQuery, String countQuery) {
         this.dbConnector = dbConnector;
         this.saveQuery = saveQuery;
         this.findByIdQuery = findByIdQuery;
         this.findAllQuery = findAllQuery;
         this.updateQuery = updateQuery;
+        this.countQuery = countQuery;
+
     }
 
     @Override
@@ -54,7 +58,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(saveQuery)) {
 
-            insert(preparedStatement, entity);
+            mapForInsertStatement(preparedStatement, entity);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("Insertion has failed", e);
@@ -85,11 +89,28 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
     }
 
     @Override
+    public Long countEntries() {
+        return countEntriesByQuery(countQuery);
+    }
+
+    protected Long countEntriesByQuery(String query){
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next() ? resultSet.getLong("count") : 0;
+            }
+        } catch (SQLException e) {
+            throw new DataBaseRuntimeException(e);
+        }
+    }
+
+        @Override
     public void update(E entity) {
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
 
-            updateValues(preparedStatement, entity);
+            mapForUpdateStatement(preparedStatement, entity);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -147,7 +168,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
 
     protected abstract Optional<E> mapResultSetToEntity(ResultSet resultSet) throws SQLException;
 
-    protected abstract void insert(PreparedStatement preparedStatement, E entity) throws SQLException;
+    protected abstract void mapForInsertStatement(PreparedStatement preparedStatement, E entity) throws SQLException;
 
-    protected abstract void updateValues(PreparedStatement preparedStatement, E entity) throws SQLException;
+    protected abstract void mapForUpdateStatement(PreparedStatement preparedStatement, E entity) throws SQLException;
 }

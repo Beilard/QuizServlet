@@ -17,8 +17,10 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
 
     private static final String UPDATE_QUERY = "UPDATE game SET question_id = ?, start_time = ?, end_time = ?, deadline = ?, hint_used = ?, is_correct = ?, given_answer = ?, game_id = ?, WHERE phase.phase_id = ?";
 
+    private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM phase";
+
     public PhaseDaoImpl(DBConnector dbConnector, String saveQuery, String findByIdQuery, String findAllQuery, String updateQuery) {
-        super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
+        super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
     }
 
 
@@ -26,12 +28,7 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
     protected Optional<PhaseEntity> mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return Optional.ofNullable(PhaseEntity.builder()
                 .withId(resultSet.getLong("phase_id"))
-                .withQuestion(QuestionEntity.builder()
-                        .withId(resultSet.getLong("question_id"))
-                        .withBody(resultSet.getString("body"))
-                        .withCorrectAnswer(resultSet.getString("correct_answer"))
-                        .withHint("hint")
-                        .build())
+                .withQuestion(mapResultSetToQuestionEntity(resultSet))
                 .withStartTime(resultSet.getTimestamp("start_time").toLocalDateTime())
                 .withStartTime(resultSet.getTimestamp("end_time").toLocalDateTime())
                 .withStartTime(resultSet.getTimestamp("deadline").toLocalDateTime())
@@ -43,7 +40,7 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
     }
 
     @Override
-    protected void insert(PreparedStatement preparedStatement, PhaseEntity entity) throws SQLException {
+    protected void mapForInsertStatement(PreparedStatement preparedStatement, PhaseEntity entity) throws SQLException {
         preparedStatement.setLong(1, entity.getQuestion().getId());
         preparedStatement.setTimestamp(2, Timestamp.valueOf(entity.getStartTime()));
         preparedStatement.setTimestamp(3, Timestamp.valueOf(entity.getEndTime()));
@@ -55,8 +52,17 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
     }
 
     @Override
-    protected void updateValues(PreparedStatement preparedStatement, PhaseEntity entity) throws SQLException {
-        insert(preparedStatement, entity);
+    protected void mapForUpdateStatement(PreparedStatement preparedStatement, PhaseEntity entity) throws SQLException {
+        mapForInsertStatement(preparedStatement, entity);
         preparedStatement.setLong(9, entity.getId());
+    }
+
+    private QuestionEntity mapResultSetToQuestionEntity(ResultSet resultSet) throws SQLException {
+        return QuestionEntity.builder()
+                .withId(resultSet.getLong("question_id"))
+                .withBody(resultSet.getString("body"))
+                .withCorrectAnswer(resultSet.getString("correct_answer"))
+                .withHint("hint")
+                .build();
     }
 }

@@ -2,10 +2,16 @@ package ua.quiz.model.service;
 
 import ua.quiz.model.dto.Phase;
 
+import java.util.List;
+
 public interface PhaseService {
-    Phase initiatePhase();
+    Phase initiatePhase(Long gameId);
 
-    void finishPhase();
+    void finishPhase(Long gameId);
 
-    void extendDeadline();
+    List<Phase> findAllPhasesByGameId(Long id);
+
+    void extendDeadline(Long phaseId);
+
+    void useHint(Long phaseId);
 }

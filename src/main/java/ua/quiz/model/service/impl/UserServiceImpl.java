@@ -3,6 +3,7 @@ package ua.quiz.model.service.impl;
 import org.apache.log4j.Logger;
 import ua.quiz.model.dao.UserDao;
 import ua.quiz.model.dto.User;
+import ua.quiz.model.entity.RoleEntity;
 import ua.quiz.model.entity.UserEntity;
 import ua.quiz.model.excpetion.EmailAlreadyTakenException;
 import ua.quiz.model.excpetion.InvalidCredentialsExcpetion;
@@ -35,23 +36,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(User user) {
         userValidator.validate(user);
-        if (userDao.findByEmail(user.getEmail()).isPresent()) {
+        if (!userDao.findByEmail(user.getEmail()).isPresent()) {
             LOGGER.warn("User with such email already exists");
             throw new EmailAlreadyTakenException("User with such email already exists");
         }
 
         final String encryptedPassword = passwordEncoder.encrypt(user.getPassword());
-        final User userWithEncryptedPassword = User.builder()
-                .withEmail(user.getEmail())
-                .withPassword(encryptedPassword)
-                .withName(user.getName())
-                .withSurname(user.getSurname())
-                .withRole(user.getRole())
-                .withTeamId(user.getTeamId())
-                .build();
-        final UserEntity userEntity = userMapper.mapUserToUserEntity(userWithEncryptedPassword);
 
-        userDao.save(userEntity);
+        userDao.save(mapUserToUserEntity(user, encryptedPassword));
     }
 
     @Override
@@ -84,19 +76,11 @@ public class UserServiceImpl implements UserService {
             LOGGER.warn("User  or teamId passed to join team are null or illegal");
             throw new IllegalArgumentException("User  or teamId passed to join team are null or illegal");
         }
-        UserEntity userEntity = userDao.findById(user.getId()).get();
+        final UserEntity userEntity = userDao.findById(user.getId()).get();
 
-        final UserEntity modifiedUserEntity = UserEntity.builder()
-                .withId(userEntity.getId())
-                .withEmail(userEntity.getEmail())
-                .withPassword(userEntity.getPassword())
-                .withName(userEntity.getName())
-                .withSurname(userEntity.getSurname())
-                .withTeamId(teamId)
-                .withRoleEntity(userEntity.getRoleEntity())
-                .build();
+        final UserEntity modifiedUserEntity = updateUserTeam(teamId, userEntity);
 
-        userDao.update(userEntity);
+        userDao.update(modifiedUserEntity);
 
         return true;
     }
@@ -117,5 +101,28 @@ public class UserServiceImpl implements UserService {
         return entities.stream()
                 .map(userMapper::mapUserEntityToUser)
                 .collect(Collectors.toList());
+    }
+
+    private UserEntity mapUserToUserEntity(User user, String encryptedPassword) {
+        return UserEntity.builder()
+                .withEmail(user.getEmail())
+                .withPassword(encryptedPassword)
+                .withName(user.getName())
+                .withSurname(user.getSurname())
+                .withRole(RoleEntity.valueOf(user.getRole().name()))
+                .withTeamId(user.getTeamId())
+                .build();
+    }
+
+    private UserEntity updateUserTeam(Long teamId, UserEntity userEntity) {
+        return UserEntity.builder()
+                .withId(userEntity.getId())
+                .withEmail(userEntity.getEmail())
+                .withPassword(userEntity.getPassword())
+                .withName(userEntity.getName())
+                .withSurname(userEntity.getSurname())
+                .withTeamId(teamId)
+                .withRoleEntity(userEntity.getRoleEntity())
+                .build();
     }
 }

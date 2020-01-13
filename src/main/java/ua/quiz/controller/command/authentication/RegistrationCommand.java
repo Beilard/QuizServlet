@@ -23,6 +23,7 @@ public class RegistrationCommand implements Command {
         final String passwordConfirm = request.getParameter("passwordConfirm");
         final String name = request.getParameter("name");
         final String surname = request.getParameter("surname");
+        request.setAttribute("role", "player");
 
         if (!Objects.equals(password, passwordConfirm)) {
             request.setAttribute("registrationMessage", "Password should match");
