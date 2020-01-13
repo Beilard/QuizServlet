@@ -8,6 +8,7 @@ import ua.quiz.model.entity.UserEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements UserDao {
@@ -21,6 +22,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
 
     private static final String FIND_BY_EMAIL_QUERY = "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id WHERE email = ?";
 
+    private static final String FIND_ALL_BY_TEAM_ID = "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id GROUP BY team_id ORDER by user_id DESC";
 
     public UserDaoImpl(DBConnector dbConnector) {
         super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
@@ -29,6 +31,11 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
     @Override
     public Optional<UserEntity> findByEmail(String email) {
         return findByStringParam(email, FIND_BY_EMAIL_QUERY);
+    }
+
+    @Override
+    public List<UserEntity> findAllByTeamId(Long teamId) {
+        return findListByLongParam(teamId, FIND_ALL_BY_TEAM_ID);
     }
 
     @Override

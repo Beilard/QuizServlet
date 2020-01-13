@@ -11,7 +11,9 @@ import ua.quiz.model.service.encoder.PasswordEncoder;
 import ua.quiz.model.service.mapper.UserMapper;
 import ua.quiz.model.service.validator.Validator;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
@@ -74,5 +76,46 @@ public class UserServiceImpl implements UserService {
             LOGGER.warn("Incorrect credentials: " + email);
             throw new InvalidCredentialsExcpetion("Incorrect credentials");
         }
+    }
+
+    @Override
+    public boolean joinTeam(User user, Long teamId) {
+        if (user == null || teamId == null || teamId <= 0) {
+            LOGGER.warn("User  or teamId passed to join team are null or illegal");
+            throw new IllegalArgumentException("User  or teamId passed to join team are null or illegal");
+        }
+        UserEntity userEntity = userDao.findById(user.getId()).get();
+
+        final UserEntity modifiedUserEntity = UserEntity.builder()
+                .withId(userEntity.getId())
+                .withEmail(userEntity.getEmail())
+                .withPassword(userEntity.getPassword())
+                .withName(userEntity.getName())
+                .withSurname(userEntity.getSurname())
+                .withTeamId(teamId)
+                .withRoleEntity(userEntity.getRoleEntity())
+                .build();
+
+        userDao.update(userEntity);
+
+        return true;
+    }
+
+    @Override
+    public List<User> findByTeamId(Long teamId) {
+        if (teamId == null) {
+            LOGGER.warn("team ID passed is null");
+            throw new IllegalArgumentException("team ID passed is null");
+        }
+
+        final List<UserEntity> entities = userDao.findAllByTeamId(teamId);
+
+        return mapUserEntityListToUserList(entities);
+    }
+
+    private List<User> mapUserEntityListToUserList(List<UserEntity> entities) {
+        return entities.stream()
+                .map(userMapper::mapUserEntityToUser)
+                .collect(Collectors.toList());
     }
 }

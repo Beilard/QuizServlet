@@ -3,12 +3,11 @@ package ua.quiz.model.entity;
 import java.util.Objects;
 
 public class TeamEntity {
-    private final Long id;
+    private Long id;
     private final String teamName;
     private final Long captainId;
 
-    public TeamEntity(Long id, String teamName, Long captainId) {
-        this.id = id;
+    public TeamEntity(String teamName, Long captainId) {
         this.teamName = teamName;
         this.captainId = captainId;
     }
@@ -23,6 +22,10 @@ public class TeamEntity {
 
     public String getTeamName() {
         return teamName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

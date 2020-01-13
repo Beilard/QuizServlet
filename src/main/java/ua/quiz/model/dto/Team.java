@@ -3,12 +3,11 @@ package ua.quiz.model.dto;
 import java.util.Objects;
 
 public class Team {
-    private final Long id;
+    private Long id;
     private final String teamName;
     private final Long captainId;
 
-    public Team(Long id, String teamName, Long captainId) {
-        this.id = id;
+    public Team(String teamName, Long captainId) {
         this.teamName = teamName;
         this.captainId = captainId;
     }
@@ -23,6 +22,10 @@ public class Team {
 
     public String getTeamName() {
         return teamName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
@@ -46,7 +49,9 @@ public class Team {
 
     @Override
     public String toString() {
-        return  "id=" + id +
+        return "Team{" +
+                "id=" + id +
+                ", teamName='" + teamName + '\'' +
                 ", captainId=" + captainId +
                 '}';
     }

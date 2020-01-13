@@ -34,7 +34,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
         }
     };
 
-    private final DBConnector dbConnector;
+    protected final DBConnector dbConnector;
     private final String saveQuery;
     private final String findByIdQuery;
     private final String findAllQuery;
@@ -107,6 +107,14 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
         return findByParam(param, query, STRING_CONSUMER);
     }
 
+    protected List<E> findListByStringParam(String param, String query) {
+        return findListByParam(param, query, STRING_CONSUMER);
+    }
+
+    protected List<E> findListByLongParam(Long param, String query) {
+        return findListByParam(param, query, LONG_CONSUMER);
+    }
+
     private <P> Optional<E> findByParam(P param, String query, BiConsumer<PreparedStatement, P> consumer) {
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -116,6 +124,23 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
             }
         } catch (SQLException e) {
             LOGGER.error("An error has occurred while finding by parameter " + param.toString(), e);
+            throw new DataBaseRuntimeException(e);
+        }
+    }
+
+    private <P> List<E> findListByParam(P param, String query, BiConsumer<PreparedStatement, P> consumer) {
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            consumer.accept(preparedStatement, param);
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<E> entities = new ArrayList<>();
+                while (resultSet.next()) {
+                    mapResultSetToEntity(resultSet).ifPresent(entities::add);
+                }
+                return entities;
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Failed operation", e);
             throw new DataBaseRuntimeException(e);
         }
     }
