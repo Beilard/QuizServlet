@@ -18,7 +18,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
 
     private static final String FIND_ALL_QUERY = "SELECT * FROM user INNER JOIN role ON role_id = role.role_id ORDER BY user.user_id DESC LIMIT ?, ?";
 
-    private static final String UPDATE_QUERY = "UPDATE user SET email = ?, password = ?, name = ?, surname = ?, team_id =? WHERE user_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE user SET email = ?, password = ?, name = ?, surname = ?, is_captain = ?, team_id = ? WHERE user_id = ?";
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM user";
 
@@ -43,27 +43,28 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
     @Override
     protected void mapForInsertStatement(PreparedStatement preparedStatement, UserEntity entity) throws SQLException {
         preparedStatement.setString(1, entity.getEmail());
-        preparedStatement.setString(2,  entity.getPassword());
-        preparedStatement.setString(3,  entity.getName());
-        preparedStatement.setString(4,  entity.getSurname());
+        preparedStatement.setString(2, entity.getPassword());
+        preparedStatement.setString(3, entity.getName());
+        preparedStatement.setString(4, entity.getSurname());
     }
 
     @Override
     protected void mapForUpdateStatement(PreparedStatement preparedStatement, UserEntity entity) throws SQLException {
         mapForInsertStatement(preparedStatement, entity);
-        preparedStatement.setLong(6, entity.getId());
+        preparedStatement.setLong(7, entity.getId());
     }
 
     @Override
     protected Optional<UserEntity> mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return Optional.ofNullable(UserEntity.builder()
-        .withId(resultSet.getLong("user_id"))
-        .withEmail(resultSet.getString("email"))
-        .withPassword(resultSet.getString("password"))
-        .withName(resultSet.getString("name"))
-        .withSurname(resultSet.getString("surname"))
-        .withTeamId(resultSet.getLong("team_id"))
-        .withRole(RoleEntity.valueOf(resultSet.getString("role_name").toUpperCase()))
-        .build());
+                .withId(resultSet.getLong("user_id"))
+                .withEmail(resultSet.getString("email"))
+                .withPassword(resultSet.getString("password"))
+                .withName(resultSet.getString("name"))
+                .withSurname(resultSet.getString("surname"))
+                .withTeamId(resultSet.getLong("team_id"))
+                .withCaptain(resultSet.getBoolean("is_captain"))
+                .withRole(RoleEntity.valueOf(resultSet.getString("role_name").toUpperCase()))
+                .build());
     }
 }

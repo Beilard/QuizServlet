@@ -106,20 +106,25 @@ public class Game {
         return id.equals(game.id) &&
                 Objects.equals(numberOfQuestions, game.numberOfQuestions) &&
                 Objects.equals(timePerQuestion, game.timePerQuestion) &&
-                status == game.status;
+                Objects.equals(teamId, game.teamId) &&
+                status == game.status &&
+                Objects.equals(phases, game.phases);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfQuestions, timePerQuestion, status);
+        return Objects.hash(id, numberOfQuestions, timePerQuestion, teamId, status, phases);
     }
 
     @Override
     public String toString() {
-        return "id=" + id +
-                ", numberOfQuestion=" + numberOfQuestions +
+        return "Game{" +
+                "id=" + id +
+                ", numberOfQuestions=" + numberOfQuestions +
                 ", timePerQuestion=" + timePerQuestion +
+                ", teamId=" + teamId +
                 ", status=" + status +
+                ", phases=" + phases +
                 '}';
     }
 }

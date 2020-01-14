@@ -3,22 +3,32 @@ package ua.quiz.model.dao.impl;
 import ua.quiz.model.dao.DBConnector;
 import ua.quiz.model.dao.GameDao;
 import ua.quiz.model.entity.GameEntity;
+import ua.quiz.model.entity.PhaseEntity;
+import ua.quiz.model.entity.QuestionEntity;
 import ua.quiz.model.entity.StatusEntity;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements GameDao {
 
-    private static final String SAVE_QUERY = "INSERT INTO game(number_of_questions, time_per_question, team_id) VALUES (?,?,?)";
+    private static final String SAVE_QUERY =
+            "INSERT INTO game(number_of_questions, time_per_question, team_id) VALUES (?,?,?)";
 
-    private static final String FIND_BY_ID_QUERY = "SELECT * FROM game INNER JOIN status ON status_id = status.status_id WHERE status.status_id = ?";
+    private static final String FIND_BY_ID_QUERY =
+            "SELECT * FROM game INNER JOIN status ON status_id = status.status_id WHERE game.game_id = ?";
 
-    private static final String FIND_ALL_QUERY = "SELECT * FROM game INNER JOIN status ON status_id = status.status_id ORDER BY status.status_id DESC LIMIT ?, ?";
+    private static final String FIND_ALL_QUERY =
+            "SELECT * FROM game INNER JOIN status ON status_id = status.status_id " +
+                    "INNER JOIN phase ON game_id = phase.game_id" +
+                    "ORDER BY status.status_id DESC LIMIT ?, ?";
 
-    private static final String UPDATE_QUERY = "UPDATE game SET number_of_questions = ?, time_per_question = ?, team_id = ?, status_id = ?, WHERE game.game_id = ?";
+    private static final String UPDATE_QUERY =
+            "UPDATE game SET number_of_questions = ?, time_per_question = ?, team_id = ?, status_id = ?, WHERE game.game_id = ?";
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM game";
 
@@ -29,12 +39,13 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
     @Override
     protected Optional<GameEntity> mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return Optional.ofNullable(GameEntity.builder()
-        .withId(resultSet.getLong("game_id"))
-        .withNumberOfQuestions(resultSet.getInt("number_of_questions"))
-        .withTimePerQuestion(resultSet.getInt("time_per_question"))
-        .withTeamId(resultSet.getLong("team_id"))
-        .withStatusEntity(StatusEntity.valueOf(resultSet.getString("status_name").toUpperCase()))
-        .build());
+                .withId(resultSet.getLong("game_id"))
+                .withNumberOfQuestions(resultSet.getInt("number_of_questions"))
+                .withTimePerQuestion(resultSet.getInt("time_per_question"))
+                .withTeamId(resultSet.getLong("team_id"))
+                .withPhaseEntities(mapResultSetToPhaseList(resultSet))
+                .withStatusEntity(StatusEntity.valueOf(resultSet.getString("status_name").toUpperCase()))
+                .build());
     }
 
     @Override
@@ -48,5 +59,38 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
     protected void mapForUpdateStatement(PreparedStatement preparedStatement, GameEntity entity) throws SQLException {
         mapForInsertStatement(preparedStatement, entity);
         preparedStatement.setLong(5, entity.getId());
+    }
+
+    private List<PhaseEntity> mapResultSetToPhaseList(ResultSet resultSet) throws SQLException {
+        List<PhaseEntity> phaseEntities = new ArrayList<>();
+        resultSet.beforeFirst();
+        while (resultSet.next()) {
+            phaseEntities.add(mapResultSetToPhaseEntity(resultSet));
+        }
+        return phaseEntities;
+    }
+
+    private PhaseEntity mapResultSetToPhaseEntity(ResultSet resultSet) throws SQLException {
+        return PhaseEntity.builder()
+                .withId(resultSet.getLong("phase_id"))
+                .withQuestion(mapResultSetToQuestionEntity(resultSet))
+                .withStartTime(resultSet.getTimestamp("start_time").toLocalDateTime())
+                .withStartTime(resultSet.getTimestamp("end_time").toLocalDateTime())
+                .withStartTime(resultSet.getTimestamp("deadline").toLocalDateTime())
+                .withHintUsed(resultSet.getBoolean("hint_used"))
+                .withCorrect(resultSet.getBoolean("is_correct"))
+                .withGivenAnswer(resultSet.getString("given_answer"))
+                .withGameId(resultSet.getLong("game_id"))
+                .build();
+    }
+
+
+    private QuestionEntity mapResultSetToQuestionEntity(ResultSet resultSet) throws SQLException {
+        return QuestionEntity.builder()
+                .withId(resultSet.getLong("question_id"))
+                .withBody(resultSet.getString("body"))
+                .withCorrectAnswer(resultSet.getString("correct_answer"))
+                .withHint("hint")
+                .build();
     }
 }

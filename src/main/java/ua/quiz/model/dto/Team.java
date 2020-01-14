@@ -5,19 +5,13 @@ import java.util.Objects;
 public class Team {
     private Long id;
     private final String teamName;
-    private final Long captainId;
 
-    public Team(String teamName, Long captainId) {
+    public Team(String teamName) {
         this.teamName = teamName;
-        this.captainId = captainId;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public Long getCaptainId() {
-        return captainId;
     }
 
     public String getTeamName() {
@@ -38,13 +32,12 @@ public class Team {
         }
         Team team = (Team) o;
         return id.equals(team.id) &&
-                Objects.equals(teamName, team.teamName) &&
-                Objects.equals(captainId, team.captainId);
+                Objects.equals(teamName, team.teamName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, teamName, captainId);
+        return Objects.hash(id, teamName);
     }
 
     @Override
@@ -52,7 +45,6 @@ public class Team {
         return "Team{" +
                 "id=" + id +
                 ", teamName='" + teamName + '\'' +
-                ", captainId=" + captainId +
                 '}';
     }
 }

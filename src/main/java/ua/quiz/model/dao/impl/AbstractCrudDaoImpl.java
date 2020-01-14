@@ -72,9 +72,12 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
     }
 
     @Override
-    public List<E> findAll() {
+    public List<E> findAll(Integer startFrom, Integer rowCount) {
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
+
+            preparedStatement.setInt(1, startFrom);
+            preparedStatement.setInt(2, rowCount);
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<E> entities = new ArrayList<>();
                 while (resultSet.next()) {
@@ -83,7 +86,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
                 return entities;
             }
         } catch (SQLException e) {
-            LOGGER.error("There has been an error while trying to find all entities");
+            LOGGER.error("Connection has not been established", e);
             throw new DataBaseRuntimeException(e);
         }
     }

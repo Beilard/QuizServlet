@@ -8,6 +8,7 @@ public class UserEntity {
     private final String password;
     private final String name;
     private final String surname;
+    private final Boolean isCaptain;
     private final Long teamId;
     private final RoleEntity roleEntity;
 
@@ -19,6 +20,7 @@ public class UserEntity {
         this.surname = userEntityBuilder.surname;
         this.roleEntity = userEntityBuilder.roleEntity;
         this.teamId = userEntityBuilder.teamId;
+        this.isCaptain = userEntityBuilder.isCaptain;
     }
 
     public static UserEntityBuilder builder(){
@@ -53,12 +55,17 @@ public class UserEntity {
         return roleEntity;
     }
 
+    public Boolean getCaptain() {
+        return isCaptain;
+    }
+
     public static class UserEntityBuilder {
         private Long id;
         private String email;
         private String password;
         private String name;
         private String surname;
+        private Boolean isCaptain;
         private Long teamId;
         private RoleEntity roleEntity;
 
@@ -76,6 +83,11 @@ public class UserEntity {
 
         public UserEntityBuilder withTeamId(Long teamId) {
             this.teamId = teamId;
+            return this;
+        }
+
+        public UserEntityBuilder withCaptain(Boolean captain) {
+            isCaptain = captain;
             return this;
         }
 
@@ -112,21 +124,26 @@ public class UserEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserEntity)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof UserEntity)) {
+            return false;
+        }
         UserEntity that = (UserEntity) o;
         return id.equals(that.id) &&
-                email.equals(that.email) &&
-                password.equals(that.password) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(password, that.password) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(surname, that.surname) &&
+                Objects.equals(isCaptain, that.isCaptain) &&
                 Objects.equals(teamId, that.teamId) &&
                 roleEntity == that.roleEntity;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, name, surname, teamId, roleEntity);
+        return Objects.hash(id, email, password, name, surname, isCaptain, teamId, roleEntity);
     }
 
     @Override
@@ -137,6 +154,7 @@ public class UserEntity {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", isCaptain=" + isCaptain +
                 ", teamId=" + teamId +
                 ", roleEntity=" + roleEntity +
                 '}';

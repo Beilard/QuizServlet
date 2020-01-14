@@ -9,13 +9,17 @@ import java.sql.*;
 import java.util.Optional;
 
 public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements PhaseDao {
-    private static final String SAVE_QUERY = "INSERT INTO phase(question_id, start_time, end_time, deadline, hint_used, is_correct, given_answer, game_id) VALUES (?,?,?,?,?,?,?,?)";
+    private static final String SAVE_QUERY =
+            "INSERT INTO phase(question_id, start_time, end_time, deadline, hint_used, is_correct, given_answer, game_id) VALUES (?,?,?,?,?,?,?,?)";
 
-    private static final String FIND_BY_ID_QUERY = "SELECT * FROM phase INNER JOIN question ON question_id = question.question_id WHERE question.question_id = ?";
+    private static final String FIND_BY_ID_QUERY =
+            "SELECT * FROM phase INNER JOIN question ON question_id = question.question_id WHERE phase.phase_id = ?";
 
-    private static final String FIND_ALL_QUERY = "SELECT * FROM phase INNER JOIN question ON question_id = question.question_id ORDER BY question.question_id DESC LIMIT ?, ?";
+    private static final String FIND_ALL_QUERY =
+            "SELECT * FROM phase INNER JOIN question ON question_id = question.question_id ORDER BY phase.phase_id DESC LIMIT ?, ?";
 
-    private static final String UPDATE_QUERY = "UPDATE game SET question_id = ?, start_time = ?, end_time = ?, deadline = ?, hint_used = ?, is_correct = ?, given_answer = ?, game_id = ?, WHERE phase.phase_id = ?";
+    private static final String UPDATE_QUERY =
+            "UPDATE phase SET question_id = ?, start_time = ?, end_time = ?, deadline = ?, hint_used = ?, is_correct = ?, given_answer = ?, game_id = ?, WHERE phase.phase_id = ?";
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM phase";
 

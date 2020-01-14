@@ -3,12 +3,8 @@ package ua.quiz.model.service.mapper;
 import org.junit.Test;
 import ua.quiz.model.dto.Phase;
 import ua.quiz.model.entity.PhaseEntity;
-import ua.quiz.model.entity.QuestionEntity;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -45,7 +41,7 @@ public class PhaseMapperTest {
                 .withGameId(GAME_ID)
                 .build();
 
-        final Phase phase = phaseMapper.mapQuestionEntityToQuestion(phaseEntity);
+        final Phase phase = phaseMapper.mapPhaseEntityToPhase(phaseEntity);
         assertThat("mapping id has failed", phase.getId(), is(ID));
         assertThat("mapping startTime has failed", phase.getStartTime(), is(START_TIME));
         assertThat("mapping endTime has failed", phase.getEndTime(), is(END_TIME));
@@ -69,7 +65,7 @@ public class PhaseMapperTest {
                 .withGameId(GAME_ID)
                 .build();
 
-        final PhaseEntity phaseEntity = phaseMapper.mapQuestionToQuestionEntity(phase);
+        final PhaseEntity phaseEntity = phaseMapper.mapPhaseToPhaseEntity(phase);
         assertThat("mapping id has failed", phaseEntity.getId(), is(ID));
         assertThat("mapping startTime has failed", phaseEntity.getStartTime(), is(START_TIME));
         assertThat("mapping endTime has failed", phaseEntity.getEndTime(), is(END_TIME));

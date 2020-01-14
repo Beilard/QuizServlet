@@ -7,7 +7,7 @@ import ua.quiz.model.entity.PhaseEntity;
 public class PhaseMapper {
     private final QuestionMapper questionMapper = new QuestionMapper();
 
-    public Phase mapQuestionEntityToQuestion(PhaseEntity phaseEntity) {
+    public Phase mapPhaseEntityToPhase(PhaseEntity phaseEntity) {
         if (phaseEntity == null) {
             return null;
         }
@@ -24,7 +24,7 @@ public class PhaseMapper {
                 .build();
     }
 
-    public PhaseEntity mapQuestionToQuestionEntity(Phase phase) {
+    public PhaseEntity mapPhaseToPhaseEntity(Phase phase) {
         return PhaseEntity.builder()
                 .withId(phase.getId())
                 .withQuestion(questionMapper.mapQuestionToQuestionEntity(phase.getQuestion()))

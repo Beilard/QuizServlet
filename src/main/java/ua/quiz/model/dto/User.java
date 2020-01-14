@@ -8,6 +8,7 @@ public class User {
     private final String password;
     private final String name;
     private final String surname;
+    private final Boolean isCaptain;
     private final Long teamId;
     private final Role role;
 
@@ -19,6 +20,7 @@ public class User {
         this.surname = userBuilder.surname;
         this.role = userBuilder.role;
         this.teamId = userBuilder.teamId;
+        this.isCaptain = userBuilder.isCaptain;
     }
 
     public static UserBuilder builder(){
@@ -53,12 +55,17 @@ public class User {
         return teamId;
     }
 
+    public Boolean getCaptain() {
+        return isCaptain;
+    }
+
     public static class UserBuilder {
         private Long id;
         private String email;
         private String password;
         private String name;
         private String surname;
+        private Boolean isCaptain;
         private Long teamId;
         private Role role;
 
@@ -71,6 +78,11 @@ public class User {
 
         public UserBuilder withId(Long id) {
             this.id = id;
+            return this;
+        }
+
+        public UserBuilder withCaptain(Boolean captain) {
+            isCaptain = captain;
             return this;
         }
 
@@ -118,14 +130,15 @@ public class User {
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(name, user.name) &&
-                Objects.equals(teamId, user.teamId) &&
                 Objects.equals(surname, user.surname) &&
+                Objects.equals(isCaptain, user.isCaptain) &&
+                Objects.equals(teamId, user.teamId) &&
                 role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, name, surname, teamId, role);
+        return Objects.hash(id, email, password, name, surname, isCaptain, teamId, role);
     }
 
     @Override
@@ -136,6 +149,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", isCaptain=" + isCaptain +
                 ", teamId=" + teamId +
                 ", role=" + role +
                 '}';

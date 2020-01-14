@@ -9,17 +9,10 @@ public interface CrudDao<T, ID> {
 
     Optional<T> findById(ID id);
 
-    List<T> findAll();
+    List<T> findAll(Integer startFrom, Integer rowCount);
 
     Long countEntries();
 
     void update(T item);
 
-    default void deleteById(ID id) {
-        throw new UnsupportedOperationException("Deletion not allowed");
-    }
-
-    default void deleteAllById(Set<ID> ids) {
-        throw new UnsupportedOperationException("Deletion not allowed");
-    }
 }

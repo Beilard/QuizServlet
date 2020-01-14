@@ -18,6 +18,7 @@ public class UserMapper {
                 .withPassword(userEntity.getPassword())
                 .withName(userEntity.getName())
                 .withSurname(userEntity.getSurname())
+                .withCaptain(userEntity.getCaptain())
                 .withTeamId(userEntity.getTeamId())
                 .withRole(Role.valueOf(userEntity.getRoleEntity().name()))
                 .build();
@@ -30,6 +31,7 @@ public class UserMapper {
                 .withPassword(user.getPassword())
                 .withName(user.getName())
                 .withSurname(user.getSurname())
+                .withCaptain(user.getCaptain())
                 .withTeamId(user.getTeamId())
                 .withRole(RoleEntity.valueOf(user.getRole().name()))
                 .build();

@@ -1,14 +1,15 @@
 package ua.quiz.model.entity;
 
+import java.util.List;
 import java.util.Objects;
 
-//TODO: add list of phaseEntities;
 public class GameEntity {
     private final Long id;
     private final Integer numberOfQuestions;
     private final Integer timePerQuestion;
     private final Long teamId;
     private final StatusEntity statusEntity;
+    private final List<PhaseEntity> phaseEntities;
 
     public GameEntity(GameEntityBuilder gameEntityBuilder) {
         this.id = gameEntityBuilder.id;
@@ -16,6 +17,7 @@ public class GameEntity {
         this.timePerQuestion = gameEntityBuilder.timePerQuestion;
         this.statusEntity = gameEntityBuilder.statusEntity;
         this.teamId = gameEntityBuilder.teamId;
+        this.phaseEntities = gameEntityBuilder.phaseEntities;
     }
 
     public static GameEntityBuilder builder() {
@@ -42,12 +44,17 @@ public class GameEntity {
         return statusEntity;
     }
 
+    public List<PhaseEntity> getPhaseEntities() {
+        return phaseEntities;
+    }
+
     public static class GameEntityBuilder {
         private Long id;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
         private Long teamId;
         private StatusEntity statusEntity;
+        private List<PhaseEntity> phaseEntities;
 
         private GameEntityBuilder() {
         }
@@ -80,6 +87,11 @@ public class GameEntity {
             this.statusEntity = statusEntity;
             return this;
         }
+
+        public GameEntityBuilder withPhaseEntities(List<PhaseEntity> phaseEntities) {
+            this.phaseEntities = phaseEntities;
+            return this;
+        }
     }
 
     @Override
@@ -95,12 +107,13 @@ public class GameEntity {
                 Objects.equals(numberOfQuestions, that.numberOfQuestions) &&
                 Objects.equals(timePerQuestion, that.timePerQuestion) &&
                 Objects.equals(teamId, that.teamId) &&
-                statusEntity == that.statusEntity;
+                statusEntity == that.statusEntity &&
+                Objects.equals(phaseEntities, that.phaseEntities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfQuestions, timePerQuestion, teamId, statusEntity);
+        return Objects.hash(id, numberOfQuestions, timePerQuestion, teamId, statusEntity, phaseEntities);
     }
 
     @Override
@@ -111,6 +124,7 @@ public class GameEntity {
                 ", timePerQuestion=" + timePerQuestion +
                 ", teamId=" + teamId +
                 ", statusEntity=" + statusEntity +
+                ", phaseEntities=" + phaseEntities +
                 '}';
     }
 }
