@@ -20,13 +20,13 @@ public class Driver {
         UserMapper userMapper = new UserMapper();
         UserService userService = new UserServiceImpl(userDao, userValidator, passwordEncoder, userMapper);
 
-        userService.register(User.builder()
-                .withEmail("Vlad@mail.com")
-                .withPassword("Qwerty123#")
-                .withName("Vlad")
-                .withSurname("Khurtin")
-                .withTeamId(0L)
-                .withRole(Role.JUDGE)
-                .build());
+//        userService.register(User.builder()
+//                .withEmail("Maria@gmail.com")
+//                .withPassword("Qwerty123#")
+//                .withName("Masha")
+//                .withSurname("Shervchenko")
+//                .build());
+
+        userService.login("Vlad@mail.com", "Qwerty123#");
     }
 }

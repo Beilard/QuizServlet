@@ -9,11 +9,11 @@ public interface GameService {
 
     void finishGame(Game game);
 
-    Game reviewGame(Game game);
+    void reviewGame(Game game);
 
     Game findById(Long id);
 
-    List<Game> findAll();
+    List<Game> findAll(Integer page, Integer rowCount);
 
     List<Game> findAllByTeamId(Long teamId);
 }

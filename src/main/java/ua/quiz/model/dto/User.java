@@ -27,6 +27,10 @@ public class User {
         return new UserBuilder();
     }
 
+    public static UserBuilder builder(User user) {
+        return new UserBuilder(user);
+    }
+
     public Long getId() {
         return id;
     }
@@ -70,6 +74,17 @@ public class User {
         private Role role;
 
         private UserBuilder(){
+        }
+
+        private UserBuilder(User user) {
+            this.id = user.id;
+            this.email = user.email;
+            this.password = user.password;
+            this.name = user.name;
+            this.surname = user.surname;
+            this.role = user.role;
+            this.teamId = user.teamId;
+            this.isCaptain = user.isCaptain;
         }
 
         public User build(){

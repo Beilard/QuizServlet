@@ -2,25 +2,30 @@ package ua.quiz.model.service.impl;
 
 import org.apache.log4j.Logger;
 import ua.quiz.model.dao.TeamDao;
+import ua.quiz.model.dao.UserDao;
 import ua.quiz.model.dto.Team;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.entity.TeamEntity;
+import ua.quiz.model.entity.UserEntity;
 import ua.quiz.model.service.TeamService;
 import ua.quiz.model.service.mapper.TeamMapper;
+import ua.quiz.model.service.mapper.UserMapper;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class TeamServiceImpl implements TeamService {
     private static final Logger LOGGER = Logger.getLogger(TeamServiceImpl.class);
 
+    private final UserDao userDao;
     private final TeamDao teamDao;
     private final TeamMapper teamMapper;
+    private final UserMapper userMapper;
 
-    public TeamServiceImpl(TeamDao teamDao, TeamMapper teamMapper) {
+    public TeamServiceImpl(UserDao userDao, TeamDao teamDao, TeamMapper teamMapper, UserMapper userMapper) {
+        this.userDao = userDao;
         this.teamDao = teamDao;
         this.teamMapper = teamMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -29,8 +34,6 @@ public class TeamServiceImpl implements TeamService {
             LOGGER.warn("Provided arguments are incorrect: " + teamName);
             throw new IllegalArgumentException("Provided arguments are incorrect: ");
         }
-
-        final Long captainId = captain.getId();
         final Team team = new Team(teamName);
 
         teamDao.save(teamMapper.mapTeamToTeamEntity(team));
@@ -38,7 +41,6 @@ public class TeamServiceImpl implements TeamService {
         return team;
     }
 
-    //TODO: redo;
     @Override
     public void changeCaptain(Long teamId, User newCaptain, User oldCaptain) {
         if (teamId == null || newCaptain == null || oldCaptain == null
@@ -48,9 +50,10 @@ public class TeamServiceImpl implements TeamService {
             throw new IllegalArgumentException("New captain or teamId passed were null");
         }
 
+        swapCaptainStatusBetweenTwoUsers(newCaptain, oldCaptain);
 
-
-
+        userDao.update(userMapper.mapUserToUserEntity(oldCaptain));
+        userDao.update(userMapper.mapUserToUserEntity(newCaptain));
     }
 
     @Override
@@ -63,4 +66,28 @@ public class TeamServiceImpl implements TeamService {
 
         return teamMapper.mapTeamEntityToTeam(teamEntity);
     }
+
+    private void swapCaptainStatusBetweenTwoUsers(User newCaptain, User oldCaptain) {
+        changeCaptainStatus(oldCaptain, false);
+
+        if (oldCaptain.getCaptain()) {
+            swapCaptainStatusBetweenTwoUsers(newCaptain, oldCaptain);
+            return;
+        }
+
+        changeCaptainStatus(newCaptain, true);
+    }
+
+    private User changeCaptainStatus(User user, boolean isCaptain) {
+        if (user == null) {
+            LOGGER.warn("User passed to change captaincy is null");
+            throw new IllegalArgumentException("User passed to change captaincy is null");
+        }
+
+        return User.builder(user)
+                .withCaptain(isCaptain)
+                .build();
+    }
 }
+
+

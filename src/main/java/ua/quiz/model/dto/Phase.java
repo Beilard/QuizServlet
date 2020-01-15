@@ -30,6 +30,10 @@ public class Phase {
         return new PhaseBuilder();
     }
 
+    public static PhaseBuilder builder(Phase phase) {
+        return new PhaseBuilder(phase);
+    }
+
     public Long getId() {
         return id;
     }
@@ -78,6 +82,18 @@ public class Phase {
         private LocalDateTime deadline;
 
         private PhaseBuilder() {
+        }
+
+        public PhaseBuilder(Phase phase) {
+            this.id = phase.id;
+            this.question = phase.question;
+            this.startTime = phase.startTime;
+            this.endTime = phase.endTime;
+            this.deadline = phase.deadline;
+            this.hintUsed = phase.hintUsed;
+            this.isCorrect = phase.isCorrect;
+            this.givenAnswer = phase.givenAnswer;
+            this.gameId = phase.gameId;
         }
 
         public Phase build() {

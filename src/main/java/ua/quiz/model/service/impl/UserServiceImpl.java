@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(User user) {
         userValidator.validate(user);
-        if (!userDao.findByEmail(user.getEmail()).isPresent()) {
+        if (userDao.findByEmail(user.getEmail()).isPresent()) {
             LOGGER.warn("User with such email already exists");
             throw new EmailAlreadyTakenException("User with such email already exists");
         }

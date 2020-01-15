@@ -33,7 +33,6 @@ public class PhaseServiceImpl implements PhaseService {
             throw  new IllegalArgumentException("Passed gameId is null");
         }
 
-
         return null;
     }
 

@@ -24,6 +24,10 @@ public class Game {
         return new GameBuilder();
     }
 
+    public static GameBuilder builder(Game game) {
+        return new GameBuilder(game);
+    }
+
     public Long getId() {
         return id;
     }
@@ -57,6 +61,15 @@ public class Game {
         private List<Phase> phases;
 
         private GameBuilder() {
+        }
+
+        public GameBuilder(Game game) {
+            this.id = game.id;
+            this.numberOfQuestions = game.numberOfQuestions;
+            this.timePerQuestion = game.timePerQuestion;
+            this.status = game.status;
+            this.teamId = game.teamId;
+            this.phases = game.phases;
         }
 
         public Game build() {
