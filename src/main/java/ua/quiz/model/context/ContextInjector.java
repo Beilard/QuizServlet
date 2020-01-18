@@ -41,7 +41,7 @@ public class ContextInjector {
 
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
-    private static final Map<String, Command> AUTHENTICATION_COMMAND_NAME_TO_COMMAND = mapAuthenticationCommand();
+    private static final Map<String, Command> COMMAND_NAME_TO_COMMAND = mapCommands();
 
 
     private static ContextInjector contextInjector;
@@ -60,7 +60,7 @@ public class ContextInjector {
         return contextInjector;
     }
 
-    private static Map<String, Command> mapAuthenticationCommand() {
+    private static Map<String, Command> mapCommands() {
         Map<String, Command> authenticationCommandToCommand = new HashMap<>();
         authenticationCommandToCommand.put("login", LOG_IN_COMMAND);
         authenticationCommandToCommand.put("register", REGISTRATION_COMMAND);
@@ -73,8 +73,8 @@ public class ContextInjector {
         return authenticationCommandToCommand;
     }
 
-    public Map<String, Command> getAuthenticationCommands() {
-        return AUTHENTICATION_COMMAND_NAME_TO_COMMAND;
+    public Map<String, Command> getCommandsMap() {
+        return COMMAND_NAME_TO_COMMAND;
     }
 
     public DefaultCommand getDefaultCommand() {

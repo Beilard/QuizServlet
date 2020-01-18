@@ -48,11 +48,19 @@ public class PhaseServiceImpl implements PhaseService {
 
     @Override
     public void extendDeadline(Long phaseId) {
+        if (phaseId == null) {
+            LOGGER.warn("Passed phaseId is null");
+            throw  new IllegalArgumentException("Passed gameId is null");
+        }
 
     }
 
     @Override
     public void useHint(Long phaseId) {
+        if (phaseId == null) {
+            LOGGER.warn("Passed phaseId is null");
+            throw new IllegalArgumentException("Passed gameId is null");
+        }
 
     }
 }

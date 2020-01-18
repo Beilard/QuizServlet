@@ -1,16 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Ferox
-  Date: 06-Jan-20
-  Time: 14:03
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.language}"/>
+<fmt:setBundle basename="internationalization"/>
+
+<html lang="${param.language}">
   <head>
-    <title>$Title$</title>
+    <meta charset="utf-8">
+
+    <title>Homepage</title>
   </head>
   <body>
-  $END$
+  <c:import url="header.jsp"/>
   </body>
 </html>

@@ -19,24 +19,26 @@ public class LogInCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-         final String email = request.getParameter("email");
-         final String password = request.getParameter("password");
+        final String email = request.getParameter("email");
+        final String password = request.getParameter("password");
 
-         User user;
+        User user;
 
-         try {
-             user = userService.login(email, password);
-         } catch (InvalidCredentialsExcpetion e) {
-             request.setAttribute("loginMessage", "Invalid user credentials");
-             return "login?Command=LoginForm";
-         }
+        try {
+            user = userService.login(email, password);
+        } catch (InvalidCredentialsExcpetion e) {
+            request.setAttribute("loginMessage", "Invalid user credentials");
+            return "command=login";
+        }
 
-         final Role role = user.getRole();
+        final Role role = user.getRole();
 
-         if (role == Role.PLAYER) {
-             return "player";
-         } else {
-             return "judge";
-         }
+        if (role == Role.PLAYER) {
+            return "player-page.jsp";
+        } else if (role == Role.JUDGE) {
+            return "judge-page.jsp";
+        } else {
+            return "index.jsp";
+        }
     }
 }

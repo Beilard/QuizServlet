@@ -35,6 +35,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(User user) {
+        if (user == null) {
+            LOGGER.warn("Null user passed to register");
+            throw new IllegalArgumentException("Null user passed to register");
+        }
         userValidator.validate(user);
         if (userDao.findByEmail(user.getEmail()).isPresent()) {
             LOGGER.warn("User with such email already exists");

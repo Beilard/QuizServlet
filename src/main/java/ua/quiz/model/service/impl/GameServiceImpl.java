@@ -9,6 +9,7 @@ import ua.quiz.model.dto.Phase;
 import ua.quiz.model.dto.Question;
 import ua.quiz.model.dto.Status;
 import ua.quiz.model.entity.GameEntity;
+import ua.quiz.model.excpetion.EntityNotFoundException;
 import ua.quiz.model.service.GameService;
 import ua.quiz.model.service.mapper.GameMapper;
 import ua.quiz.model.service.mapper.PhaseMapper;
@@ -44,18 +45,13 @@ public class GameServiceImpl implements GameService {
             throw new IllegalArgumentException("Either teamId is null or number of question/time per question" +
                     " are less than 0 to start the game");
         }
-
         final Game game = gameBuilder(teamId, numberOfQuestions, timePerQuestion);
         Long gameId = gameDao.saveAndReturnId(gameMapper.mapGameToGameEntity(game));
 
-        Game gameWithId = gameMapper.mapGameEntityToGame(gameDao.findById(gameId).get());
-
-        final Game gameWithPhases = Game.builder(gameWithId)
+        return Game.builder(game)
+                .withId(gameId)
                 .withPhases(generatePhases(gameId, numberOfQuestions))
                 .build();
-
-
-        return gameWithPhases;
     }
 
     @Override
@@ -112,28 +108,20 @@ public class GameServiceImpl implements GameService {
         return null;
     }
 
+    //TODO: separate into methods
     private List<Phase> generatePhases(Long gameId, Integer numberOfPhases) {
         Long amountOfQuestionsInDb = questionDao.countEntries();
         if (numberOfPhases > amountOfQuestionsInDb) {
             LOGGER.warn("Amount of questions requested is bigger than the count in DB");
             throw new IllegalArgumentException("Amount of questions requested is bigger than the count in DB");
         }
-        final Random random = new Random();
-        List<Long> generatedIds = random
-                .longs(0, amountOfQuestionsInDb + 1)
-                .distinct()
-                .limit(numberOfPhases)
-                .boxed()
-                .collect(Collectors.toList());
+        List<Long> generatedIds = generateIds(numberOfPhases, amountOfQuestionsInDb);
 
         List<Phase> phases = new ArrayList<>(numberOfPhases);
 
         for (int i = 0; i < numberOfPhases; i++) {
-            final Question question = questionMapper.mapQuestionEntityToQuestion(questionDao.findById(generatedIds.get(i)).get());
-            final Phase phase = Phase.builder()
-                    .withGameId(gameId)
-                    .withQuestion(question)
-                    .build();
+
+            final Phase phase = generatePhase(gameId, generatedIds, i);
 
             phases.add(phase);
 
@@ -141,6 +129,27 @@ public class GameServiceImpl implements GameService {
         }
 
         return phases;
+    }
+
+    private Phase generatePhase(Long gameId, List<Long> generatedIds, int i) {
+        final Question question = questionDao.findById(generatedIds.get(i))
+                .map(questionMapper::mapQuestionEntityToQuestion)
+                .orElseThrow(EntityNotFoundException::new);
+
+        return Phase.builder()
+                .withGameId(gameId)
+                .withQuestion(question)
+                .build();
+    }
+
+    private List<Long> generateIds(Integer numberOfPhases, Long amountOfQuestionsInDb) {
+        final Random random = new Random();
+        return random
+                .longs(0, amountOfQuestionsInDb + 1)
+                .distinct()
+                .limit(numberOfPhases)
+                .boxed()
+                .collect(Collectors.toList());
     }
 
     private Game gameBuilder(Long teamId, int numberOfQuestions, int timePerQuestion) {

@@ -1,19 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+<fmt:setLocale value="${sessionScope.language}"/>
+<fmt:setBundle basename="internationalization"/>
+<html lang="${param.language}">
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <style>
+        @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
         /* Coded with love by Mutiullah Samim */
         body,
         html {
             margin: 0;
             padding: 0;
             height: 100%;
-            background: #60a3bc !important;
         }
         .user_card {
             height: 400px;
@@ -77,9 +79,58 @@
         .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
             background-color: #c0392b !important;
         }
+
+
+
+
+        body{
+            margin: 0;
+            font-size: .9rem;
+            font-weight: 400;
+            line-height: 1.6;
+            color: #212529;
+            text-align: left;
+            background-color: #f5f8fa;
+        }
+
+        .navbar-laravel
+        {
+            box-shadow: 0 2px 4px rgba(0,0,0,.04);
+        }
+
+        .navbar-brand , .nav-link, .my-form, .login-form
+        {
+            font-family: Raleway, sans-serif;
+        }
+
+        .my-form
+        {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .my-form .row
+        {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .login-form
+        {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .login-form .row
+        {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
     </style>
 </head>
 <body>
+<c:import url="header.jsp"/>
 <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
         <div class="user_card">
@@ -89,37 +140,30 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center form_container">
-                <form>
+                <form method="post" action="/game" >
+                    <input type="hidden" name="command" value="login">
                     <div class="input-group mb-3">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" name="" class="form-control input_user" value="" placeholder="username">
+                        <input type="text" name="email" class="form-control input_user" value="" placeholder=<fmt:message key="login.email"/>>
                     </div>
                     <div class="input-group mb-2">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" name="" class="form-control input_pass" value="" placeholder="password">
+                        <input type="password" name="password" class="form-control input_pass" value="" placeholder=<fmt:message key="login.password"/>>
                     </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customControlInline">
-                            <label class="custom-control-label" for="customControlInline">Remember me</label>
-                        </div>
-                    </div>
+
                     <div class="d-flex justify-content-center mt-3 login_container">
-                        <button type="button" name="button" class="btn login_btn">Login</button>
+                        <button type="submit" name="button" class="btn login_btn"><fmt:message key="login.button"/></button>
                     </div>
                 </form>
             </div>
 
             <div class="mt-4">
                 <div class="d-flex justify-content-center links">
-                    Don't have an account? <a href="/authentication?command=sign-in" class="ml-2">Sign Up</a>
-                </div>
-                <div class="d-flex justify-content-center links">
-                    <a href="#">Forgot your password?</a>
+                    <fmt:message key="login.forgot"/> <a href="/authentication?command=registrationForm" class="ml-2"><fmt:message key="login.signup"/></a>
                 </div>
             </div>
         </div>

@@ -20,14 +20,14 @@ public class RegistrationCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         final String email = request.getParameter("email");
         final String password = request.getParameter("password");
-        final String passwordConfirm = request.getParameter("passwordConfirm");
+        final String passwordConfirm = request.getParameter("confirmPassword");
         final String name = request.getParameter("name");
         final String surname = request.getParameter("surname");
         request.setAttribute("role", "player");
 
         if (!Objects.equals(password, passwordConfirm)) {
             request.setAttribute("registrationMessage", "Password should match");
-            return "registration?command=registerForm";
+            return "registration?command=registrationForm";
         }
 
         final User user = User.builder()
