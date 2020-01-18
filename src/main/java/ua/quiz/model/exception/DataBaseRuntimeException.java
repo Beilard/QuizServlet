@@ -1,6 +1,4 @@
-package ua.quiz.model.excpetion;
-
-import java.sql.SQLException;
+package ua.quiz.model.exception;
 
 public class DataBaseRuntimeException extends RuntimeException {
     public DataBaseRuntimeException() {

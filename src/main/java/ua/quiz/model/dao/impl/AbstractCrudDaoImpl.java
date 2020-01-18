@@ -3,7 +3,7 @@ package ua.quiz.model.dao.impl;
 import org.apache.log4j.Logger;
 import ua.quiz.model.dao.CrudDao;
 import ua.quiz.model.dao.DBConnector;
-import ua.quiz.model.excpetion.DataBaseRuntimeException;
+import ua.quiz.model.exception.DataBaseRuntimeException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

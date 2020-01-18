@@ -1,4 +1,4 @@
-package ua.quiz.model.excpetion;
+package ua.quiz.model.exception;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException() {

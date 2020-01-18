@@ -12,9 +12,9 @@ import java.io.IOException;
 public class SecurityFilter implements Filter {
     private static final int FIRST_ELEMENT_OF_ARRAY = 0;
 
-    public static final String JUDGE_ROLE_NAME = "judge";
+    private static final String JUDGE_ROLE_NAME = "judge";
 
-    public static final String PLAYER_ROLE_NAME = "player";
+    private static final String PLAYER_ROLE_NAME = "player";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -37,6 +37,9 @@ public class SecurityFilter implements Filter {
 
     //TODO: something or empty;
     private String urlSplitter(String command) {
+        if (command == null) {
+            return "/game?command=pageNotFoundForm";
+        }
         String[] strings = command.split("-");
         return strings[FIRST_ELEMENT_OF_ARRAY];
     }

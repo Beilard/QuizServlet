@@ -1,12 +1,9 @@
 package ua.quiz.model.dao.impl;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import ua.quiz.model.dao.DBConnector;
 import ua.quiz.model.dao.TeamDao;
 import ua.quiz.model.entity.TeamEntity;
-import ua.quiz.model.excpetion.DataBaseRuntimeException;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

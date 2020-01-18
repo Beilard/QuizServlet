@@ -3,7 +3,7 @@ package ua.quiz.model.dao;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.Logger;
-import ua.quiz.model.excpetion.DataBaseRuntimeException;
+import ua.quiz.model.exception.DataBaseRuntimeException;
 
 import java.sql.Connection;
 import java.sql.SQLException;

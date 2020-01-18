@@ -3,6 +3,11 @@ package ua.quiz.model.context;
 import ua.quiz.controller.command.Command;
 import ua.quiz.controller.command.DefaultCommand;
 import ua.quiz.controller.command.authentication.*;
+import ua.quiz.controller.command.error.PageNotFoundFormCommand;
+import ua.quiz.controller.command.judge.JudgePageFormCommand;
+import ua.quiz.controller.command.player.CreateTeamFormCommand;
+import ua.quiz.controller.command.player.PlayerPageFormCommand;
+import ua.quiz.controller.command.player.ProfilePageFormCommand;
 import ua.quiz.model.dao.DBConnector;
 import ua.quiz.model.dao.UserDao;
 import ua.quiz.model.dao.impl.UserDaoImpl;
@@ -39,6 +44,18 @@ public class ContextInjector {
 
     private static final LogOutCommand LOG_OUT_COMMAND = new LogOutCommand();
 
+    private static final PageNotFoundFormCommand PAGE_NOT_FOUND_FORM_COMMAND = new PageNotFoundFormCommand();
+
+    private static final PlayerPageFormCommand PLAYER_PAGE_FORM = new PlayerPageFormCommand();
+
+    private static final JudgePageFormCommand JUDGE_PAGE_FORM = new JudgePageFormCommand();
+
+    private static final ProfilePageFormCommand PROFILE_PAGE_FORM = new ProfilePageFormCommand();
+
+    private static final CreateTeamFormCommand CREATE_TEAM_FORM_COMMAND = new CreateTeamFormCommand();
+
+    private static final IndexPageFormCommand INDEX_PAGE_FORM_COMMAND = new IndexPageFormCommand();
+
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
     private static final Map<String, Command> COMMAND_NAME_TO_COMMAND = mapCommands();
@@ -63,12 +80,19 @@ public class ContextInjector {
     private static Map<String, Command> mapCommands() {
         Map<String, Command> authenticationCommandToCommand = new HashMap<>();
         authenticationCommandToCommand.put("login", LOG_IN_COMMAND);
-        authenticationCommandToCommand.put("register", REGISTRATION_COMMAND);
+        authenticationCommandToCommand.put("registration", REGISTRATION_COMMAND);
         authenticationCommandToCommand.put("logout", LOG_OUT_COMMAND);
         authenticationCommandToCommand.put("loginForm", LOG_IN_FORM_COMMAND);
         authenticationCommandToCommand.put("registrationForm", REGISTRATION_FORM_COMMAND);
-        authenticationCommandToCommand.put("user-start-game", REGISTRATION_FORM_COMMAND);
         authenticationCommandToCommand.put("default", DEFAULT_COMMAND);
+        authenticationCommandToCommand.put("pageNotFoundForm", PAGE_NOT_FOUND_FORM_COMMAND);
+        authenticationCommandToCommand.put("player-PageForm", PLAYER_PAGE_FORM);
+        authenticationCommandToCommand.put("judge-PageForm", JUDGE_PAGE_FORM);
+        authenticationCommandToCommand.put("player-profilePageForm", PROFILE_PAGE_FORM);
+        authenticationCommandToCommand.put("indexPageForm", INDEX_PAGE_FORM_COMMAND);
+        authenticationCommandToCommand.put("player-createTeam", CREATE_TEAM_FORM_COMMAND);
+
+
 
         return authenticationCommandToCommand;
     }

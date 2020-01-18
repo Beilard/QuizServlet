@@ -122,7 +122,7 @@
                 <div class="card">
                     <div class="card-header"><fmt:message key="register.title"/></div>
                     <div class="card-body">
-                        <form name="my-form" onsubmit="return validform()" action="success.php" method="">
+                        <form name="my-form" onsubmit="" action="/game?command=registration" method="post">
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right"><fmt:message key="register.email"/></label>
                                 <div class="col-md-6">
@@ -147,7 +147,7 @@
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right"><fmt:message key="register.password"/></label>
                                 <div class="col-md-6">
-                                    <input type="text" id="password" class="form-control">
+                                    <input type="password" id="password" class="form-control" name="password">
                                 </div>
                             </div>
 
@@ -155,7 +155,7 @@
                                 <label for=confirmPassword class="col-md-4 col-form-label text-md-right">
                                     <fmt:message key="register.confirmPassword"/></label>
                                 <div class="col-md-6">
-                                    <input type="password" id="confirmPassword" class="form-control" name="nid-number">
+                                    <input type="password" id="confirmPassword" class="form-control" name="confirmPassword">
                                 </div>
                             </div>
 
@@ -164,13 +164,13 @@
                                     <fmt:message key="register.button"/>
                                 </button>
                             </div>
-                    </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     </div>
+
 
 </main>
 

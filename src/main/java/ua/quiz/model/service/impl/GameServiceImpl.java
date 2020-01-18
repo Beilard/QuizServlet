@@ -9,7 +9,7 @@ import ua.quiz.model.dto.Phase;
 import ua.quiz.model.dto.Question;
 import ua.quiz.model.dto.Status;
 import ua.quiz.model.entity.GameEntity;
-import ua.quiz.model.excpetion.EntityNotFoundException;
+import ua.quiz.model.exception.EntityNotFoundException;
 import ua.quiz.model.service.GameService;
 import ua.quiz.model.service.mapper.GameMapper;
 import ua.quiz.model.service.mapper.PhaseMapper;
@@ -108,7 +108,7 @@ public class GameServiceImpl implements GameService {
         return null;
     }
 
-    //TODO: separate into methods
+
     private List<Phase> generatePhases(Long gameId, Integer numberOfPhases) {
         Long amountOfQuestionsInDb = questionDao.countEntries();
         if (numberOfPhases > amountOfQuestionsInDb) {

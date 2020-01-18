@@ -3,7 +3,7 @@ package ua.quiz.controller.command.authentication;
 import ua.quiz.controller.command.Command;
 import ua.quiz.model.dto.Role;
 import ua.quiz.model.dto.User;
-import ua.quiz.model.excpetion.InvalidCredentialsExcpetion;
+import ua.quiz.model.exception.InvalidCredentialsExcpetion;
 import ua.quiz.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,17 +28,24 @@ public class LogInCommand implements Command {
             user = userService.login(email, password);
         } catch (InvalidCredentialsExcpetion e) {
             request.setAttribute("loginMessage", "Invalid user credentials");
-            return "command=login";
+            return "/game?command=login";
         }
 
         final Role role = user.getRole();
+        User userWithoutPassword = User.builder(user)
+                .withPassword(null)
+                .build();
 
-        if (role == Role.PLAYER) {
-            return "player-page.jsp";
-        } else if (role == Role.JUDGE) {
-            return "judge-page.jsp";
-        } else {
-            return "index.jsp";
-        }
+        request.getSession().setAttribute("user", userWithoutPassword);
+        request.getSession().setAttribute("isLoggedIn", true);
+
+        return "/game?command=indexPageForm";
+//        if (role == Role.PLAYER) {
+//            return "/game?command=userPageForm";
+//        } else if (role == Role.JUDGE) {
+//            return "/game?command=judgePageForm";
+//        } else {
+//            return "/game?command=registrationForm";
+//        }
     }
 }

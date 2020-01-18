@@ -13,12 +13,24 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
+               <c:choose>
+                   <c:when test="${isLoggedIn==true}">
+                       <li class="nav-item">
+                           <a class="nav-link" href="/game?command=profilePageForm"><fmt:message key="header.profile"/></a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="/game?command=logout"><fmt:message key="header.logout"/></a>
+                       </li>
+                   </c:when>
+                   <c:otherwise>
                 <li class="nav-item">
-                    <a class="nav-link" href="/authentication?command=loginForm"><fmt:message key="header.login"/></a>
+                    <a class="nav-link" href="/game?command=loginForm"><fmt:message key="header.login"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/authentication?command=registrationForm"><fmt:message key="header.register"/></a>
+                    <a class="nav-link" href="/game?command=registrationForm"><fmt:message key="header.register"/></a>
                 </li>
+                   </c:otherwise>
+               </c:choose>
             </ul>
 
         </div>

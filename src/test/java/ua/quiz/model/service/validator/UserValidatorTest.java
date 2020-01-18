@@ -4,7 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import ua.quiz.model.dto.User;
-import ua.quiz.model.excpetion.InvalidCredentialsExcpetion;
+import ua.quiz.model.exception.InvalidCredentialsExcpetion;
 
 public class UserValidatorTest {
     @Rule

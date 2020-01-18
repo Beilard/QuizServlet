@@ -6,7 +6,7 @@ import ua.quiz.model.entity.GameEntity;
 import ua.quiz.model.entity.PhaseEntity;
 import ua.quiz.model.entity.QuestionEntity;
 import ua.quiz.model.entity.StatusEntity;
-import ua.quiz.model.excpetion.DataBaseRuntimeException;
+import ua.quiz.model.exception.DataBaseRuntimeException;
 
 import java.sql.*;
 import java.util.ArrayList;

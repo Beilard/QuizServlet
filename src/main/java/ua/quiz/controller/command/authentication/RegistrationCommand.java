@@ -1,8 +1,9 @@
 package ua.quiz.controller.command.authentication;
 
 import ua.quiz.controller.command.Command;
+import ua.quiz.model.dto.Role;
 import ua.quiz.model.dto.User;
-import ua.quiz.model.excpetion.EmailAlreadyTakenException;
+import ua.quiz.model.exception.EmailAlreadyTakenException;
 import ua.quiz.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class RegistrationCommand implements Command {
 
         if (!Objects.equals(password, passwordConfirm)) {
             request.setAttribute("registrationMessage", "Password should match");
-            return "registration?command=registrationForm";
+            return "/game?command=registrationForm";
         }
 
         final User user = User.builder()
@@ -35,13 +36,15 @@ public class RegistrationCommand implements Command {
                 .withPassword(password)
                 .withName(name)
                 .withSurname(surname)
+                .withRole(Role.PLAYER)
                 .build();
+
         try {
             userService.register(user);
         }  catch (EmailAlreadyTakenException e) {
             request.setAttribute("registrationMessage", "Email is taken");
-            return "register?command=registrationForm";
+            return "game?command=registrationForm";
         }
-        return "/";
+        return "/game?command=loginForm";
     }
 }

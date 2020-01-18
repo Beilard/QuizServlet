@@ -73,12 +73,9 @@
 <div class="bg-light border-right" id="sidebar-wrapper">
     <div class="sidebar-heading">Profile </div>
     <div class="list-group list-group-flush">
-        <a href="" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.createTeam"/></a>
+        <a href="/game?command=player-createTeam" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.createTeam"/></a>
         <a href="#" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.checkTeam"/></a>
         <a href="#" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.startGame"/></a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
