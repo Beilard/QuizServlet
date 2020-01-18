@@ -5,15 +5,21 @@ import ua.quiz.controller.command.DefaultCommand;
 import ua.quiz.controller.command.authentication.*;
 import ua.quiz.controller.command.error.PageNotFoundFormCommand;
 import ua.quiz.controller.command.judge.JudgePageFormCommand;
+import ua.quiz.controller.command.player.CreateTeamCommand;
 import ua.quiz.controller.command.player.CreateTeamFormCommand;
 import ua.quiz.controller.command.player.PlayerPageFormCommand;
 import ua.quiz.controller.command.player.ProfilePageFormCommand;
 import ua.quiz.model.dao.DBConnector;
+import ua.quiz.model.dao.TeamDao;
 import ua.quiz.model.dao.UserDao;
+import ua.quiz.model.dao.impl.TeamDaoImpl;
 import ua.quiz.model.dao.impl.UserDaoImpl;
+import ua.quiz.model.service.TeamService;
 import ua.quiz.model.service.UserService;
 import ua.quiz.model.service.encoder.PasswordEncoder;
+import ua.quiz.model.service.impl.TeamServiceImpl;
 import ua.quiz.model.service.impl.UserServiceImpl;
+import ua.quiz.model.service.mapper.TeamMapper;
 import ua.quiz.model.service.mapper.UserMapper;
 import ua.quiz.model.service.validator.UserValidator;
 
@@ -25,11 +31,18 @@ public class ContextInjector {
 
     private static final UserDao USER_DAO = new UserDaoImpl(DB_CONNECTOR);
 
+    private static final TeamDao TEAM_DAO = new TeamDaoImpl(DB_CONNECTOR);
+
     private static final PasswordEncoder PASSWORD_ENCODER = new PasswordEncoder();
 
     private static final UserValidator USER_VALIDATOR = new UserValidator();
 
     private static final UserMapper USER_MAPPER = new UserMapper();
+
+    private static final TeamMapper TEAM_MAPPER = new TeamMapper();
+
+    private static final TeamService TEAM_SERVICE =
+            new TeamServiceImpl(USER_DAO, TEAM_DAO, TEAM_MAPPER, USER_MAPPER);
 
     private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, USER_VALIDATOR,
             PASSWORD_ENCODER, USER_MAPPER);
@@ -55,6 +68,9 @@ public class ContextInjector {
     private static final CreateTeamFormCommand CREATE_TEAM_FORM_COMMAND = new CreateTeamFormCommand();
 
     private static final IndexPageFormCommand INDEX_PAGE_FORM_COMMAND = new IndexPageFormCommand();
+
+    private static final CreateTeamCommand CREATE_TEAM_COMMAND
+            = new CreateTeamCommand(USER_SERVICE, TEAM_SERVICE, TEAM_MAPPER, USER_MAPPER);
 
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
@@ -90,7 +106,8 @@ public class ContextInjector {
         authenticationCommandToCommand.put("judge-PageForm", JUDGE_PAGE_FORM);
         authenticationCommandToCommand.put("player-profilePageForm", PROFILE_PAGE_FORM);
         authenticationCommandToCommand.put("indexPageForm", INDEX_PAGE_FORM_COMMAND);
-        authenticationCommandToCommand.put("player-createTeam", CREATE_TEAM_FORM_COMMAND);
+        authenticationCommandToCommand.put("player-createTeamForm", CREATE_TEAM_FORM_COMMAND);
+        authenticationCommandToCommand.put("player-createTeam", CREATE_TEAM_COMMAND);
 
 
 

@@ -12,4 +12,8 @@ public interface UserService {
     boolean joinTeam(User user, Long teamId);
 
     List<User> findByTeamId(Long teamId);
+
+    User findByEmail(String email);
+
+    void update(User user);
 }

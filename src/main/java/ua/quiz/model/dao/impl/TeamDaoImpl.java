@@ -24,7 +24,7 @@ public class TeamDaoImpl extends AbstractCrudDaoImpl<TeamEntity> implements Team
 
     private  static final String DELETE_BY_ID = "SELECT * FROM team WHERE team.team_id = ?";
 
-    public TeamDaoImpl(DBConnector dbConnector, String saveQuery, String findByIdQuery, String findAllQuery, String updateQuery) {
+    public TeamDaoImpl(DBConnector dbConnector) {
         super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_PAGINATION_QUERY, UPDATE_QUERY, COUNT_QUERY);
     }
 

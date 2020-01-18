@@ -6,7 +6,7 @@ import ua.quiz.model.dto.User;
 import java.util.List;
 
 public interface TeamService {
-    Team createTeam(User captain, String teamName);
+    void createTeam(String teamName);
 
     void changeCaptain(Long teamId, User newCaptain, User oldCaptain);
 

@@ -73,7 +73,9 @@
 <div class="bg-light border-right" id="sidebar-wrapper">
     <div class="sidebar-heading">Profile </div>
     <div class="list-group list-group-flush">
-        <a href="/game?command=player-createTeam" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.createTeam"/></a>
+        <c:if test="${user.getTeamId() == 0}">
+            <a href="/game?command=player-createTeamForm" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.createTeam"/></a>
+        </c:if>
         <a href="#" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.checkTeam"/></a>
         <a href="#" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.startGame"/></a>
     </div>

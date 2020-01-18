@@ -6,6 +6,7 @@ import ua.quiz.model.dto.User;
 import ua.quiz.model.entity.RoleEntity;
 import ua.quiz.model.entity.UserEntity;
 import ua.quiz.model.exception.EmailAlreadyTakenException;
+import ua.quiz.model.exception.EntityNotFoundException;
 import ua.quiz.model.exception.InvalidCredentialsExcpetion;
 import ua.quiz.model.service.UserService;
 import ua.quiz.model.service.encoder.PasswordEncoder;
@@ -13,6 +14,7 @@ import ua.quiz.model.service.mapper.UserMapper;
 import ua.quiz.model.service.validator.Validator;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -87,6 +89,28 @@ public class UserServiceImpl implements UserService {
         userDao.update(modifiedUserEntity);
 
         return true;
+    }
+
+    @Override
+    public void update(User user) {
+        if (user == null) {
+            LOGGER.warn("User passed to update is null");
+            throw new InvalidCredentialsExcpetion("User passed to update is null");
+        }
+
+        userDao.update(userMapper.mapUserToUserEntity(user));
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        if (email == null) {
+            LOGGER.warn("email passed is null");
+            throw new InvalidCredentialsExcpetion("email passed is null");
+        }
+
+        return userDao.findByEmail(email)
+                .map(userMapper::mapUserEntityToUser)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

@@ -150,18 +150,45 @@
          width: 300px;
          height: 300px;
          display: flex;
-         flex-direction: column;
+         flex-direction: row;
          justify-content: center;">
-        <input name="teamName" type="text">
+        <form action="#" style="margin-right: 30px">
+            <label for="teamName">
+                <p>
+                    Create Team
+                </p>
+            </label>
+        <input name="teamName" id="teamName" type="text">
         <div style="margin-top:10px;text-align: center;width: 100%; ">
-            <a class="btn btn-warning" href="#"><fmt:message key="team.create.join"/></a>
-            <a class="btn btn-warning"  href="#"><fmt:message key="team.create.create"/></a>
+            <input type="hidden" name="command" value="player-createTeam">
+            <input type="submit" value="submit">
         </div>
+        </form>
+
+        <form action="#">
+            <label for="teamNameForJoin">
+                <p>
+                    Join Team
+                </p>
+            </label>
+        <input name="teamNameForJoin" id="teamNameForJoin" type="text">
+        <div style="margin-top:10px;text-align: center;width: 100%; ">
+            <input type="hidden" name="command" value="player-joinTeam">
+            <input type="submit" value="submit">
+        </div>
+        </form>
+    </div>
+
 
     </div>
 
-    </div>
-
+    <c:if test="${nameTaken == true}">
+        <div>
+            <p style="color: darkred; font-size: 20px; text-align: center">
+                <fmt:message key="team.create.taken"/>
+            </p>
+        </div>
+    </c:if>
     <c:import url="footer.jsp"/>
 </div>
 

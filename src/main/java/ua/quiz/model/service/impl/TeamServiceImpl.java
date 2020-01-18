@@ -7,14 +7,18 @@ import ua.quiz.model.dto.Team;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.entity.TeamEntity;
 import ua.quiz.model.entity.UserEntity;
+import ua.quiz.model.exception.EntityAlreadyExistsException;
 import ua.quiz.model.service.TeamService;
 import ua.quiz.model.service.mapper.TeamMapper;
 import ua.quiz.model.service.mapper.UserMapper;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class TeamServiceImpl implements TeamService {
     private static final Logger LOGGER = Logger.getLogger(TeamServiceImpl.class);
+    private static final int MAX_TEAM_NAME_LENGTH = 31;
+    private static final int MIN_TEAM_NAME_LENGTH = 1;
 
     private final UserDao userDao;
     private final TeamDao teamDao;
@@ -29,16 +33,22 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team createTeam(User captain, String teamName) {
-        if (teamName.length() > 31 || captain == null) {
+    public void createTeam(String teamName) {
+        if (teamName.length() < MIN_TEAM_NAME_LENGTH || teamName.length() > MAX_TEAM_NAME_LENGTH) {
             LOGGER.warn("Provided arguments are incorrect: " + teamName);
             throw new IllegalArgumentException("Provided arguments are incorrect: ");
         }
+
+        Optional<TeamEntity> teamFoundByName = teamDao.findByTeamName(teamName);
+
+        if (teamFoundByName.isPresent()) {
+            LOGGER.info("Team with name found " + teamName);
+            throw new EntityAlreadyExistsException("Team with name found " + teamName);
+        }
+
         final Team team = new Team(teamName);
 
         teamDao.save(teamMapper.mapTeamToTeamEntity(team));
-
-        return team;
     }
 
     @Override
