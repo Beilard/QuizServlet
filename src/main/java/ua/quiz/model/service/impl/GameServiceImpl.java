@@ -46,7 +46,7 @@ public class GameServiceImpl implements GameService {
                     " are less than 0 to start the game");
         }
         final Game game = gameBuilder(teamId, numberOfQuestions, timePerQuestion);
-        Long gameId = gameDao.saveAndReturnId(gameMapper.mapGameToGameEntity(game));
+        final Long gameId = gameDao.saveAndReturnId(gameMapper.mapGameToGameEntity(game));
 
         return Game.builder(game)
                 .withId(gameId)
@@ -157,6 +157,8 @@ public class GameServiceImpl implements GameService {
                 .withNumberOfQuestions(numberOfQuestions)
                 .withTimePerQuestion(timePerQuestion)
                 .withTeamId(teamId)
+                .withPhases(Collections.emptyList())
+                .withStatus(Status.ONGOING)
                 .build();
     }
 

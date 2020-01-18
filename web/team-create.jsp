@@ -155,7 +155,7 @@
         <form action="#" style="margin-right: 30px">
             <label for="teamName">
                 <p>
-                    Create Team
+                    <fmt:message key="team.create.create"/>
                 </p>
             </label>
         <input name="teamName" id="teamName" type="text">
@@ -168,7 +168,7 @@
         <form action="#">
             <label for="teamNameForJoin">
                 <p>
-                    Join Team
+                    <fmt:message key="team.create.join"/>
                 </p>
             </label>
         <input name="teamNameForJoin" id="teamNameForJoin" type="text">

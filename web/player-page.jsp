@@ -77,7 +77,7 @@
             <a href="/game?command=player-createTeamForm" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.createTeam"/></a>
         </c:if>
         <a href="#" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.checkTeam"/></a>
-        <a href="#" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.startGame"/></a>
+        <a href="/game?command=player-configureGameForm" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.startGame"/></a>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

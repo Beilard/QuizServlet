@@ -35,7 +35,7 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM game";
 
-    public GameDaoImpl(DBConnector dbConnector, String saveQuery, String findByIdQuery, String findAllQuery, String updateQuery) {
+    public GameDaoImpl(DBConnector dbConnector) {
         super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
     }
 

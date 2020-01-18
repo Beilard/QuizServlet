@@ -21,7 +21,7 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<QuestionEntity> impleme
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM question";
 
-    public QuestionDaoImpl(DBConnector dbConnector, String saveQuery, String findByIdQuery, String findAllQuery, String updateQuery) {
+    public QuestionDaoImpl(DBConnector dbConnector) {
         super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_PAGINATION_QUERY, UPDATE_QUERY, COUNT_QUERY);
     }
 

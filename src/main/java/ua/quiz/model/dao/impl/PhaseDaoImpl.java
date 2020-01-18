@@ -23,7 +23,7 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM phase";
 
-    public PhaseDaoImpl(DBConnector dbConnector, String saveQuery, String findByIdQuery, String findAllQuery, String updateQuery) {
+    public PhaseDaoImpl(DBConnector dbConnector) {
         super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
     }
 
