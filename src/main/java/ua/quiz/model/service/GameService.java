@@ -11,6 +11,8 @@ public interface GameService {
 
     void reviewGame(Game game);
 
+    void updateGame(Game game);
+
     Game findById(Long id);
 
     List<Game> findAll(Long page, Long rowCount);

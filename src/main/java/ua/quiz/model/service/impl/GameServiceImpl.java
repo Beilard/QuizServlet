@@ -111,6 +111,16 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public void updateGame(Game game) {
+        if (game == null) {
+            LOGGER.warn("Null id passed to update a game");
+            throw new IllegalArgumentException("Null id passed to update a game");
+        }
+
+        gameDao.update(gameMapper.mapGameToGameEntity(game));
+    }
+
+    @Override
     public List<Game> findAllByTeamId(Long teamId) {
         return null;
     }

@@ -50,12 +50,18 @@ public class PhaseServiceImpl implements PhaseService {
     }
 
     @Override
+    public List<Phase> findAllPhasesByGameId(Long id) {
+        return null;
+    }
+
+    @Override
     public Phase finishPhase(Phase phase, String givenAnswer) {
         if (phase == null) {
             LOGGER.warn("Passed phase is null");
             throw  new IllegalArgumentException("Passed phase is null");
         }
-        Phase finishedPhase = setEndTimeAndAnswer(phase, givenAnswer);
+        final Phase finishedPhase = setEndTimeAndAnswer(phase, givenAnswer);
+        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(finishedPhase));
 
         return finishedPhase;
     }
@@ -65,11 +71,6 @@ public class PhaseServiceImpl implements PhaseService {
                 .withEndTime(LocalDateTime.now())
                 .withGivenAnswer(givenAnswer)
                 .build();
-    }
-
-    @Override
-    public List<Phase> findAllPhasesByGameId(Long id) {
-        return null;
     }
 
     @Override

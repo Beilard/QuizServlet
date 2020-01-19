@@ -4,10 +4,7 @@ import ua.quiz.controller.command.Command;
 import ua.quiz.controller.command.DefaultCommand;
 import ua.quiz.controller.command.authentication.*;
 import ua.quiz.controller.command.error.PageNotFoundFormCommand;
-import ua.quiz.controller.command.game.ConfigureGameFormCommand;
-import ua.quiz.controller.command.game.GeneratePhaseForm;
-import ua.quiz.controller.command.game.StartGameCommand;
-import ua.quiz.controller.command.game.ViewPhaseFormCommand;
+import ua.quiz.controller.command.game.*;
 import ua.quiz.controller.command.judge.JudgePageFormCommand;
 import ua.quiz.controller.command.player.*;
 import ua.quiz.model.dao.*;
@@ -99,6 +96,8 @@ public class ContextInjector {
 
     private static final ViewPhaseFormCommand VIEW_PHASE_FORM_COMMAND = new ViewPhaseFormCommand();
 
+    private static final FinishPhaseCommand FINISH_PHASE_COMMAND = new FinishPhaseCommand(PHASE_SERVICE, GAME_SERVICE);
+
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
     private static final Map<String, Command> COMMAND_NAME_TO_COMMAND = mapCommands();
@@ -139,6 +138,7 @@ public class ContextInjector {
         commandToCommandMap.put("player-startGame", START_GAME_COMMAND);
         commandToCommandMap.put("player-viewPhase", VIEW_PHASE_FORM_COMMAND);
         commandToCommandMap.put("player-generatePhase", GENERATE_PHASE_FORM);
+        commandToCommandMap.put("player-finishPhase", FINISH_PHASE_COMMAND);
 
 
         return commandToCommandMap;

@@ -181,9 +181,9 @@
                 <p style=" width: 80%; height: 100px; text-align:center;color: black;font-size: 28px;border: 1px solid #dcd8d8;background: #00000014;">
                     ${question.body}
                 <form style="text-align: start" action="/game">
-                    <input type="hidden" name="command" value="#">
+                    <input type="hidden" name="command" value="player-finishPhase">
                     <%--                    Field for answer --%>
-                    <input style="width: 60%;" type="text">
+                    <input style="width: 60%;" type="text" name="givenAnswer">
                     <input class="btn btn-success " type="submit" value="Submit">
                 </form>
             </div>

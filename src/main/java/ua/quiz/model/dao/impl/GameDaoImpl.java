@@ -66,6 +66,7 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
                 .withId(resultSet.getLong("game_id"))
                 .withNumberOfQuestions(resultSet.getInt("number_of_questions"))
                 .withTimePerQuestion(resultSet.getInt("time_per_question"))
+                .withCurrentPhase(resultSet.getInt("current_phase"))
                 .withTeamId(resultSet.getLong("team_id"))
                 .withStatusEntity(StatusEntity.valueOf(resultSet.getString("status_name").toUpperCase()))
                 .withPhaseEntities(mapResultSetToPhaseList(resultSet))
@@ -83,7 +84,7 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
     protected void mapForUpdateStatement(PreparedStatement preparedStatement, GameEntity entity) throws SQLException {
         mapForInsertStatement(preparedStatement, entity);
         preparedStatement.setLong(4, entity.getCurrentPhase());
-        preparedStatement.setInt(5, entity.getStatusEntity().ordinal());
+        preparedStatement.setInt(5, entity.getStatusEntity().ordinal() + 1);
         preparedStatement.setLong(6, entity.getId());
     }
 

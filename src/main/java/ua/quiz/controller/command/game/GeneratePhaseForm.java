@@ -23,7 +23,6 @@ public class GeneratePhaseForm implements Command {
 
     }
 
-    //TODO: check why modifiedGamePhase has null for currentPhase
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         final Game game = (Game) request.getSession().getAttribute("game");
