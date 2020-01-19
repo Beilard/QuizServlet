@@ -9,7 +9,7 @@ public interface CrudDao<T, ID> {
 
     Optional<T> findById(ID id);
 
-    List<T> findAll(Integer startFrom, Integer rowCount);
+    List<T> findAll(Long startFrom, Long rowCount);
 
     Long countEntries();
 

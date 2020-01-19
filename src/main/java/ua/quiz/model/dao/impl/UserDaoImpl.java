@@ -16,10 +16,10 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
             "INSERT INTO user(email, password, name, surname) VALUES (?,?,?,?)";
 
     private static final String FIND_BY_ID_QUERY =
-            "SELECT * FROM user INNER JOIN role ON role_id = role.role_id WHERE users.user_id = ?";
+            "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id WHERE users.user_id = ?";
 
     private static final String FIND_ALL_QUERY =
-            "SELECT * FROM user INNER JOIN role ON role_id = role.role_id ORDER BY user.user_id DESC LIMIT ?, ?";
+            "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id ORDER BY user.user_id DESC LIMIT ?, ?";
 
     private static final String UPDATE_QUERY =
             "UPDATE user SET email = ?, password = ?, name = ?, surname = ?, is_captain = ?, team_id = ? WHERE user_id = ?";

@@ -8,6 +8,7 @@ import ua.quiz.model.dto.User;
 import ua.quiz.model.entity.TeamEntity;
 import ua.quiz.model.entity.UserEntity;
 import ua.quiz.model.exception.EntityAlreadyExistsException;
+import ua.quiz.model.exception.EntityNotFoundException;
 import ua.quiz.model.service.TeamService;
 import ua.quiz.model.service.mapper.TeamMapper;
 import ua.quiz.model.service.mapper.UserMapper;
@@ -67,12 +68,27 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public boolean joinTeam(User user, Long teamId) {
+        if (user == null || teamId == null || teamId <= 0) {
+            LOGGER.warn("User or teamId passed to join team are null or illegal");
+            throw new IllegalArgumentException("User or teamId passed to join team are null or illegal");
+        }
+        final UserEntity userEntity = userDao.findById(user.getId()).orElseThrow(EntityNotFoundException::new);
+
+        final UserEntity modifiedUserEntity = updateUserTeam(teamId, userEntity);
+
+        userDao.update(modifiedUserEntity);
+
+        return true;
+    }
+
+    @Override
     public Team findTeamByName(String name) {
         if (name == null) {
             LOGGER.warn("String provided for findByName was null");
             throw new IllegalArgumentException("String provided for findByName was null");
         }
-        final TeamEntity teamEntity = teamDao.findByTeamName(name).get();
+        final TeamEntity teamEntity = teamDao.findByTeamName(name).orElseThrow(EntityNotFoundException::new);
 
         return teamMapper.mapTeamEntityToTeam(teamEntity);
     }
@@ -96,6 +112,18 @@ public class TeamServiceImpl implements TeamService {
 
         return User.builder(user)
                 .withCaptain(isCaptain)
+                .build();
+    }
+
+    private UserEntity updateUserTeam(Long teamId, UserEntity userEntity) {
+        return UserEntity.builder()
+                .withId(userEntity.getId())
+                .withEmail(userEntity.getEmail())
+                .withPassword(userEntity.getPassword())
+                .withName(userEntity.getName())
+                .withSurname(userEntity.getSurname())
+                .withTeamId(teamId)
+                .withRoleEntity(userEntity.getRoleEntity())
                 .build();
     }
 }

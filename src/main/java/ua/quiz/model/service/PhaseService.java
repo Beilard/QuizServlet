@@ -5,9 +5,9 @@ import ua.quiz.model.dto.Phase;
 import java.util.List;
 
 public interface PhaseService {
-    Phase initiatePhase(Long gameId);
+    Phase initiatePhase(Phase phase, Integer timePerQuestion);
 
-    void finishPhase(Long gameId);
+    Phase finishPhase(Phase phase, String givenAnswer);
 
     List<Phase> findAllPhasesByGameId(Long id);
 

@@ -22,6 +22,7 @@ public class GameMapper {
                 .withNumberOfQuestions(gameEntity.getNumberOfQuestions())
                 .withTimePerQuestion(gameEntity.getTimePerQuestion())
                 .withTeamId(gameEntity.getTeamId())
+                .withCurrentPhase((gameEntity.getCurrentPhase()))
                 .withStatus(Status.valueOf(gameEntity.getStatusEntity().name()))
                 .withPhases(mapPhaseEntitiesToPhase(gameEntity.getPhaseEntities()))
                 .build();
@@ -32,6 +33,7 @@ public class GameMapper {
                 .withId(game.getId())
                 .withNumberOfQuestions(game.getNumberOfQuestions())
                 .withTimePerQuestion(game.getTimePerQuestion())
+                .withCurrentPhase(game.getCurrentPhase())
                 .withTeamId(game.getTeamId())
                 .withStatusEntity(StatusEntity.valueOf(game.getStatus().name()))
                 .withPhaseEntities(mapPhaseToPhaseEntities(game.getPhases()))

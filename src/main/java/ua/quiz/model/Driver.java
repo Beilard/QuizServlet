@@ -4,9 +4,12 @@ import ua.quiz.model.dao.DBConnector;
 import ua.quiz.model.dao.UserDao;
 import ua.quiz.model.dao.impl.UserDaoImpl;
 import ua.quiz.model.dto.Role;
+import ua.quiz.model.dto.Status;
 import ua.quiz.model.dto.User;
+import ua.quiz.model.service.GameService;
 import ua.quiz.model.service.UserService;
 import ua.quiz.model.service.encoder.PasswordEncoder;
+import ua.quiz.model.service.impl.GameServiceImpl;
 import ua.quiz.model.service.impl.UserServiceImpl;
 import ua.quiz.model.service.mapper.UserMapper;
 import ua.quiz.model.service.validator.UserValidator;
@@ -27,6 +30,7 @@ public class Driver {
 //                .withSurname("Shervchenko")
 //                .build());
 
-        userService.login("Vlad@mail.com", "Qwerty123#");
+
+
     }
 }

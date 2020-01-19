@@ -7,6 +7,7 @@ public class Game {
     private final Long id;
     private final Integer numberOfQuestions;
     private final Integer timePerQuestion;
+    private Integer currentPhase;
     private final Long teamId;
     private final Status status;
     private final List<Phase> phases;
@@ -17,6 +18,7 @@ public class Game {
         this.timePerQuestion = gameBuilder.timePerQuestion;
         this.status = gameBuilder.status;
         this.teamId = gameBuilder.teamId;
+        this.currentPhase = gameBuilder.currentPhase;
         this.phases = gameBuilder.phases;
     }
 
@@ -48,6 +50,14 @@ public class Game {
         return teamId;
     }
 
+    public Integer getCurrentPhase() {
+        return currentPhase;
+    }
+
+    public void setCurrentPhase(Integer currentPhase) {
+        this.currentPhase = currentPhase;
+    }
+
     public List<Phase> getPhases() {
         return phases;
     }
@@ -56,6 +66,7 @@ public class Game {
         private Long id;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
+        private Integer currentPhase;
         private Long teamId;
         private Status status;
         private List<Phase> phases;
@@ -70,6 +81,7 @@ public class Game {
             this.status = game.status;
             this.teamId = game.teamId;
             this.phases = game.phases;
+            this.currentPhase = game.currentPhase;
         }
 
         public Game build() {
@@ -83,6 +95,11 @@ public class Game {
 
         public GameBuilder withTimePerQuestion(Integer timePerQuestion) {
             this.timePerQuestion = timePerQuestion;
+            return this;
+        }
+
+        public GameBuilder withCurrentPhase(Integer currentPhase) {
+            this.currentPhase = currentPhase;
             return this;
         }
 
@@ -119,6 +136,7 @@ public class Game {
         return id.equals(game.id) &&
                 Objects.equals(numberOfQuestions, game.numberOfQuestions) &&
                 Objects.equals(timePerQuestion, game.timePerQuestion) &&
+                Objects.equals(currentPhase, game.currentPhase) &&
                 Objects.equals(teamId, game.teamId) &&
                 status == game.status &&
                 Objects.equals(phases, game.phases);
@@ -126,7 +144,7 @@ public class Game {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfQuestions, timePerQuestion, teamId, status, phases);
+        return Objects.hash(id, numberOfQuestions, timePerQuestion, currentPhase, teamId, status, phases);
     }
 
     @Override
@@ -135,6 +153,7 @@ public class Game {
                 "id=" + id +
                 ", numberOfQuestions=" + numberOfQuestions +
                 ", timePerQuestion=" + timePerQuestion +
+                ", currentPhase=" + currentPhase +
                 ", teamId=" + teamId +
                 ", status=" + status +
                 ", phases=" + phases +

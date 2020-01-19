@@ -15,6 +15,7 @@ import ua.quiz.model.service.mapper.GameMapper;
 import ua.quiz.model.service.mapper.PhaseMapper;
 import ua.quiz.model.service.mapper.QuestionMapper;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,7 +51,8 @@ public class GameServiceImpl implements GameService {
 
         return Game.builder(game)
                 .withId(gameId)
-                .withPhases(generatePhases(gameId, numberOfQuestions))
+                .withCurrentPhase(0)
+                .withPhases(returnPhaseList(gameId, numberOfQuestions))
                 .build();
     }
 
@@ -88,19 +90,24 @@ public class GameServiceImpl implements GameService {
             LOGGER.warn("Null id passed to find a game");
             throw new IllegalArgumentException("Null id passed to find a game");
         }
-
         final Optional<GameEntity> foundGameEntity = gameDao.findById(id);
 
         return gameMapper.mapGameEntityToGame(foundGameEntity.get());
     }
 
+    //TODO: check why returns only 1 entry
     @Override
-    public List<Game> findAll(Integer page, Integer rowCount) {
-        Integer offset = page * rowCount - rowCount;
+    public List<Game> findAll(Long page, Long rowCount) {
+        Long offset = page * rowCount - rowCount;
         List<GameEntity> entities = gameDao.findAll(offset, rowCount);
 
         return entities.isEmpty() ? Collections.emptyList() :
                 mapGameEntityListToGameList(entities);
+    }
+
+    @Override
+    public Long countAllEntries() {
+        return gameDao.countEntries();
     }
 
     @Override
@@ -109,26 +116,28 @@ public class GameServiceImpl implements GameService {
     }
 
 
-    private List<Phase> generatePhases(Long gameId, Integer numberOfPhases) {
+    private List<Phase> returnPhaseList(Long gameId, Integer numberOfPhases) {
         Long amountOfQuestionsInDb = questionDao.countEntries();
         if (numberOfPhases > amountOfQuestionsInDb) {
             LOGGER.warn("Amount of questions requested is bigger than the count in DB");
             throw new IllegalArgumentException("Amount of questions requested is bigger than the count in DB");
         }
+        saveGeneratedPhases(gameId, numberOfPhases, amountOfQuestionsInDb);
+
+        return phaseDao.findPhasesByGameId(gameId)
+                .stream()
+                .map(phaseMapper::mapPhaseEntityToPhase)
+                .collect(Collectors.toList());
+    }
+
+    private void saveGeneratedPhases(Long gameId, Integer numberOfPhases, Long amountOfQuestionsInDb) {
         List<Long> generatedIds = generateIds(numberOfPhases, amountOfQuestionsInDb);
 
-        List<Phase> phases = new ArrayList<>(numberOfPhases);
-
         for (int i = 0; i < numberOfPhases; i++) {
-
             final Phase phase = generatePhase(gameId, generatedIds, i);
-
-            phases.add(phase);
 
             phaseDao.save(phaseMapper.mapPhaseToPhaseEntity(phase));
         }
-
-        return phases;
     }
 
     private Phase generatePhase(Long gameId, List<Long> generatedIds, int i) {
@@ -138,6 +147,9 @@ public class GameServiceImpl implements GameService {
 
         return Phase.builder()
                 .withGameId(gameId)
+                .withStartTime(LocalDateTime.now())
+                .withDeadline(LocalDateTime.now())
+                .withEndTime(LocalDateTime.now())
                 .withQuestion(question)
                 .build();
     }
@@ -145,7 +157,7 @@ public class GameServiceImpl implements GameService {
     private List<Long> generateIds(Integer numberOfPhases, Long amountOfQuestionsInDb) {
         final Random random = new Random();
         return random
-                .longs(0, amountOfQuestionsInDb + 1)
+                .longs(1, amountOfQuestionsInDb)
                 .distinct()
                 .limit(numberOfPhases)
                 .boxed()

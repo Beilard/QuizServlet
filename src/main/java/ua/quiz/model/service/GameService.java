@@ -13,7 +13,9 @@ public interface GameService {
 
     Game findById(Long id);
 
-    List<Game> findAll(Integer page, Integer rowCount);
+    List<Game> findAll(Long page, Long rowCount);
 
     List<Game> findAllByTeamId(Long teamId);
+
+    Long countAllEntries();
 }

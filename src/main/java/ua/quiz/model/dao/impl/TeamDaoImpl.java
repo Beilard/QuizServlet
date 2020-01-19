@@ -16,13 +16,11 @@ public class TeamDaoImpl extends AbstractCrudDaoImpl<TeamEntity> implements Team
 
     private static final String FIND_ALL_PAGINATION_QUERY = "SELECT * FROM team ORDER BY team_id DESC LIMIT ?, ?";
 
-    private static final String UPDATE_QUERY = "UPDATE team SET team_name = ?, WHERE team.team_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE team SET team_name = ? WHERE team.team_id = ?";
 
     private static final String FIND_BY_TEAM_NAME = "SELECT * FROM team WHERE team_name = ?";
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM team";
-
-    private  static final String DELETE_BY_ID = "SELECT * FROM team WHERE team.team_id = ?";
 
     public TeamDaoImpl(DBConnector dbConnector) {
         super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_PAGINATION_QUERY, UPDATE_QUERY, COUNT_QUERY);

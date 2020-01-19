@@ -141,12 +141,14 @@ public class PhaseEntity {
                 Objects.equals(isCorrect, that.isCorrect) &&
                 Objects.equals(startTime, that.startTime) &&
                 Objects.equals(endTime, that.endTime) &&
-                Objects.equals(deadline, that.deadline);
+                Objects.equals(deadline, that.deadline) &&
+                Objects.equals(givenAnswer, that.givenAnswer) &&
+                Objects.equals(gameId, that.gameId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, question, hintUsed, isCorrect, startTime, endTime, deadline);
+        return Objects.hash(id, question, hintUsed, isCorrect, startTime, endTime, deadline, givenAnswer, gameId);
     }
 
     @Override
@@ -159,6 +161,8 @@ public class PhaseEntity {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", deadline=" + deadline +
+                ", givenAnswer='" + givenAnswer + '\'' +
+                ", gameId=" + gameId +
                 '}';
     }
 }

@@ -72,12 +72,12 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
     }
 
     @Override
-    public List<E> findAll(Integer startFrom, Integer rowCount) {
+    public List<E> findAll(Long startFrom, Long rowCount) {
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
 
-            preparedStatement.setInt(1, startFrom);
-            preparedStatement.setInt(2, rowCount);
+            preparedStatement.setLong(1, startFrom);
+            preparedStatement.setLong(2, rowCount);
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<E> entities = new ArrayList<>();
                 while (resultSet.next()) {

@@ -8,6 +8,7 @@ import ua.quiz.model.service.PhaseService;
 import ua.quiz.model.service.mapper.PhaseMapper;
 import ua.quiz.model.service.mapper.QuestionMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PhaseServiceImpl implements PhaseService {
@@ -27,18 +28,43 @@ public class PhaseServiceImpl implements PhaseService {
     }
 
     @Override
-    public Phase initiatePhase(Long gameId) {
-        if (gameId == null) {
-            LOGGER.warn("Passed gameId is null");
-            throw  new IllegalArgumentException("Passed gameId is null");
+    public Phase initiatePhase(Phase phase, Integer timePerQuestion) {
+        if (phase == null) {
+            LOGGER.warn("Passed phase is null");
+            throw  new IllegalArgumentException("Passed phase is null");
         }
+        Phase initiatedPhase = setDeadlines(phase, timePerQuestion);
 
-        return null;
+        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(initiatedPhase));
+
+        return initiatedPhase;
+    }
+
+    private Phase setDeadlines(Phase phase, Integer timePerQuestion) {
+        return Phase.builder(phase)
+                .withStartTime(LocalDateTime.now())
+                .withDeadline(LocalDateTime.now().plusSeconds(timePerQuestion))
+                .withHintUsed(false)
+                .withCorrect(false)
+                .build();
     }
 
     @Override
-    public void finishPhase(Long gameId) {
+    public Phase finishPhase(Phase phase, String givenAnswer) {
+        if (phase == null) {
+            LOGGER.warn("Passed phase is null");
+            throw  new IllegalArgumentException("Passed phase is null");
+        }
+        Phase finishedPhase = setEndTimeAndAnswer(phase, givenAnswer);
 
+        return finishedPhase;
+    }
+
+    private Phase setEndTimeAndAnswer(Phase phase, String givenAnswer) {
+        return Phase.builder(phase)
+                .withEndTime(LocalDateTime.now())
+                .withGivenAnswer(givenAnswer)
+                .build();
     }
 
     @Override

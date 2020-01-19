@@ -9,8 +9,6 @@ public interface UserService {
 
     User login(String email, String password);
 
-    boolean joinTeam(User user, Long teamId);
-
     List<User> findByTeamId(Long teamId);
 
     User findByEmail(String email);

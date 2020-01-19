@@ -16,7 +16,7 @@
                <c:choose>
                    <c:when test="${isLoggedIn==true}">
                        <li class="nav-item">
-                           <a class="nav-link" href="/game?command=profilePageForm"><fmt:message key="header.profile"/></a>
+                           <a class="nav-link" href="/game?command=player-profilePageForm&page=1"><fmt:message key="header.profile"/></a>
                        </li>
                        <li class="nav-item">
                            <a class="nav-link" href="/game?command=logout"><fmt:message key="header.logout"/></a>

@@ -8,8 +8,10 @@ import java.util.List;
 public interface TeamService {
     void createTeam(String teamName);
 
-    void changeCaptain(Long teamId, User newCaptain, User oldCaptain);
-
     Team findTeamByName(String name);
+
+    boolean joinTeam(User user, Long teamId);
+
+    void changeCaptain(Long teamId, User newCaptain, User oldCaptain);
 
 }

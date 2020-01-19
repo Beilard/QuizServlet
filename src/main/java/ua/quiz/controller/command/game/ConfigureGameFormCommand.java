@@ -1,4 +1,4 @@
-package ua.quiz.controller.command.player;
+package ua.quiz.controller.command.game;
 
 import ua.quiz.controller.command.Command;
 

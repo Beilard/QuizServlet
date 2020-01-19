@@ -9,6 +9,7 @@ import ua.quiz.model.entity.StatusEntity;
 import ua.quiz.model.exception.DataBaseRuntimeException;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,19 +20,19 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
             "INSERT INTO game(number_of_questions, time_per_question, team_id) VALUES (?,?,?)";
 
     private static final String FIND_BY_ID_QUERY =
-            "SELECT *FROM game INNER JOIN status ON status_id = status.status_id" +
-                    "INNER JOIN phase ON game_id = phase.game_id" +
-                    "INNER JOIN question ON phase.question_id = question.question_id" +
+            "SELECT * FROM game INNER JOIN status ON game.status_id = status.status_id" +
+                    " INNER JOIN phase ON game.game_id = phase.game_id " +
+                    "INNER JOIN question ON phase.question_id = question.question_id " +
                     "WHERE game.game_id = ?";
 
     private static final String FIND_ALL_QUERY =
-            "SELECT * FROM game INNER JOIN status ON status_id = status.status_id " +
-                    "INNER JOIN phase ON game_id = phase.game_id" +
-                    "INNER JOIN question ON phase.question_id = question.question_id" +
+            "SELECT * FROM game INNER JOIN status ON game.status_id = status.status_id " +
+                    "INNER JOIN phase ON game.game_id = phase.game_id " +
+                    "INNER JOIN question ON phase.question_id = question.question_id " +
                     "ORDER BY status.status_id DESC LIMIT ?, ?";
 
     private static final String UPDATE_QUERY =
-            "UPDATE game SET number_of_questions = ?, time_per_question = ?, team_id = ?, status_id = ?, WHERE game.game_id = ?";
+            "UPDATE game SET number_of_questions = ?, time_per_question = ?, team_id = ?, current_phase =?, status_id = ? WHERE game.game_id = ?";
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM game";
 
@@ -49,7 +50,7 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
             int rowAffected = preparedStatement.executeUpdate();
             if (rowAffected == 1) {
                 ResultSet resultSet = preparedStatement.getGeneratedKeys();
-                if(resultSet.next()) {
+                if (resultSet.next()) {
                     idToReturn = resultSet.getLong(1);
                 }
             }
@@ -81,7 +82,9 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
     @Override
     protected void mapForUpdateStatement(PreparedStatement preparedStatement, GameEntity entity) throws SQLException {
         mapForInsertStatement(preparedStatement, entity);
-        preparedStatement.setLong(5, entity.getId());
+        preparedStatement.setLong(4, entity.getCurrentPhase());
+        preparedStatement.setInt(5, entity.getStatusEntity().ordinal());
+        preparedStatement.setLong(6, entity.getId());
     }
 
     private List<PhaseEntity> mapResultSetToPhaseList(ResultSet resultSet) throws SQLException {
@@ -97,14 +100,19 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
         return PhaseEntity.builder()
                 .withId(resultSet.getLong("phase_id"))
                 .withQuestion(mapResultSetToQuestionEntity(resultSet))
-                .withStartTime(resultSet.getTimestamp("start_time").toLocalDateTime())
-                .withStartTime(resultSet.getTimestamp("end_time").toLocalDateTime())
-                .withStartTime(resultSet.getTimestamp("deadline").toLocalDateTime())
+                .withStartTime(mapResultSetToLocalDatetime(resultSet, "start_time"))
+                .withEndTime(mapResultSetToLocalDatetime(resultSet, "end_time"))
+                .withDeadline(mapResultSetToLocalDatetime(resultSet, "deadline"))
                 .withHintUsed(resultSet.getBoolean("hint_used"))
                 .withCorrect(resultSet.getBoolean("is_correct"))
                 .withGivenAnswer(resultSet.getString("given_answer"))
                 .withGameId(resultSet.getLong("game_id"))
                 .build();
+    }
+
+    private LocalDateTime mapResultSetToLocalDatetime(ResultSet resultSet, String columnLabel) throws SQLException {
+        Timestamp timestamp = resultSet.getTimestamp(columnLabel);
+        return  timestamp == null ? null : timestamp.toLocalDateTime();
     }
 
 

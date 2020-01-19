@@ -17,7 +17,7 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<QuestionEntity> impleme
 
     private static final String FIND_ALL_PAGINATION_QUERY = "SELECT * FROM question ORDER BY question_id DESC LIMIT ?, ?";
 
-    private static final String UPDATE_QUERY = "UPDATE question SET body = ?, correct_answer = ?, hint = ?, WHERE question.question_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE question SET body = ?, correct_answer = ?, hint = ? WHERE question.question_id = ?";
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM question";
 

@@ -77,21 +77,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean joinTeam(User user, Long teamId) {
-        if (user == null || teamId == null || teamId <= 0) {
-            LOGGER.warn("User  or teamId passed to join team are null or illegal");
-            throw new IllegalArgumentException("User  or teamId passed to join team are null or illegal");
-        }
-        final UserEntity userEntity = userDao.findById(user.getId()).get();
-
-        final UserEntity modifiedUserEntity = updateUserTeam(teamId, userEntity);
-
-        userDao.update(modifiedUserEntity);
-
-        return true;
-    }
-
-    @Override
     public void update(User user) {
         if (user == null) {
             LOGGER.warn("User passed to update is null");
@@ -139,18 +124,6 @@ public class UserServiceImpl implements UserService {
                 .withSurname(user.getSurname())
                 .withRole(RoleEntity.valueOf(user.getRole().name()))
                 .withTeamId(user.getTeamId())
-                .build();
-    }
-
-    private UserEntity updateUserTeam(Long teamId, UserEntity userEntity) {
-        return UserEntity.builder()
-                .withId(userEntity.getId())
-                .withEmail(userEntity.getEmail())
-                .withPassword(userEntity.getPassword())
-                .withName(userEntity.getName())
-                .withSurname(userEntity.getSurname())
-                .withTeamId(teamId)
-                .withRoleEntity(userEntity.getRoleEntity())
                 .build();
     }
 }

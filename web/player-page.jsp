@@ -80,6 +80,46 @@
         <a href="/game?command=player-configureGameForm" class="list-group-item list-group-item-action bg-light"><fmt:message key="player.startGame"/></a>
     </div>
 </div>
+<table class="table table-striped table-responsive-md btn-table">
+    <thead>
+    <tr>
+        <th><fmt:message key="profile.pagination.gameId"/></th>
+        <th><fmt:message key="profile.pagination.currentPhase"/></th>
+        <th><fmt:message key="profile.pagination.status"/></th>
+
+    </tr>
+    </thead>
+
+    <tbody>
+    <c:forEach items="${allGames}" var="game">
+
+        <tr>
+            <td> ${game.id}</td>
+            <td> ${game.currentPhase}</td>
+            <td> ${game.status}</td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
+<table cellpadding="5" cellspacing="5">
+    <tr>
+        <c:forEach begin="1" end="${countOfElements}" var="i">
+            <c:choose>
+                <c:when test="${currentPage eq i}">
+                    <td><p class="btn btn-primary">${i}</p></td>
+                </c:when>
+                <c:otherwise>
+                    <td><a class="btn btn-outline-success " style="color: black;"
+                           href="/game?command=player-profilePageForm&page=${i}">${i}</a>
+                    </td>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </tr>
+</table>
+<div>
+
+</div>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

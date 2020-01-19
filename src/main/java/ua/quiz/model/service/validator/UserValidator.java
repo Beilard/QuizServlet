@@ -15,7 +15,6 @@ public class UserValidator implements Validator<User> {
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
 
-
     @Override
     public void validate(User item) {
         if (item == null) {

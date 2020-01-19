@@ -7,6 +7,7 @@ public class GameEntity {
     private final Long id;
     private final Integer numberOfQuestions;
     private final Integer timePerQuestion;
+    private final Integer currentPhase;
     private final Long teamId;
     private final StatusEntity statusEntity;
     private final List<PhaseEntity> phaseEntities;
@@ -18,6 +19,7 @@ public class GameEntity {
         this.statusEntity = gameEntityBuilder.statusEntity;
         this.teamId = gameEntityBuilder.teamId;
         this.phaseEntities = gameEntityBuilder.phaseEntities;
+        this.currentPhase = gameEntityBuilder.currentPhase;
     }
 
     public static GameEntityBuilder builder() {
@@ -36,6 +38,10 @@ public class GameEntity {
         return timePerQuestion;
     }
 
+    public Integer getCurrentPhase() {
+        return currentPhase;
+    }
+
     public Long getTeamId() {
         return teamId;
     }
@@ -52,6 +58,7 @@ public class GameEntity {
         private Long id;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
+        private Integer currentPhase;
         private Long teamId;
         private StatusEntity statusEntity;
         private List<PhaseEntity> phaseEntities;
@@ -70,6 +77,11 @@ public class GameEntity {
 
         public GameEntityBuilder withTimePerQuestion(Integer timePerQuestion) {
             this.timePerQuestion = timePerQuestion;
+            return this;
+        }
+
+        public GameEntityBuilder withCurrentPhase(Integer currentPhase) {
+            this.currentPhase = currentPhase;
             return this;
         }
 
@@ -106,6 +118,7 @@ public class GameEntity {
         return id.equals(that.id) &&
                 Objects.equals(numberOfQuestions, that.numberOfQuestions) &&
                 Objects.equals(timePerQuestion, that.timePerQuestion) &&
+                Objects.equals(currentPhase, that.currentPhase) &&
                 Objects.equals(teamId, that.teamId) &&
                 statusEntity == that.statusEntity &&
                 Objects.equals(phaseEntities, that.phaseEntities);
@@ -113,7 +126,7 @@ public class GameEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfQuestions, timePerQuestion, teamId, statusEntity, phaseEntities);
+        return Objects.hash(id, numberOfQuestions, timePerQuestion, currentPhase, teamId, statusEntity, phaseEntities);
     }
 
     @Override
@@ -122,6 +135,7 @@ public class GameEntity {
                 "id=" + id +
                 ", numberOfQuestions=" + numberOfQuestions +
                 ", timePerQuestion=" + timePerQuestion +
+                ", currentPhase=" + currentPhase +
                 ", teamId=" + teamId +
                 ", statusEntity=" + statusEntity +
                 ", phaseEntities=" + phaseEntities +

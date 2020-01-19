@@ -1,11 +1,11 @@
-package ua.quiz.controller.command.player;
+package ua.quiz.controller.command.game;
 
 import org.apache.log4j.Logger;
 import ua.quiz.controller.command.Command;
 import ua.quiz.model.dto.Game;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.service.GameService;
-import ua.quiz.model.service.mapper.GameMapper;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,11 +14,10 @@ public class StartGameCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(StartGameCommand.class);
 
     private final GameService gameService;
-    private final GameMapper gameMapper;
 
-    public StartGameCommand(GameService gameService, GameMapper gameMapper) {
+    public StartGameCommand(GameService gameService) {
         this.gameService = gameService;
-        this.gameMapper = gameMapper;
+
     }
 
     @Override
@@ -29,6 +28,6 @@ public class StartGameCommand implements Command {
         final Game game = gameService.startGame(teamId, numberOfQuestions, timePerQuestion);
 
         request.getSession().setAttribute("game", game);
-        return "/game?command=startGame";
+        return "/game?command=player-generatePhase";
     }
 }
