@@ -11,16 +11,15 @@ import ua.quiz.model.service.PhaseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GeneratePhaseForm implements Command {
-    private static final Logger LOGGER = Logger.getLogger(GeneratePhaseForm.class);
+public class GeneratePhaseFormCommand implements Command {
+    private static final Logger LOGGER = Logger.getLogger(GeneratePhaseFormCommand.class);
 
     private final GameService gameService;
     private final PhaseService phaseService;
 
-    public GeneratePhaseForm(GameService gameService, PhaseService phaseService) {
+    public GeneratePhaseFormCommand(GameService gameService, PhaseService phaseService) {
         this.gameService = gameService;
         this.phaseService = phaseService;
-
     }
 
     @Override
@@ -32,6 +31,7 @@ public class GeneratePhaseForm implements Command {
         Game modifiedGame = gameService.findById(game.getId());
         request.getSession().setAttribute("game", modifiedGame);
         request.getSession().setAttribute("question", getQuestion(modifiedGame, game));
+        request.setAttribute("hintUsed", false);
 
         return "/game?command=player-viewPhase";
     }

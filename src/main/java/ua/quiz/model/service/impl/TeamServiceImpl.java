@@ -39,17 +39,14 @@ public class TeamServiceImpl implements TeamService {
             LOGGER.warn("Provided arguments are incorrect: " + teamName);
             throw new IllegalArgumentException("Provided arguments are incorrect: ");
         }
-
         Optional<TeamEntity> teamFoundByName = teamDao.findByTeamName(teamName);
 
         if (teamFoundByName.isPresent()) {
             LOGGER.info("Team with name found " + teamName);
             throw new EntityAlreadyExistsException("Team with name found " + teamName);
         }
-
-        final Team team = new Team(teamName);
-
-        teamDao.save(teamMapper.mapTeamToTeamEntity(team));
+        final TeamEntity team = new TeamEntity(teamName);
+        teamDao.save(team);
     }
 
     @Override
@@ -60,7 +57,6 @@ public class TeamServiceImpl implements TeamService {
             LOGGER.warn("New captain or teamId passed were null");
             throw new IllegalArgumentException("New captain or teamId passed were null");
         }
-
         swapCaptainStatusBetweenTwoUsers(newCaptain, oldCaptain);
 
         userDao.update(userMapper.mapUserToUserEntity(oldCaptain));
@@ -74,12 +70,21 @@ public class TeamServiceImpl implements TeamService {
             throw new IllegalArgumentException("User or teamId passed to join team are null or illegal");
         }
         final UserEntity userEntity = userDao.findById(user.getId()).orElseThrow(EntityNotFoundException::new);
-
         final UserEntity modifiedUserEntity = updateUserTeam(teamId, userEntity);
 
         userDao.update(modifiedUserEntity);
 
         return true;
+    }
+
+    @Override
+    public void leaveTeam(User user) {
+        if (user == null || user.getCaptain()) {
+            LOGGER.warn("User passed to leave is null or captain");
+            throw new IllegalArgumentException("User passed to leave is null or captain");
+        }
+
+        userDao.update(userMapper.mapUserToUserEntity(removeTeam(user)));
     }
 
     @Override
@@ -93,6 +98,17 @@ public class TeamServiceImpl implements TeamService {
         return teamMapper.mapTeamEntityToTeam(teamEntity);
     }
 
+
+//    @Override
+//    public Team findTeamById(Long id) {
+//        if (id == null) {
+//            LOGGER.warn("id provided for findById was null");
+//            throw new IllegalArgumentException("id provided for findById was null");
+//        }
+//        final TeamEntity teamEntity = teamDao.findById(id).orElseThrow(EntityNotFoundException::new);
+//
+//        return teamMapper.mapTeamEntityToTeam(teamEntity);
+//    }
     private void swapCaptainStatusBetweenTwoUsers(User newCaptain, User oldCaptain) {
         changeCaptainStatus(oldCaptain, false);
 
@@ -120,10 +136,17 @@ public class TeamServiceImpl implements TeamService {
                 .withId(userEntity.getId())
                 .withEmail(userEntity.getEmail())
                 .withPassword(userEntity.getPassword())
+                .withCaptain(userEntity.getCaptain())
                 .withName(userEntity.getName())
                 .withSurname(userEntity.getSurname())
                 .withTeamId(teamId)
                 .withRoleEntity(userEntity.getRoleEntity())
+                .build();
+    }
+
+    private User removeTeam(User user) {
+        return User.builder(user)
+                .withTeamId(null)
                 .build();
     }
 }

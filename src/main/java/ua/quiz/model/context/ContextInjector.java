@@ -89,7 +89,7 @@ public class ContextInjector {
 
     private static final StartGameCommand START_GAME_COMMAND = new StartGameCommand(GAME_SERVICE);
 
-    private static final GeneratePhaseForm GENERATE_PHASE_FORM = new GeneratePhaseForm(GAME_SERVICE, PHASE_SERVICE);
+    private static final GeneratePhaseFormCommand GENERATE_PHASE_FORM = new GeneratePhaseFormCommand(GAME_SERVICE, PHASE_SERVICE);
 
     private static final CreateTeamCommand CREATE_TEAM_COMMAND
             = new CreateTeamCommand(USER_SERVICE, TEAM_SERVICE);
@@ -97,6 +97,18 @@ public class ContextInjector {
     private static final ViewPhaseFormCommand VIEW_PHASE_FORM_COMMAND = new ViewPhaseFormCommand();
 
     private static final FinishPhaseCommand FINISH_PHASE_COMMAND = new FinishPhaseCommand(PHASE_SERVICE, GAME_SERVICE);
+
+    private static final FinishGameCommand FINISH_GAME_COMMAND = new FinishGameCommand(GAME_SERVICE);
+
+    private static final JoinTeamCommand JOIN_TEAM_COMMAND = new JoinTeamCommand(TEAM_SERVICE, USER_SERVICE);
+
+    private static final ProvideHintCommand PROVIDE_HINT_COMMAND = new ProvideHintCommand(PHASE_SERVICE, GAME_SERVICE);
+
+    private static final CheckTeamCommand CHECK_TEAM_COMMAND = new CheckTeamCommand(USER_SERVICE);
+
+    private static final LeaveTeamCommand LEAVE_TEAM_COMMAND = new LeaveTeamCommand(TEAM_SERVICE, USER_SERVICE);
+
+    private static final CheckTeamFormCommand CHECK_TEAM_FORM_COMMAND = new CheckTeamFormCommand();
 
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
@@ -139,6 +151,12 @@ public class ContextInjector {
         commandToCommandMap.put("player-viewPhase", VIEW_PHASE_FORM_COMMAND);
         commandToCommandMap.put("player-generatePhase", GENERATE_PHASE_FORM);
         commandToCommandMap.put("player-finishPhase", FINISH_PHASE_COMMAND);
+        commandToCommandMap.put("player-joinTeam", JOIN_TEAM_COMMAND);
+        commandToCommandMap.put("player-finishGame", FINISH_GAME_COMMAND);
+        commandToCommandMap.put("player-provideHint", PROVIDE_HINT_COMMAND);
+        commandToCommandMap.put("player-checkTeam", CHECK_TEAM_COMMAND);
+        commandToCommandMap.put("player-checkTeamForm", CHECK_TEAM_FORM_COMMAND);
+        commandToCommandMap.put("player-leaveTeam", LEAVE_TEAM_COMMAND);
 
 
         return commandToCommandMap;

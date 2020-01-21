@@ -9,9 +9,7 @@ public interface PhaseService {
 
     Phase finishPhase(Phase phase, String givenAnswer);
 
-    List<Phase> findAllPhasesByGameId(Long id);
+    Phase extendDeadline(Phase phase);
 
-    void extendDeadline(Long phaseId);
-
-    void useHint(Long phaseId);
+    Phase useHint(Phase phase);
 }

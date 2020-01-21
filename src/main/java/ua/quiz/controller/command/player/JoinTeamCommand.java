@@ -6,6 +6,7 @@ import ua.quiz.model.dto.Team;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.exception.EntityNotFoundException;
 import ua.quiz.model.service.TeamService;
+import ua.quiz.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,13 +15,13 @@ public class JoinTeamCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(JoinTeamCommand.class);
 
     private final TeamService teamService;
+    private final UserService userService;
 
-    public JoinTeamCommand(TeamService teamService) {
+    public JoinTeamCommand(TeamService teamService, UserService userService) {
         this.teamService = teamService;
+        this.userService = userService;
     }
 
-
-    //TODO: finish
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String teamName = request.getParameter("teamNameForJoin");
@@ -29,10 +30,12 @@ public class JoinTeamCommand implements Command {
         try {
             final Team foundTeam = teamService.findTeamByName(teamName);
             teamService.joinTeam(user, foundTeam.getId());
+            request.getSession().setAttribute("user", userService.findByEmail(user.getEmail()));
         } catch (IllegalArgumentException | EntityNotFoundException e) {
             LOGGER.info("Failed to join");
+            request.setAttribute("nameDoesNotExist", true);
+            return "/game?command=player-createTeamForm";
         }
-
 
         return "/game?command=player-profilePageForm";
     }

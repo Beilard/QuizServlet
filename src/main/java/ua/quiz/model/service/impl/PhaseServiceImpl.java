@@ -13,6 +13,7 @@ import java.util.List;
 
 public class PhaseServiceImpl implements PhaseService {
     private static final Logger LOGGER = Logger.getLogger(PhaseServiceImpl.class);
+    private static final int DEADLINE_EXTENSION = 60;
 
     private final PhaseDao phaseDao;
     private final QuestionDao questionDao;
@@ -40,20 +41,6 @@ public class PhaseServiceImpl implements PhaseService {
         return initiatedPhase;
     }
 
-    private Phase setDeadlines(Phase phase, Integer timePerQuestion) {
-        return Phase.builder(phase)
-                .withStartTime(LocalDateTime.now())
-                .withDeadline(LocalDateTime.now().plusSeconds(timePerQuestion))
-                .withHintUsed(false)
-                .withCorrect(false)
-                .build();
-    }
-
-    @Override
-    public List<Phase> findAllPhasesByGameId(Long id) {
-        return null;
-    }
-
     @Override
     public Phase finishPhase(Phase phase, String givenAnswer) {
         if (phase == null) {
@@ -66,6 +53,45 @@ public class PhaseServiceImpl implements PhaseService {
         return finishedPhase;
     }
 
+    @Override
+    public Phase extendDeadline(Phase phase) {
+        if (phase == null) {
+            LOGGER.warn("Passed phase is null");
+            throw  new IllegalArgumentException("Passed phase is null");
+        }
+        Phase phaseWithDeadline = increaseDeadline(phase);
+        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(phaseWithDeadline));
+
+        return phaseWithDeadline;
+    }
+
+    @Override
+    public Phase useHint(Phase phase) {
+        if (phase == null) {
+            LOGGER.warn("Passed phase is null");
+            throw new IllegalArgumentException("Passed phase is null");
+        }
+        Phase phaseWithHint = enableHint(phase);
+        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(phaseWithHint));
+
+        return phaseWithHint;
+    }
+
+    private Phase setDeadlines(Phase phase, Integer timePerQuestion) {
+        return Phase.builder(phase)
+                .withStartTime(LocalDateTime.now())
+                .withDeadline(LocalDateTime.now().plusSeconds(timePerQuestion))
+                .withHintUsed(false)
+                .withCorrect(false)
+                .build();
+    }
+
+    private Phase increaseDeadline(Phase phase) {
+        return Phase.builder(phase)
+                .withDeadline(phase.getDeadline().plusSeconds(DEADLINE_EXTENSION))
+                .build();
+    }
+
     private Phase setEndTimeAndAnswer(Phase phase, String givenAnswer) {
         return Phase.builder(phase)
                 .withEndTime(LocalDateTime.now())
@@ -73,21 +99,9 @@ public class PhaseServiceImpl implements PhaseService {
                 .build();
     }
 
-    @Override
-    public void extendDeadline(Long phaseId) {
-        if (phaseId == null) {
-            LOGGER.warn("Passed phaseId is null");
-            throw  new IllegalArgumentException("Passed gameId is null");
-        }
-
-    }
-
-    @Override
-    public void useHint(Long phaseId) {
-        if (phaseId == null) {
-            LOGGER.warn("Passed phaseId is null");
-            throw new IllegalArgumentException("Passed gameId is null");
-        }
-
+    private Phase enableHint(Phase phase) {
+        return Phase.builder(phase)
+                .withHintUsed(true)
+                .build();
     }
 }

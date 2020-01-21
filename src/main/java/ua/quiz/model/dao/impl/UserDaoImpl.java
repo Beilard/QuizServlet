@@ -8,6 +8,7 @@ import ua.quiz.model.entity.UserEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
             "INSERT INTO user(email, password, name, surname) VALUES (?,?,?,?)";
 
     private static final String FIND_BY_ID_QUERY =
-            "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id WHERE users.user_id = ?";
+            "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id WHERE user.user_id = ?";
 
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id ORDER BY user.user_id DESC LIMIT ?, ?";
@@ -31,7 +32,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
             "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id WHERE email = ?";
 
     private static final String FIND_ALL_BY_TEAM_ID =
-            "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id GROUP BY team_id ORDER by user_id DESC";
+            "SELECT * FROM user INNER JOIN role ON user.role_id = role.role_id WHERE team_id = ? GROUP BY user.user_id";
 
     public UserDaoImpl(DBConnector dbConnector) {
         super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
@@ -59,7 +60,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
     protected void mapForUpdateStatement(PreparedStatement preparedStatement, UserEntity entity) throws SQLException {
         mapForInsertStatement(preparedStatement, entity);
         preparedStatement.setBoolean(5, entity.getCaptain());
-        preparedStatement.setLong(6, entity.getTeamId());
+        mapPreparedStatementForTeamId(preparedStatement, entity);
         preparedStatement.setLong(7, entity.getId());
     }
 
@@ -75,5 +76,13 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements User
                 .withCaptain(resultSet.getBoolean("is_captain"))
                 .withRole(RoleEntity.valueOf(resultSet.getString("role_name").toUpperCase()))
                 .build());
+    }
+
+    private void mapPreparedStatementForTeamId(PreparedStatement preparedStatement, UserEntity entity) throws SQLException {
+        if (entity.getTeamId() == null) {
+            preparedStatement.setNull(6, Types.INTEGER);
+        } else {
+            preparedStatement.setLong(6, entity.getTeamId());
+        }
     }
 }

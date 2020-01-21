@@ -62,7 +62,6 @@ public class GameServiceImpl implements GameService {
             LOGGER.warn("Null game passed to finish");
             throw new IllegalArgumentException("Null game passed to finish");
         }
-
         final Game finishedGame = Game.builder(game)
                 .withStatus(Status.PENDING)
                 .build();
@@ -76,7 +75,6 @@ public class GameServiceImpl implements GameService {
             LOGGER.warn("Null game passed to  finish review");
             throw new IllegalArgumentException("Null game passed to finish review");
         }
-
         final Game reviewedGame = Game.builder(game)
                 .withStatus(Status.REVIEWED)
                 .build();
@@ -122,9 +120,15 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<Game> findAllByTeamId(Long teamId) {
+        if (teamId == null) {
+            LOGGER.warn("Null id passed to find games by team id");
+            throw new IllegalArgumentException("Null id passed to find games by team id");
+        }
+
+
+
         return null;
     }
-
 
     private List<Phase> returnPhaseList(Long gameId, Integer numberOfPhases) {
         Long amountOfQuestionsInDb = questionDao.countEntries();

@@ -30,7 +30,7 @@ public class FinishPhaseCommand implements Command {
 
         request.getSession().setAttribute("game", gameService.findById(game.getId()));
 
-        if (currentPhase >= game.getNumberOfQuestions()) {
+        if (currentPhase >= game.getNumberOfQuestions() - 1) {
             return "/game?command=player-finishGame";
         } else {
             return "/game?command=player-generatePhase";

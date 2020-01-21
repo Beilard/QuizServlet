@@ -14,6 +14,8 @@ import ua.quiz.model.service.impl.UserServiceImpl;
 import ua.quiz.model.service.mapper.UserMapper;
 import ua.quiz.model.service.validator.UserValidator;
 
+import java.util.List;
+
 public class Driver {
     public static void main(String[] args) {
         DBConnector dbConnector = new DBConnector("database");
@@ -30,6 +32,8 @@ public class Driver {
 //                .withSurname("Shervchenko")
 //                .build());
 
+        List<User> byTeamId = userService.findByTeamId(2L);
+        System.out.println(byTeamId);
 
 
     }

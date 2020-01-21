@@ -189,6 +189,14 @@
             </p>
         </div>
     </c:if>
+
+    <c:if test="${nameDoesNotExist == true}">
+        <div>
+            <p style="color: darkred; font-size: 20px; text-align: center">
+                <fmt:message key="team.create.exists"/>
+            </p>
+        </div>
+    </c:if>
     <c:import url="footer.jsp"/>
 </div>
 

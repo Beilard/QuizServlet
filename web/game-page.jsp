@@ -142,7 +142,7 @@
         var countDownDate = new Date(${game.phases[game.currentPhase].deadline}).getTime();
 
         // Update the count down every 1 second
-        var x = setInterval(function() {
+        var x = setInterval(function () {
 
             // Get today's date and time
             var now = new Date().getTime();
@@ -178,7 +178,7 @@
         <div class="wrapper"
              style="display: flex;justify-content: space-around; flex-direction:row; width: 100%; justify-items:center;">
             <div class="content" style="width: 100%;  margin: 10px;">
-                <p style=" width: 80%; height: 100px; text-align:center;color: black;font-size: 28px;border: 1px solid #dcd8d8;background: #00000014;">
+                <p style=" width: 80%; height: 100px; text-align:center;color: black;font-size: 20px;border: 1px solid #dcd8d8;background: #00000014;">
                     ${question.body}
                 <form style="text-align: start" action="/game">
                     <input type="hidden" name="command" value="player-finishPhase">
@@ -188,15 +188,20 @@
                 </form>
             </div>
             <div class="content" style=" display: flex; margin: 10px; flex-direction: column ; width: 100%">
-                <div id="demo"  class="timer" style=" color: white; width: 150px; height:50px;  background: blue;">
+                <div id="demo" class="timer" style=" color: white; width: 150px; height:50px;  background: blue;">
                 </div>
 
-                <form action=""  style="margin-top: 10px; ">
-                    <input class="btn btn-warning" type="submit" value="Hint">
-                </form>
-
-                <div style="background: rgba(251, 213, 217, 0.5);width: 100%;height: 50px;border: 1px solid #00000029;" class="hintBody">
-
+                <c:if test="${hintUsed == false}">
+                    <form action="/game" style="margin-top: 10px; ">
+                        <input type="hidden" name="command" value="player-provideHint">
+                        <input class="btn btn-warning" type="submit" value="Hint">
+                    </form>
+                </c:if>
+                <div style="background: rgba(251, 213, 217, 0.5);width: 100%;height: 50px;border: 1px solid #00000029;"
+                     class="hintBody">
+                    <c:if test="${hintUsed == true}">
+                        ${question.hint}
+                    </c:if>
                 </div>
             </div>
             <div style="width: 20%"></div>

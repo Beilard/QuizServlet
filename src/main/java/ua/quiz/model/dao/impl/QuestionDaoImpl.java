@@ -31,7 +31,7 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<QuestionEntity> impleme
         .withId(resultSet.getLong("question_id"))
         .withBody(resultSet.getString("body"))
         .withCorrectAnswer(resultSet.getString("correct_answer"))
-        .withHint("hint")
+        .withHint(resultSet.getString("hint"))
         .build());
     }
 

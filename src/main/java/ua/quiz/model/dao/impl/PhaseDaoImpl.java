@@ -80,7 +80,7 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
                 .withId(resultSet.getLong("question_id"))
                 .withBody(resultSet.getString("body"))
                 .withCorrectAnswer(resultSet.getString("correct_answer"))
-                .withHint("hint")
+                .withHint(resultSet.getString("hint"))
                 .build();
     }
 }
