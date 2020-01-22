@@ -26,17 +26,17 @@ public class GeneratePhaseFormCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         final Game game = (Game) request.getSession().getAttribute("game");
 
-        Phase currentPhase = game.getPhases().get(game.getCurrentPhase());
+        final Phase currentPhase = game.getPhases().get(game.getCurrentPhase());
         phaseService.initiatePhase(currentPhase, game.getTimePerQuestion());
         Game modifiedGame = gameService.findById(game.getId());
         request.getSession().setAttribute("game", modifiedGame);
-        request.getSession().setAttribute("question", getQuestion(modifiedGame, game));
+        request.getSession().setAttribute("question", getQuestion(modifiedGame));
         request.setAttribute("hintUsed", false);
 
         return "/game?command=player-viewPhase";
     }
 
-    private Question getQuestion(Game modifiedGame, Game game) {
-        return modifiedGame.getPhases().get(game.getCurrentPhase()).getQuestion();
+    private Question getQuestion(Game modifiedGame) {
+        return modifiedGame.getPhases().get(modifiedGame.getCurrentPhase()).getQuestion();
     }
 }

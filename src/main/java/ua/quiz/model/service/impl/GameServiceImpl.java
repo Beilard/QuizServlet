@@ -49,11 +49,7 @@ public class GameServiceImpl implements GameService {
         final Game game = gameBuilder(teamId, numberOfQuestions, timePerQuestion);
         final Long gameId = gameDao.saveAndReturnId(gameMapper.mapGameToGameEntity(game));
 
-        return Game.builder(game)
-                .withId(gameId)
-                .withCurrentPhase(0)
-                .withPhases(returnPhaseList(gameId, numberOfQuestions))
-                .build();
+        return createGameWithPhases(numberOfQuestions, game, gameId);
     }
 
     @Override
@@ -68,7 +64,19 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void reviewGame(Game game) {
+    public Game startReview(Game game) {
+        if (game == null || game.getStatus() != Status.PENDING) {
+            LOGGER.warn("Game passed to start review is invalid");
+            throw new IllegalArgumentException("Game passed to start review is invalid");
+        }
+        final Game gameWithSetPhases = changePhaseToZero(game);
+
+        gameDao.update(gameMapper.mapGameToGameEntity(gameWithSetPhases));
+        return gameWithSetPhases;
+    }
+
+    @Override
+    public void finishReview(Game game) {
         if (game == null) {
             LOGGER.warn("Null game passed to  finish review");
             throw new IllegalArgumentException("Null game passed to finish review");
@@ -102,13 +110,34 @@ public class GameServiceImpl implements GameService {
     public Long countAllEntries() {
         return gameDao.countEntries();
     }
+
+    @Override
+    public Long countAllByTeamId(Long teamId) {
+        if (teamId == null) {
+            LOGGER.warn("Null teamId passed to count games");
+            throw new IllegalArgumentException("Null teamId passed to count games");
+        }
+        return gameDao.countAllByTeamId(teamId);
+    }
+
+    @Override
+    public Long getCorrectAnswersCount(Game game) {
+        if (game == null) {
+            LOGGER.warn("Null id passed to get correct answers from the game");
+            throw new IllegalArgumentException("Null id passed to get correct answers from the game");
+        }
+        return game.getPhases()
+                .stream()
+                .filter(Phase::getCorrect)
+                .count();
+    }
+
     @Override
     public void updateGame(Game game) {
         if (game == null) {
             LOGGER.warn("Null id passed to update a game");
             throw new IllegalArgumentException("Null id passed to update a game");
         }
-
         gameDao.update(gameMapper.mapGameToGameEntity(game));
     }
 
@@ -124,6 +153,14 @@ public class GameServiceImpl implements GameService {
 
         return gamesOfTeam.isEmpty() ? Collections.emptyList() :
                 mapGameEntityListToGameList(gamesOfTeam);
+    }
+
+    private Game createGameWithPhases(int numberOfQuestions, Game game, Long gameId) {
+        return Game.builder(game)
+                .withId(gameId)
+                .withCurrentPhase(0)
+                .withPhases(returnPhaseList(gameId, numberOfQuestions))
+                .build();
     }
 
     private List<Phase> returnPhaseList(Long gameId, Integer numberOfPhases) {
@@ -203,6 +240,12 @@ public class GameServiceImpl implements GameService {
     private Game changeStatusToReviewed(Game game) {
         return Game.builder(game)
                 .withStatus(Status.REVIEWED)
+                .build();
+    }
+
+    private Game changePhaseToZero(Game game) {
+        return Game.builder(game)
+                .withCurrentPhase(0)
                 .build();
     }
 }

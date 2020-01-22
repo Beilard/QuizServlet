@@ -54,13 +54,13 @@ public class PhaseServiceImpl implements PhaseService {
     }
 
     @Override
-    public Phase reviewPhasePositively(Phase phase) {
+    public void reviewPhasePositively(Phase phase) {
         if (phase == null) {
             LOGGER.warn("Passed phase is null");
             throw  new IllegalArgumentException("Passed phase is null");
         }
-
-        return changeToCorrect(phase);
+        Phase updatedPhase = changeToCorrect(phase);
+        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(updatedPhase));
     }
 
     @Override

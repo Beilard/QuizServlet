@@ -49,7 +49,8 @@ public class Driver {
 
         GameService gameService = new GameServiceImpl(gameDao, phaseDao, questionDao, gameMapper, phaseMapper, questionMapper);
 
-        System.out.println(Role.JUDGE.ordinal());
+        Long aLong = gameDao.countAllByTeamId(5L);
+        System.out.println(aLong);
         phaseDao.findAll(0L, 10L);
         List<Game> gameList = gameService.findAll(2L, 10L);
 

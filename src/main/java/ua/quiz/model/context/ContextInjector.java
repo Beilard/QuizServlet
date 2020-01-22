@@ -5,9 +5,7 @@ import ua.quiz.controller.command.DefaultCommand;
 import ua.quiz.controller.command.authentication.*;
 import ua.quiz.controller.command.error.PageNotFoundFormCommand;
 import ua.quiz.controller.command.game.*;
-import ua.quiz.controller.command.judge.JudgePageFormCommand;
-import ua.quiz.controller.command.judge.ViewAllGamesCommand;
-import ua.quiz.controller.command.judge.ViewAllGamesFormCommand;
+import ua.quiz.controller.command.judge.*;
 import ua.quiz.controller.command.player.*;
 import ua.quiz.model.dao.*;
 import ua.quiz.model.dao.impl.*;
@@ -91,7 +89,8 @@ public class ContextInjector {
 
     private static final StartGameCommand START_GAME_COMMAND = new StartGameCommand(GAME_SERVICE);
 
-    private static final GeneratePhaseFormCommand GENERATE_PHASE_FORM = new GeneratePhaseFormCommand(GAME_SERVICE, PHASE_SERVICE);
+    private static final GeneratePhaseFormCommand GENERATE_PHASE_FORM
+            = new GeneratePhaseFormCommand(GAME_SERVICE, PHASE_SERVICE);
 
     private static final CreateTeamCommand CREATE_TEAM_COMMAND
             = new CreateTeamCommand(USER_SERVICE, TEAM_SERVICE);
@@ -118,6 +117,26 @@ public class ContextInjector {
 
     private static final ViewAllGamesFormCommand VIEW_ALL_GAMES_FORM_COMMAND = new ViewAllGamesFormCommand();
 
+    private static final ReviewFormCommand REVIEW_FORM_COMMAND = new ReviewFormCommand();
+
+    private static final StartReviewCommand START_REVIEW_COMMAND = new StartReviewCommand(GAME_SERVICE);
+
+    private static final PreparePhaseForReviewCommand PREPARE_PHASE_FOR_REVIEW_COMMAND =
+            new PreparePhaseForReviewCommand();
+
+    private static final RightAnswerCommand RIGHT_ANSWER_COMMAND
+            = new RightAnswerCommand(GAME_SERVICE, PHASE_SERVICE);
+
+    private static final WrongAnswerCommand WRONG_ANSWER_COMMAND = new WrongAnswerCommand(GAME_SERVICE);
+
+    private static final FinishReviewCommand FINISH_REVIEW_COMMAND = new FinishReviewCommand(GAME_SERVICE);
+
+    private static final GetStatisticsCommand GET_STATISTICS_COMMAND = new GetStatisticsCommand(GAME_SERVICE);
+
+    private static final GetStatisticsFormCommand GET_STATISTICS_FORM_COMMAND = new GetStatisticsFormCommand();
+
+    private static final JoinGameCommand JOIN_GAME_COMMAND = new JoinGameCommand(GAME_SERVICE);
+
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
     private static final Map<String, Command> COMMAND_NAME_TO_COMMAND = mapCommands();
@@ -141,12 +160,12 @@ public class ContextInjector {
 
     private static Map<String, Command> mapCommands() {
         Map<String, Command> commandToCommandMap = new HashMap<>();
+
         commandToCommandMap.put("login", LOG_IN_COMMAND);
         commandToCommandMap.put("registration", REGISTRATION_COMMAND);
         commandToCommandMap.put("logout", LOG_OUT_COMMAND);
         commandToCommandMap.put("loginForm", LOG_IN_FORM_COMMAND);
         commandToCommandMap.put("registrationForm", REGISTRATION_FORM_COMMAND);
-        commandToCommandMap.put("default", DEFAULT_COMMAND);
         commandToCommandMap.put("pageNotFoundForm", PAGE_NOT_FOUND_FORM_COMMAND);
         commandToCommandMap.put("player-PageForm", PLAYER_PAGE_FORM);
         commandToCommandMap.put("judge-PageForm", PLAYER_PAGE_FORM);
@@ -168,8 +187,17 @@ public class ContextInjector {
         commandToCommandMap.put("judge-viewAllGames", VIEW_ALL_GAMES_COMMAND);
         commandToCommandMap.put("judge-viewAllGamesForm", VIEW_ALL_GAMES_FORM_COMMAND);
         commandToCommandMap.put("player-changeCaptain", CHANGE_CAPTAINS_COMMAND);
+        commandToCommandMap.put("judge-reviewForm", REVIEW_FORM_COMMAND);
+        commandToCommandMap.put("judge-startReview", START_REVIEW_COMMAND);
+        commandToCommandMap.put("judge-preparePhase", PREPARE_PHASE_FOR_REVIEW_COMMAND);
+        commandToCommandMap.put("judge-rightAnswer", RIGHT_ANSWER_COMMAND);
+        commandToCommandMap.put("judge-wrongAnswer", WRONG_ANSWER_COMMAND);
+        commandToCommandMap.put("judge-finishReview", FINISH_REVIEW_COMMAND);
+        commandToCommandMap.put("player-getStatistics", GET_STATISTICS_COMMAND);
+        commandToCommandMap.put("player-getStatisticsForm", GET_STATISTICS_FORM_COMMAND);
+        commandToCommandMap.put("player-joinGame", JOIN_GAME_COMMAND);
 
-
+        commandToCommandMap.put("default", DEFAULT_COMMAND);
 
         return commandToCommandMap;
     }

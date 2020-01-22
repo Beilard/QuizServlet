@@ -22,9 +22,8 @@ public class ProfilePageFormCommand implements Command {
         User user = (User) request.getSession().getAttribute("user");
         Long currentPage = convertParameterToLong(request);
 
-        Long numberOfElements = gameService.countAllEntries();
-
         if (user.getTeamId() != null) {
+            Long numberOfElements = gameService.countAllByTeamId(user.getTeamId());
             request.getSession().setAttribute("allGamesOfTeam", gameService.findAllByTeamId(user.getTeamId(), currentPage, DEFAULT_RECORDS_PER_PAGE));
             request.getSession().setAttribute("countOfElements", getCountElement(numberOfElements));
         }

@@ -5,7 +5,6 @@ import ua.quiz.model.dto.User;
 
 import java.util.List;
 
-//TODO: check findById
 public interface TeamService {
     void createTeam(String teamName);
 

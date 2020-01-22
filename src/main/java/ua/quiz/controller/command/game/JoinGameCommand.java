@@ -3,6 +3,7 @@ package ua.quiz.controller.command.game;
 import org.apache.log4j.Logger;
 import ua.quiz.controller.command.Command;
 import ua.quiz.model.dto.Game;
+import ua.quiz.model.dto.Status;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.exception.EntityNotFoundException;
 import ua.quiz.model.service.GameService;
@@ -28,10 +29,16 @@ public class JoinGameCommand implements Command {
             foundGame = gameService.findById(gameId);
         } catch (EntityNotFoundException e) {
             LOGGER.info("Game with ID " + gameId + "not found");
-            return "/game?command=playerPageForm";
+            return "/game?command=player-PageForm";
         }
 
-        if (foundGame.getTeamId() != user.getTeamId()) {
+        if (foundGame.getStatus() == Status.REVIEWED) {
+            return "/game?command=player-GetStatistics";
+        } else if (foundGame.getStatus() == Status.PENDING) {
+            return "/game?command=player-PageForm";
+        }
+
+        if (!foundGame.getTeamId().equals(user.getTeamId())) {
             LOGGER.info("User tried to join not his team's game. User ID: " + user.getId());
             return "/game?command=playerPageForm";
         }

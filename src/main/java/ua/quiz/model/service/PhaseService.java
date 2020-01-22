@@ -9,7 +9,7 @@ public interface PhaseService {
 
     Phase finishPhase(Phase phase, String givenAnswer);
 
-    Phase reviewPhasePositively(Phase phase);
+    void reviewPhasePositively(Phase phase);
 
     Phase useHint(Phase phase);
 }

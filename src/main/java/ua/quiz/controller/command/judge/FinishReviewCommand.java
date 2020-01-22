@@ -17,10 +17,9 @@ public class FinishReviewCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final User user = (User) request.getSession().getAttribute("user");
         final Game reviewedGame = (Game) request.getSession().getAttribute("reviewedGame");
 
-        gameService.finishGame(reviewedGame);
+        gameService.finishReview(reviewedGame);
 
         request.getSession().setAttribute("reviewedGame", null);
 

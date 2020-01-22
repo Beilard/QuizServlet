@@ -37,6 +37,8 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
     private static final String FIND_ALL_BY_TEAM_ID_QUERY =
             "SELECT * FROM game INNER JOIN status ON game.status_id = status.status_id WHERE game.team_id = ? ORDER BY game.game_id DESC LIMIT ?, ?";
 
+    private static final String COUNT_BY_TEAM_ID = "SELECT COUNT(*) AS count FROM game WHERE game.team_id = ?";
+
 
     public GameDaoImpl(DBConnector dbConnector) {
         super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
@@ -60,6 +62,19 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
             throw new DataBaseRuntimeException("Insertion has failed, with" + gameEntity.toString(), e);
         }
         return idToReturn;
+    }
+
+    @Override
+    public Long countAllByTeamId(Long teamId) {
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(COUNT_BY_TEAM_ID)) {
+            preparedStatement.setLong(1, teamId);
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next() ? resultSet.getLong("count") : 0;
+            }
+        } catch (SQLException e) {
+            throw new DataBaseRuntimeException(e);
+        }
     }
 
     @Override
@@ -163,7 +178,7 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
                 .withId(resultSet.getLong("question_id"))
                 .withBody(resultSet.getString("body"))
                 .withCorrectAnswer(resultSet.getString("correct_answer"))
-                .withHint("hint")
+                .withHint(resultSet.getString("hint"))
                 .build();
     }
 

@@ -21,9 +21,14 @@ public class FinishPhaseCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         Game game = (Game) request.getSession().getAttribute("game");
         String givenAnswer = request.getParameter("givenAnswer");
+
+        if (givenAnswer == null) {
+            return "/game?command=player-viewPhase";
+        }
+
         Integer currentPhase = game.getCurrentPhase();
 
-        phaseService.finishPhase(game.getPhases().get(currentPhase), givenAnswer );
+        phaseService.finishPhase(game.getPhases().get(currentPhase), givenAnswer);
 
         game.setCurrentPhase(currentPhase + 1);
         gameService.updateGame(game);
