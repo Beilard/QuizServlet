@@ -16,10 +16,10 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
             "INSERT INTO phase(question_id, game_id) VALUES (?,?)";
 
     private static final String FIND_BY_ID_QUERY =
-            "SELECT * FROM phase INNER JOIN question ON question_id = question.question_id WHERE phase.phase_id = ?";
+            "SELECT * FROM phase INNER JOIN question ON phase.question_id = question.question_id WHERE phase.phase_id = ?";
 
     private static final String FIND_ALL_QUERY =
-            "SELECT * FROM phase INNER JOIN question ON question_id = question.question_id ORDER BY phase.phase_id DESC LIMIT ?, ?";
+            "SELECT * FROM phase INNER JOIN question ON phase.question_id = question.question_id ORDER BY phase.phase_id DESC LIMIT ?, ?";
 
     private static final String UPDATE_QUERY =
             "UPDATE phase SET question_id = ?, game_id = ?, start_time = ?, end_time = ?, deadline = ?, hint_used = ?, is_correct = ?, given_answer = ? WHERE phase.phase_id = ?";

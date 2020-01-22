@@ -31,21 +31,17 @@ public class LogInCommand implements Command {
             return "/game?command=login";
         }
 
-        final Role role = user.getRole();
-        User userWithoutPassword = User.builder(user)
-                .withPassword(null)
-                .build();
+        User userWithoutPassword = removePassword(user);
 
         request.getSession().setAttribute("user", userWithoutPassword);
         request.getSession().setAttribute("isLoggedIn", true);
 
         return "/game?command=indexPageForm";
-//        if (role == Role.PLAYER) {
-//            return "/game?command=userPageForm";
-//        } else if (role == Role.JUDGE) {
-//            return "/game?command=judgePageForm";
-//        } else {
-//            return "/game?command=registrationForm";
-//        }
+    }
+
+    private User removePassword(User user) {
+        return User.builder(user)
+                .withPassword(null)
+                .build();
     }
 }

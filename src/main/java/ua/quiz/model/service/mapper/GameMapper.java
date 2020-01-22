@@ -24,7 +24,8 @@ public class GameMapper {
                 .withTeamId(gameEntity.getTeamId())
                 .withCurrentPhase((gameEntity.getCurrentPhase()))
                 .withStatus(Status.valueOf(gameEntity.getStatusEntity().name()))
-                .withPhases(mapPhaseEntitiesToPhase(gameEntity.getPhaseEntities()))
+                .withPhases(gameEntity.getPhaseEntities() == null ? null :
+                        mapPhaseEntitiesToPhase(gameEntity.getPhaseEntities()))
                 .build();
     }
 

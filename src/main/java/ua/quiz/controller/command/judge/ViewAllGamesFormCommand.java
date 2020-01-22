@@ -5,9 +5,9 @@ import ua.quiz.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class JudgePageFormCommand implements Command {
+public class ViewAllGamesFormCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        return "player-page.jsp";
+        return "judge-all-games.jsp";
     }
 }

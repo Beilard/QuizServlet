@@ -54,15 +54,13 @@ public class PhaseServiceImpl implements PhaseService {
     }
 
     @Override
-    public Phase extendDeadline(Phase phase) {
+    public Phase reviewPhasePositively(Phase phase) {
         if (phase == null) {
             LOGGER.warn("Passed phase is null");
             throw  new IllegalArgumentException("Passed phase is null");
         }
-        Phase phaseWithDeadline = increaseDeadline(phase);
-        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(phaseWithDeadline));
 
-        return phaseWithDeadline;
+        return changeToCorrect(phase);
     }
 
     @Override
@@ -86,12 +84,6 @@ public class PhaseServiceImpl implements PhaseService {
                 .build();
     }
 
-    private Phase increaseDeadline(Phase phase) {
-        return Phase.builder(phase)
-                .withDeadline(phase.getDeadline().plusSeconds(DEADLINE_EXTENSION))
-                .build();
-    }
-
     private Phase setEndTimeAndAnswer(Phase phase, String givenAnswer) {
         return Phase.builder(phase)
                 .withEndTime(LocalDateTime.now())
@@ -102,6 +94,12 @@ public class PhaseServiceImpl implements PhaseService {
     private Phase enableHint(Phase phase) {
         return Phase.builder(phase)
                 .withHintUsed(true)
+                .build();
+    }
+
+    private Phase changeToCorrect(Phase phase) {
+        return Phase.builder(phase)
+                .withCorrect(true)
                 .build();
     }
 }

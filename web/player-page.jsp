@@ -88,6 +88,10 @@
             <a href="/game?command=player-configureGameForm"
                class="list-group-item list-group-item-action bg-light"><fmt:message key="player.startGame"/></a>
         </c:if>
+        <c:if test="${user.getRole().ordinal() == 1}">
+            <a href="/game?command=judge-viewAllGames"
+               class="list-group-item list-group-item-action bg-light"><fmt:message key="judge.viewAllGames"/></a>
+        </c:if>
     </div>
 </div>
 <table class="table table-striped table-responsive-md btn-table">
@@ -101,7 +105,7 @@
     </thead>
 
     <tbody>
-    <c:forEach items="${allGames}" var="game">
+    <c:forEach items="${allGamesOfTeam}" var="game">
 
         <tr>
             <td> ${game.id}</td>

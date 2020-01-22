@@ -35,7 +35,6 @@ public class SecurityFilter implements Filter {
         }
     }
 
-    //TODO: something or empty;
     private String urlSplitter(String command) {
         if (command == null) {
             return "/game?command=pageNotFoundForm";

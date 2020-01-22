@@ -6,6 +6,8 @@ import ua.quiz.controller.command.authentication.*;
 import ua.quiz.controller.command.error.PageNotFoundFormCommand;
 import ua.quiz.controller.command.game.*;
 import ua.quiz.controller.command.judge.JudgePageFormCommand;
+import ua.quiz.controller.command.judge.ViewAllGamesCommand;
+import ua.quiz.controller.command.judge.ViewAllGamesFormCommand;
 import ua.quiz.controller.command.player.*;
 import ua.quiz.model.dao.*;
 import ua.quiz.model.dao.impl.*;
@@ -110,6 +112,12 @@ public class ContextInjector {
 
     private static final CheckTeamFormCommand CHECK_TEAM_FORM_COMMAND = new CheckTeamFormCommand();
 
+    private static final ViewAllGamesCommand VIEW_ALL_GAMES_COMMAND = new ViewAllGamesCommand(GAME_SERVICE);
+
+    private static final ChangeCaptainsCommand CHANGE_CAPTAINS_COMMAND = new ChangeCaptainsCommand(TEAM_SERVICE, USER_SERVICE);
+
+    private static final ViewAllGamesFormCommand VIEW_ALL_GAMES_FORM_COMMAND = new ViewAllGamesFormCommand();
+
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
     private static final Map<String, Command> COMMAND_NAME_TO_COMMAND = mapCommands();
@@ -141,7 +149,7 @@ public class ContextInjector {
         commandToCommandMap.put("default", DEFAULT_COMMAND);
         commandToCommandMap.put("pageNotFoundForm", PAGE_NOT_FOUND_FORM_COMMAND);
         commandToCommandMap.put("player-PageForm", PLAYER_PAGE_FORM);
-        commandToCommandMap.put("judge-PageForm", JUDGE_PAGE_FORM);
+        commandToCommandMap.put("judge-PageForm", PLAYER_PAGE_FORM);
         commandToCommandMap.put("player-profilePageForm", PROFILE_PAGE_FORM);
         commandToCommandMap.put("indexPageForm", INDEX_PAGE_FORM_COMMAND);
         commandToCommandMap.put("player-createTeamForm", CREATE_TEAM_FORM_COMMAND);
@@ -157,6 +165,10 @@ public class ContextInjector {
         commandToCommandMap.put("player-checkTeam", CHECK_TEAM_COMMAND);
         commandToCommandMap.put("player-checkTeamForm", CHECK_TEAM_FORM_COMMAND);
         commandToCommandMap.put("player-leaveTeam", LEAVE_TEAM_COMMAND);
+        commandToCommandMap.put("judge-viewAllGames", VIEW_ALL_GAMES_COMMAND);
+        commandToCommandMap.put("judge-viewAllGamesForm", VIEW_ALL_GAMES_FORM_COMMAND);
+        commandToCommandMap.put("player-changeCaptain", CHANGE_CAPTAINS_COMMAND);
+
 
 
         return commandToCommandMap;

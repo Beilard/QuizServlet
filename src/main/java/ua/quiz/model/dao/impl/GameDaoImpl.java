@@ -26,15 +26,17 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
                     "WHERE game.game_id = ?";
 
     private static final String FIND_ALL_QUERY =
-            "SELECT * FROM game INNER JOIN status ON game.status_id = status.status_id " +
-                    "INNER JOIN phase ON game.game_id = phase.game_id " +
-                    "INNER JOIN question ON phase.question_id = question.question_id " +
-                    "ORDER BY status.status_id DESC LIMIT ?, ?";
+            "SELECT * FROM game INNER JOIN status ON game.status_id = status.status_id ORDER BY game.game_id DESC LIMIT ?, ?";
 
     private static final String UPDATE_QUERY =
-            "UPDATE game SET number_of_questions = ?, time_per_question = ?, team_id = ?, current_phase =?, status_id = ? WHERE game.game_id = ?";
+            "UPDATE game SET number_of_questions = ?, time_per_question = ?, " +
+                    "team_id = ?, current_phase =?, status_id = ? WHERE game.game_id = ?";
 
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM game";
+
+    private static final String FIND_ALL_BY_TEAM_ID_QUERY =
+            "SELECT * FROM game INNER JOIN status ON game.status_id = status.status_id WHERE game.team_id = ? ORDER BY game.game_id DESC LIMIT ?, ?";
+
 
     public GameDaoImpl(DBConnector dbConnector) {
         super(dbConnector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
@@ -58,6 +60,45 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
             throw new DataBaseRuntimeException("Insertion has failed, with" + gameEntity.toString(), e);
         }
         return idToReturn;
+    }
+
+    @Override
+    public List<GameEntity> findAll(Long startFrom, Long rowCount) {
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_QUERY)) {
+
+            preparedStatement.setLong(1, startFrom);
+            preparedStatement.setLong(2, rowCount);
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<GameEntity> entities = new ArrayList<>();
+                while (resultSet.next()) {
+                    mapResultSetToEntityForFindAll(resultSet).ifPresent(entities::add);
+                }
+                return entities;
+            }
+        } catch (SQLException e) {
+            throw new DataBaseRuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<GameEntity> findAllByTeamId(Long teamId, Long startFrom, Long rowCount) {
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_BY_TEAM_ID_QUERY)) {
+
+            preparedStatement.setLong(1, teamId);
+            preparedStatement.setLong(2, startFrom);
+            preparedStatement.setLong(3, rowCount);
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<GameEntity> entities = new ArrayList<>();
+                while (resultSet.next()) {
+                    mapResultSetToEntityForFindAll(resultSet).ifPresent(entities::add);
+                }
+                return entities;
+            }
+        } catch (SQLException e) {
+            throw new DataBaseRuntimeException(e);
+        }
     }
 
     @Override
@@ -125,4 +166,16 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
                 .withHint("hint")
                 .build();
     }
+
+    private Optional<GameEntity> mapResultSetToEntityForFindAll(ResultSet resultSet) throws SQLException {
+        return Optional.ofNullable(GameEntity.builder()
+                .withId(resultSet.getLong("game_id"))
+                .withNumberOfQuestions(resultSet.getInt("number_of_questions"))
+                .withTimePerQuestion(resultSet.getInt("time_per_question"))
+                .withCurrentPhase(resultSet.getInt("current_phase"))
+                .withTeamId(resultSet.getLong("team_id"))
+                .withStatusEntity(StatusEntity.valueOf(resultSet.getString("status_name").toUpperCase()))
+                .build());
+    }
+
 }

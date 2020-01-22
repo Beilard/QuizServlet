@@ -62,9 +62,7 @@ public class GameServiceImpl implements GameService {
             LOGGER.warn("Null game passed to finish");
             throw new IllegalArgumentException("Null game passed to finish");
         }
-        final Game finishedGame = Game.builder(game)
-                .withStatus(Status.PENDING)
-                .build();
+        final Game finishedGame = changeStatusToPending(game);
 
         gameDao.update(gameMapper.mapGameToGameEntity(finishedGame));
     }
@@ -75,9 +73,7 @@ public class GameServiceImpl implements GameService {
             LOGGER.warn("Null game passed to  finish review");
             throw new IllegalArgumentException("Null game passed to finish review");
         }
-        final Game reviewedGame = Game.builder(game)
-                .withStatus(Status.REVIEWED)
-                .build();
+        final Game reviewedGame = changeStatusToReviewed(game);
 
         gameDao.update(gameMapper.mapGameToGameEntity(reviewedGame));
     }
@@ -90,13 +86,12 @@ public class GameServiceImpl implements GameService {
         }
         final Optional<GameEntity> foundGameEntity = gameDao.findById(id);
 
-        return gameMapper.mapGameEntityToGame(foundGameEntity.get());
+        return gameMapper.mapGameEntityToGame(foundGameEntity.orElseThrow(EntityNotFoundException::new));
     }
 
-    //TODO: check why returns only 1 entry
     @Override
     public List<Game> findAll(Long page, Long rowCount) {
-        Long offset = page * rowCount - rowCount;
+        Long offset = getOffset(page, rowCount);
         List<GameEntity> entities = gameDao.findAll(offset, rowCount);
 
         return entities.isEmpty() ? Collections.emptyList() :
@@ -107,7 +102,6 @@ public class GameServiceImpl implements GameService {
     public Long countAllEntries() {
         return gameDao.countEntries();
     }
-
     @Override
     public void updateGame(Game game) {
         if (game == null) {
@@ -119,15 +113,17 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<Game> findAllByTeamId(Long teamId) {
+    public List<Game> findAllByTeamId(Long teamId, Long page, Long rowCount) {
         if (teamId == null) {
             LOGGER.warn("Null id passed to find games by team id");
             throw new IllegalArgumentException("Null id passed to find games by team id");
         }
 
+        Long offset = getOffset(page, rowCount);
+        List<GameEntity> gamesOfTeam = gameDao.findAllByTeamId(teamId, offset, rowCount);
 
-
-        return null;
+        return gamesOfTeam.isEmpty() ? Collections.emptyList() :
+                mapGameEntityListToGameList(gamesOfTeam);
     }
 
     private List<Phase> returnPhaseList(Long gameId, Integer numberOfPhases) {
@@ -188,9 +184,25 @@ public class GameServiceImpl implements GameService {
                 .build();
     }
 
+    private long getOffset(Long page, Long rowCount) {
+        return page * rowCount - rowCount;
+    }
+
     private List<Game> mapGameEntityListToGameList(List<GameEntity> gameEntities) {
         return gameEntities.stream()
                 .map(gameMapper::mapGameEntityToGame)
                 .collect(Collectors.toList());
+    }
+
+    private Game changeStatusToPending(Game game) {
+        return Game.builder(game)
+                .withStatus(Status.PENDING)
+                .build();
+    }
+
+    private Game changeStatusToReviewed(Game game) {
+        return Game.builder(game)
+                .withStatus(Status.REVIEWED)
+                .build();
     }
 }

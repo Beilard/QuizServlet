@@ -1,8 +1,12 @@
 package ua.quiz.model;
 
-import ua.quiz.model.dao.DBConnector;
-import ua.quiz.model.dao.UserDao;
+import jdk.nashorn.internal.ir.CallNode;
+import ua.quiz.model.dao.*;
+import ua.quiz.model.dao.impl.GameDaoImpl;
+import ua.quiz.model.dao.impl.PhaseDaoImpl;
+import ua.quiz.model.dao.impl.QuestionDaoImpl;
 import ua.quiz.model.dao.impl.UserDaoImpl;
+import ua.quiz.model.dto.Game;
 import ua.quiz.model.dto.Role;
 import ua.quiz.model.dto.Status;
 import ua.quiz.model.dto.User;
@@ -11,6 +15,9 @@ import ua.quiz.model.service.UserService;
 import ua.quiz.model.service.encoder.PasswordEncoder;
 import ua.quiz.model.service.impl.GameServiceImpl;
 import ua.quiz.model.service.impl.UserServiceImpl;
+import ua.quiz.model.service.mapper.GameMapper;
+import ua.quiz.model.service.mapper.PhaseMapper;
+import ua.quiz.model.service.mapper.QuestionMapper;
 import ua.quiz.model.service.mapper.UserMapper;
 import ua.quiz.model.service.validator.UserValidator;
 
@@ -32,8 +39,19 @@ public class Driver {
 //                .withSurname("Shervchenko")
 //                .build());
 
-        List<User> byTeamId = userService.findByTeamId(2L);
-        System.out.println(byTeamId);
+        GameDao gameDao = new GameDaoImpl(dbConnector);
+        GameMapper gameMapper = new GameMapper();
+        QuestionDao questionDao = new QuestionDaoImpl(dbConnector);
+        QuestionMapper questionMapper = new QuestionMapper();
+        PhaseDao phaseDao = new PhaseDaoImpl(dbConnector);
+        PhaseMapper phaseMapper = new PhaseMapper();
+
+
+        GameService gameService = new GameServiceImpl(gameDao, phaseDao, questionDao, gameMapper, phaseMapper, questionMapper);
+
+        System.out.println(Role.JUDGE.ordinal());
+        phaseDao.findAll(0L, 10L);
+        List<Game> gameList = gameService.findAll(2L, 10L);
 
 
     }

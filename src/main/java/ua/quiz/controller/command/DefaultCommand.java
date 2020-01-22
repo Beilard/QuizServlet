@@ -12,10 +12,8 @@ public class DefaultCommand implements Command {
         final User user = (User) request.getSession().getAttribute("user");
 
         if (user != null) {
-            if (user.getRole() == Role.PLAYER) {
+            if (user.getRole() == Role.PLAYER || user.getRole() == Role.JUDGE) {
                 return "player-page.jsp";
-            } else if (user.getRole() == Role.JUDGE) {
-                return "judge-page.jsp";
             }
         }
         return "index.jsp";

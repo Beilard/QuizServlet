@@ -50,21 +50,21 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public void changeCaptain(Long teamId, User newCaptain, User oldCaptain) {
-        if (teamId == null || newCaptain == null || oldCaptain == null
-                || !Objects.equals(newCaptain.getTeamId(), teamId)
+    public void changeCaptain(User newCaptain, User oldCaptain) {
+        if (newCaptain == null || oldCaptain == null
+                || !Objects.equals(newCaptain.getTeamId(), oldCaptain.getTeamId())
                 || newCaptain.getCaptain()) {
             LOGGER.warn("New captain or teamId passed were null");
             throw new IllegalArgumentException("New captain or teamId passed were null");
         }
-        swapCaptainStatusBetweenTwoUsers(newCaptain, oldCaptain);
 
-        userDao.update(userMapper.mapUserToUserEntity(oldCaptain));
-        userDao.update(userMapper.mapUserToUserEntity(newCaptain));
+        User oldCaptainWithEmail = getOldCaptainWithEmail(oldCaptain);
+        userDao.update(userMapper.mapUserToUserEntity(changeCaptainStatus(oldCaptainWithEmail, false)));
+        userDao.update(userMapper.mapUserToUserEntity(changeCaptainStatus(newCaptain, true)));
     }
 
     @Override
-    public boolean joinTeam(User user, Long teamId) {
+    public void joinTeam(User user, Long teamId) {
         if (user == null || teamId == null || teamId <= 0) {
             LOGGER.warn("User or teamId passed to join team are null or illegal");
             throw new IllegalArgumentException("User or teamId passed to join team are null or illegal");
@@ -73,8 +73,6 @@ public class TeamServiceImpl implements TeamService {
         final UserEntity modifiedUserEntity = updateUserTeam(teamId, userEntity);
 
         userDao.update(modifiedUserEntity);
-
-        return true;
     }
 
     @Override
@@ -109,17 +107,6 @@ public class TeamServiceImpl implements TeamService {
 //
 //        return teamMapper.mapTeamEntityToTeam(teamEntity);
 //    }
-    private void swapCaptainStatusBetweenTwoUsers(User newCaptain, User oldCaptain) {
-        changeCaptainStatus(oldCaptain, false);
-
-        if (oldCaptain.getCaptain()) {
-            swapCaptainStatusBetweenTwoUsers(newCaptain, oldCaptain);
-            return;
-        }
-
-        changeCaptainStatus(newCaptain, true);
-    }
-
     private User changeCaptainStatus(User user, boolean isCaptain) {
         if (user == null) {
             LOGGER.warn("User passed to change captaincy is null");
@@ -148,6 +135,11 @@ public class TeamServiceImpl implements TeamService {
         return User.builder(user)
                 .withTeamId(null)
                 .build();
+    }
+
+    private User getOldCaptainWithEmail(User oldCaptain) {
+        return userMapper.mapUserEntityToUser(userDao.findByEmail(oldCaptain.getEmail())
+                .orElseThrow(EntityNotFoundException::new));
     }
 }
 

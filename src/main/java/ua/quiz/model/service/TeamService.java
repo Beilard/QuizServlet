@@ -11,12 +11,10 @@ public interface TeamService {
 
     Team findTeamByName(String name);
 
-//    Team findTeamById(Long id);
-
-    boolean joinTeam(User user, Long teamId);
+    void joinTeam(User user, Long teamId);
 
     void leaveTeam(User user);
 
-    void changeCaptain(Long teamId, User newCaptain, User oldCaptain);
+    void changeCaptain(User newCaptain, User oldCaptain);
 
 }
