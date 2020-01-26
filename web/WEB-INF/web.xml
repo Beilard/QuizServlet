@@ -39,7 +39,7 @@
 <!--    </error-page>-->
 
 <!--    <error-page>-->
-<!--        <exception-type>ua.quiz.model.exception.InvalidCredentialsExcpetion</exception-type>-->
+<!--        <exception-type>ua.quiz.model.exception.InvalidCredentialsException</exception-type>-->
 <!--        <location>/access-error.jsp</location>-->
 <!--    </error-page>-->
 

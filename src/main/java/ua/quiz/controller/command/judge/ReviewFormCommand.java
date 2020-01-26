@@ -8,6 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ReviewFormCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        return "review-page";
+        return "review-page.jsp";
     }
 }

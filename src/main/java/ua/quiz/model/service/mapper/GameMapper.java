@@ -30,6 +30,10 @@ public class GameMapper {
     }
 
     public GameEntity mapGameToGameEntity(Game game) {
+        if (game == null) {
+            return null;
+        }
+
         return GameEntity.builder()
                 .withId(game.getId())
                 .withNumberOfQuestions(game.getNumberOfQuestions())

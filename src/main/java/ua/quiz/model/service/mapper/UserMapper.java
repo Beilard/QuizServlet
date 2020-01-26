@@ -25,6 +25,10 @@ public class UserMapper {
     }
 
     public UserEntity mapUserToUserEntity(User user) {
+        if (user == null) {
+            return null;
+        }
+
         return UserEntity.builder()
                 .withId(user.getId())
                 .withEmail(user.getEmail())

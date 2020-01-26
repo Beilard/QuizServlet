@@ -58,7 +58,7 @@ public class ContextInjector {
             PASSWORD_ENCODER, USER_MAPPER);
 
     private static final PhaseService PHASE_SERVICE =
-            new PhaseServiceImpl(PHASE_DAO, QUESTION_DAO, PHASE_MAPPER, QUESTION_MAPPER);
+            new PhaseServiceImpl(PHASE_DAO, PHASE_MAPPER);
 
     private static final GameService GAME_SERVICE =
             new GameServiceImpl(GAME_DAO, PHASE_DAO, QUESTION_DAO, GAME_MAPPER, PHASE_MAPPER, QUESTION_MAPPER);

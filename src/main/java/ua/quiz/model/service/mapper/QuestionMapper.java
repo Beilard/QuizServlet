@@ -18,6 +18,10 @@ public class QuestionMapper {
     }
 
     public QuestionEntity mapQuestionToQuestionEntity(Question question) {
+        if (question == null) {
+            return null;
+        }
+
         return QuestionEntity.builder()
                 .withId(question.getId())
                 .withBody(question.getBody())

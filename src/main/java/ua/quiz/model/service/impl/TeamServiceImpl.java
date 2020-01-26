@@ -96,17 +96,6 @@ public class TeamServiceImpl implements TeamService {
         return teamMapper.mapTeamEntityToTeam(teamEntity);
     }
 
-
-//    @Override
-//    public Team findTeamById(Long id) {
-//        if (id == null) {
-//            LOGGER.warn("id provided for findById was null");
-//            throw new IllegalArgumentException("id provided for findById was null");
-//        }
-//        final TeamEntity teamEntity = teamDao.findById(id).orElseThrow(EntityNotFoundException::new);
-//
-//        return teamMapper.mapTeamEntityToTeam(teamEntity);
-//    }
     private User changeCaptainStatus(User user, boolean isCaptain) {
         if (user == null) {
             LOGGER.warn("User passed to change captaincy is null");

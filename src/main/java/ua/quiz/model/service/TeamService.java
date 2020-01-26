@@ -15,5 +15,4 @@ public interface TeamService {
     void leaveTeam(User user);
 
     void changeCaptain(User newCaptain, User oldCaptain);
-
 }

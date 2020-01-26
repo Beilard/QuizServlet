@@ -4,7 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import ua.quiz.model.dto.User;
-import ua.quiz.model.exception.InvalidCredentialsExcpetion;
+import ua.quiz.model.exception.InvalidCredentialsException;
 
 public class UserValidatorTest {
     @Rule
@@ -14,7 +14,7 @@ public class UserValidatorTest {
 
     @Test
     public void validateShouldThrowInvalidCredentialsDueToNullUser() {
-        expectedException.expect(InvalidCredentialsExcpetion.class);
+        expectedException.expect(InvalidCredentialsException.class);
         expectedException.expectMessage("Provided user is null");
 
         userValidator.validate(null);
@@ -22,7 +22,7 @@ public class UserValidatorTest {
 
     @Test
     public void validateShouldThrowInvalidCredentialsDueToEmail() {
-        expectedException.expect(InvalidCredentialsExcpetion.class);
+        expectedException.expect(InvalidCredentialsException.class);
         expectedException.expectMessage("Email not validated");
 
         userValidator.validate(User.builder()
@@ -32,7 +32,7 @@ public class UserValidatorTest {
 
     @Test
     public void validateShouldThrowInvalidCredentialsDueToPassword() {
-        expectedException.expect(InvalidCredentialsExcpetion.class);
+        expectedException.expect(InvalidCredentialsException.class);
         expectedException.expectMessage("Password not validated");
 
         userValidator.validate(User.builder()

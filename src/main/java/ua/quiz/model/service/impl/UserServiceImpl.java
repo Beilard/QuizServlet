@@ -7,14 +7,13 @@ import ua.quiz.model.entity.RoleEntity;
 import ua.quiz.model.entity.UserEntity;
 import ua.quiz.model.exception.EmailAlreadyTakenException;
 import ua.quiz.model.exception.EntityNotFoundException;
-import ua.quiz.model.exception.InvalidCredentialsExcpetion;
+import ua.quiz.model.exception.InvalidCredentialsException;
 import ua.quiz.model.service.UserService;
 import ua.quiz.model.service.encoder.PasswordEncoder;
 import ua.quiz.model.service.mapper.UserMapper;
 import ua.quiz.model.service.validator.Validator;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -55,15 +54,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String email, String password) {
         if (email == null || password == null) {
-            LOGGER.warn("Null email or password passed");
-            throw new InvalidCredentialsExcpetion("Incorrect email or password provided");
+            LOGGER.warn("Incorrect credentials");
+            throw new InvalidCredentialsException("Incorrect credentials");
         }
 
         Optional<UserEntity> entity = userDao.findByEmail(email);
 
         if (!entity.isPresent()) {
-            LOGGER.warn("Incorrect credentials: " + email);
-            throw new InvalidCredentialsExcpetion("Incorrect credentials");
+            LOGGER.warn("User wasn't found with email: " + email);
+            throw new EntityNotFoundException("User wasn't found with email: " + email);
         }
 
         final String encryptedPassword = passwordEncoder.encrypt(password);
@@ -72,7 +71,7 @@ public class UserServiceImpl implements UserService {
             return userMapper.mapUserEntityToUser(entity.get());
         } else {
             LOGGER.warn("Incorrect credentials: " + email);
-            throw new InvalidCredentialsExcpetion("Incorrect credentials");
+            throw new InvalidCredentialsException("Incorrect credentials");
         }
     }
 
@@ -80,7 +79,7 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         if (user == null) {
             LOGGER.warn("User passed to update is null");
-            throw new InvalidCredentialsExcpetion("User passed to update is null");
+            throw new InvalidCredentialsException("User passed to update is null");
         }
 
         userDao.update(userMapper.mapUserToUserEntity(user));
@@ -90,7 +89,7 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         if (email == null) {
             LOGGER.warn("email passed is null");
-            throw new InvalidCredentialsExcpetion("email passed is null");
+            throw new InvalidCredentialsException("email passed is null");
         }
 
         return userDao.findByEmail(email)

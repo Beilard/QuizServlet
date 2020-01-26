@@ -3,6 +3,7 @@ package ua.quiz.controller.command.game;
 import org.apache.log4j.Logger;
 import ua.quiz.controller.command.Command;
 import ua.quiz.model.dto.Game;
+import ua.quiz.model.dto.Question;
 import ua.quiz.model.dto.Status;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.exception.EntityNotFoundException;
@@ -22,7 +23,7 @@ public class JoinGameCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         final User user = (User) request.getSession().getAttribute("user");
-        final Long gameId = (Long) request.getSession().getAttribute("gameId");
+        final Long gameId = Long.parseLong(request.getParameter("joinGameId"));
         Game foundGame;
 
         try {
@@ -33,7 +34,7 @@ public class JoinGameCommand implements Command {
         }
 
         if (foundGame.getStatus() == Status.REVIEWED) {
-            return "/game?command=player-GetStatistics";
+            return "/game?command=player-getStatistics";
         } else if (foundGame.getStatus() == Status.PENDING) {
             return "/game?command=player-PageForm";
         }
@@ -43,7 +44,13 @@ public class JoinGameCommand implements Command {
             return "/game?command=playerPageForm";
         }
         request.getSession().setAttribute("game", foundGame);
+        request.getSession().setAttribute("question", getQuestion(foundGame));
+        request.setAttribute("hintUsed", getQuestion(foundGame).getHint());
 
         return "/game?command=player-viewPhase";
+    }
+
+    private Question getQuestion(Game modifiedGame) {
+        return modifiedGame.getPhases().get(modifiedGame.getCurrentPhase()).getQuestion();
     }
 }

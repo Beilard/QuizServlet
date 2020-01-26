@@ -89,11 +89,24 @@
                class="list-group-item list-group-item-action bg-light"><fmt:message key="player.startGame"/></a>
         </c:if>
         <c:if test="${user.getRole().ordinal() == 1}">
-            <a href="/game?command=judge-viewAllGames"
+            <a href="/game?command=judge-viewAllGames&page=1"
                class="list-group-item list-group-item-action bg-light"><fmt:message key="judge.viewAllGames"/></a>
         </c:if>
     </div>
 </div>
+<form action="#" style="margin-right: 30px">
+    <label for="joinGameId">
+        <p>
+            <fmt:message key="profile.join.game"/>
+        </p>
+    </label>
+    <input name="joinGameId" id="joinGameId" type="text">
+    <div style="margin-top:10px;text-align: center;width: 100%; ">
+        <input type="hidden" name="command" value="player-joinGame">
+        <input type="submit" value="Join">
+    </div>
+</form>
+
 <table class="table table-striped table-responsive-md btn-table">
     <thead>
     <tr>
@@ -131,9 +144,9 @@
         </c:forEach>
     </tr>
 </table>
-<div>
 
-</div>
+<c:import url="footer.jsp"/>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

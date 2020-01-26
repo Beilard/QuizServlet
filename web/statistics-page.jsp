@@ -144,9 +144,8 @@
     <div style="background: red; "class="container">
 
         <p>
-            Statistics
+            <fmt:message key="statistics.count" /> ${correctAnswersCount} / ${numberOfQuestions}
         </p>
-        <%--   Main content --%>
 
     </div>
 

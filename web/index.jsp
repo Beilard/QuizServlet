@@ -18,6 +18,11 @@
         padding: 0;
         height: 100%;
       }
+
+      body {
+        background-image: url('/img/background_index.jpg');
+        background-color: #cccccc;
+      }
       .user_card {
         height: 400px;
         width: 350px;

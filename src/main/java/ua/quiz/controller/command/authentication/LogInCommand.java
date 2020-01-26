@@ -1,9 +1,9 @@
 package ua.quiz.controller.command.authentication;
 
 import ua.quiz.controller.command.Command;
-import ua.quiz.model.dto.Role;
 import ua.quiz.model.dto.User;
-import ua.quiz.model.exception.InvalidCredentialsExcpetion;
+import ua.quiz.model.exception.EntityNotFoundException;
+import ua.quiz.model.exception.InvalidCredentialsException;
 import ua.quiz.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +26,8 @@ public class LogInCommand implements Command {
 
         try {
             user = userService.login(email, password);
-        } catch (InvalidCredentialsExcpetion e) {
-            request.setAttribute("loginMessage", "Invalid user credentials");
+        } catch (InvalidCredentialsException | EntityNotFoundException e) {
+            request.setAttribute("loginMessage", true);
             return "/game?command=login";
         }
 

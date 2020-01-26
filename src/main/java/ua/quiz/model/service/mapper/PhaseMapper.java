@@ -25,6 +25,10 @@ public class PhaseMapper {
     }
 
     public PhaseEntity mapPhaseToPhaseEntity(Phase phase) {
+        if (phase == null) {
+            return null;
+        }
+
         return PhaseEntity.builder()
                 .withId(phase.getId())
                 .withQuestion(questionMapper.mapQuestionToQuestionEntity(phase.getQuestion()))

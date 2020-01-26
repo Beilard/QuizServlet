@@ -2,30 +2,22 @@ package ua.quiz.model.service.impl;
 
 import org.apache.log4j.Logger;
 import ua.quiz.model.dao.PhaseDao;
-import ua.quiz.model.dao.QuestionDao;
 import ua.quiz.model.dto.Phase;
 import ua.quiz.model.service.PhaseService;
 import ua.quiz.model.service.mapper.PhaseMapper;
-import ua.quiz.model.service.mapper.QuestionMapper;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class PhaseServiceImpl implements PhaseService {
     private static final Logger LOGGER = Logger.getLogger(PhaseServiceImpl.class);
-    private static final int DEADLINE_EXTENSION = 60;
 
     private final PhaseDao phaseDao;
-    private final QuestionDao questionDao;
     private final PhaseMapper phaseMapper;
-    private final QuestionMapper questionMapper;
 
-    public PhaseServiceImpl(PhaseDao phaseDao, QuestionDao questionDao,
-                            PhaseMapper phaseMapper, QuestionMapper questionMapper) {
+    public PhaseServiceImpl(PhaseDao phaseDao,
+                            PhaseMapper phaseMapper) {
         this.phaseDao = phaseDao;
-        this.questionDao = questionDao;
         this.phaseMapper = phaseMapper;
-        this.questionMapper = questionMapper;
     }
 
     @Override

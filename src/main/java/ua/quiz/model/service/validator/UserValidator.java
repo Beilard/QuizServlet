@@ -2,7 +2,7 @@ package ua.quiz.model.service.validator;
 
 import org.apache.log4j.Logger;
 import ua.quiz.model.dto.User;
-import ua.quiz.model.exception.InvalidCredentialsExcpetion;
+import ua.quiz.model.exception.InvalidCredentialsException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +19,7 @@ public class UserValidator implements Validator<User> {
     public void validate(User item) {
         if (item == null) {
             LOGGER.warn("Invalid user provided");
-            throw new InvalidCredentialsExcpetion("Provided user is null");
+            throw new InvalidCredentialsException("Provided user is null");
         }
         validateEmail(item.getEmail());
         validatePassword(item.getPassword());
@@ -38,7 +38,7 @@ public class UserValidator implements Validator<User> {
 
         if (!matcher.find()) {
             LOGGER.warn(message);
-            throw new InvalidCredentialsExcpetion(message);
+            throw new InvalidCredentialsException(message);
         }
     }
 }

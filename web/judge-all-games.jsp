@@ -141,14 +141,60 @@
   justify-content: space-between;" class="flex">
     <c:import url="header.jsp"/>
 
-    <div style="background: red; "class="container">
+</div>
 
+<form action="#" style="margin-right: 30px">
+    <label for="gameIdToReview">
         <p>
-            Hello word
+            <fmt:message key="judge.start.review"/>
         </p>
-        <%--   Main content --%>
-
+    </label>
+    <input name="gameIdToReview" id="gameIdToReview" type="text">
+    <div style="margin-top:10px;text-align: center;width: 100%; ">
+        <input type="hidden" name="command" value="judge-startReview">
+        <input type="submit" value="Review">
     </div>
+</form>
+<table class="table table-striped table-responsive-md btn-table">
+    <thead>
+    <tr>
+        <th><fmt:message key="profile.pagination.gameId"/></th>
+        <th><fmt:message key="profile.pagination.teamId"/></th>
+        <th><fmt:message key="profile.pagination.currentPhase"/></th>
+        <th><fmt:message key="profile.pagination.status"/></th>
+
+    </tr>
+    </thead>
+
+    <tbody>
+    <c:forEach items="${allGames}" var="game">
+
+        <tr>
+            <td> ${game.id}</td>
+            <td> ${game.teamId}</td>
+            <td> ${game.currentPhase}</td>
+            <td> ${game.status}</td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
+<table cellpadding="5" cellspacing="5">
+    <tr>
+        <c:forEach begin="1" end="${countOfElements}" var="i">
+            <c:choose>
+                <c:when test="${currentPage eq i}">
+                    <td><p class="btn btn-primary">${i}</p></td>
+                </c:when>
+                <c:otherwise>
+                    <td><a class="btn btn-outline-success " style="color: black;"
+                           href="/game?command=judge-viewAllGames&page=${i}">${i}</a>
+                    </td>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </tr>
+</table>
+<div>
 
     <c:import url="footer.jsp"/>
 </div>
