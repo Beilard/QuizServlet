@@ -7,18 +7,22 @@ public class GameEntity {
     private final Long id;
     private final Integer numberOfQuestions;
     private final Integer timePerQuestion;
-    private final List<QuestionEntity> questionEntities;
+    private final Integer currentPhase;
+    private final Long teamId;
     private final StatusEntity statusEntity;
+    private final List<PhaseEntity> phaseEntities;
 
     public GameEntity(GameEntityBuilder gameEntityBuilder) {
         this.id = gameEntityBuilder.id;
         this.numberOfQuestions = gameEntityBuilder.numberOfQuestions;
         this.timePerQuestion = gameEntityBuilder.timePerQuestion;
-        this.questionEntities = gameEntityBuilder.questionEntities;
         this.statusEntity = gameEntityBuilder.statusEntity;
+        this.teamId = gameEntityBuilder.teamId;
+        this.phaseEntities = gameEntityBuilder.phaseEntities;
+        this.currentPhase = gameEntityBuilder.currentPhase;
     }
 
-    public static GameEntityBuilder builder(){
+    public static GameEntityBuilder builder() {
         return new GameEntityBuilder();
     }
 
@@ -34,25 +38,35 @@ public class GameEntity {
         return timePerQuestion;
     }
 
-    public List<QuestionEntity> getQuestionEntities() {
-        return questionEntities;
+    public Integer getCurrentPhase() {
+        return currentPhase;
+    }
+
+    public Long getTeamId() {
+        return teamId;
     }
 
     public StatusEntity getStatusEntity() {
         return statusEntity;
     }
 
+    public List<PhaseEntity> getPhaseEntities() {
+        return phaseEntities;
+    }
+
     public static class GameEntityBuilder {
         private Long id;
         private Integer numberOfQuestions;
         private Integer timePerQuestion;
-        private List<QuestionEntity> questionEntities;
+        private Integer currentPhase;
+        private Long teamId;
         private StatusEntity statusEntity;
+        private List<PhaseEntity> phaseEntities;
 
         private GameEntityBuilder() {
         }
 
-        public GameEntity build(){
+        public GameEntity build() {
             return new GameEntity(this);
         }
 
@@ -61,23 +75,33 @@ public class GameEntity {
             return this;
         }
 
-        public GameEntityBuilder withNumberOfQuestion(Integer numberOfQuestion) {
-            this.numberOfQuestions = numberOfQuestion;
-            return this;
-        }
-
         public GameEntityBuilder withTimePerQuestion(Integer timePerQuestion) {
             this.timePerQuestion = timePerQuestion;
             return this;
         }
 
-        public GameEntityBuilder withQuestions(List<QuestionEntity> questionEntities) {
-            this.questionEntities = questionEntities;
+        public GameEntityBuilder withCurrentPhase(Integer currentPhase) {
+            this.currentPhase = currentPhase;
             return this;
         }
 
-        public GameEntityBuilder withStatus(StatusEntity statusEntity) {
+        public GameEntityBuilder withNumberOfQuestions(Integer numberOfQuestions) {
+            this.numberOfQuestions = numberOfQuestions;
+            return this;
+        }
+
+        public GameEntityBuilder withTeamId(Long teamId) {
+            this.teamId = teamId;
+            return this;
+        }
+
+        public GameEntityBuilder withStatusEntity(StatusEntity statusEntity) {
             this.statusEntity = statusEntity;
+            return this;
+        }
+
+        public GameEntityBuilder withPhaseEntities(List<PhaseEntity> phaseEntities) {
+            this.phaseEntities = phaseEntities;
             return this;
         }
     }
@@ -90,26 +114,31 @@ public class GameEntity {
         if (!(o instanceof GameEntity)) {
             return false;
         }
-        GameEntity gameEntity = (GameEntity) o;
-        return id.equals(gameEntity.id) &&
-                Objects.equals(numberOfQuestions, gameEntity.numberOfQuestions) &&
-                Objects.equals(timePerQuestion, gameEntity.timePerQuestion) &&
-                Objects.equals(questionEntities, gameEntity.questionEntities) &&
-                statusEntity == gameEntity.statusEntity;
+        GameEntity that = (GameEntity) o;
+        return id.equals(that.id) &&
+                Objects.equals(numberOfQuestions, that.numberOfQuestions) &&
+                Objects.equals(timePerQuestion, that.timePerQuestion) &&
+                Objects.equals(currentPhase, that.currentPhase) &&
+                Objects.equals(teamId, that.teamId) &&
+                statusEntity == that.statusEntity &&
+                Objects.equals(phaseEntities, that.phaseEntities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfQuestions, timePerQuestion, questionEntities, statusEntity);
+        return Objects.hash(id, numberOfQuestions, timePerQuestion, currentPhase, teamId, statusEntity, phaseEntities);
     }
 
     @Override
     public String toString() {
-        return  "id=" + id +
-                ", numberOfQuestion=" + numberOfQuestions +
+        return "GameEntity{" +
+                "id=" + id +
+                ", numberOfQuestions=" + numberOfQuestions +
                 ", timePerQuestion=" + timePerQuestion +
-                ", questions=" + questionEntities +
-                ", status=" + statusEntity +
+                ", currentPhase=" + currentPhase +
+                ", teamId=" + teamId +
+                ", statusEntity=" + statusEntity +
+                ", phaseEntities=" + phaseEntities +
                 '}';
     }
 }

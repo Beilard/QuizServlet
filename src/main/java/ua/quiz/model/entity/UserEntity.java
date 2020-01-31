@@ -8,6 +8,8 @@ public class UserEntity {
     private final String password;
     private final String name;
     private final String surname;
+    private final Boolean isCaptain;
+    private final Long teamId;
     private final RoleEntity roleEntity;
 
     public UserEntity(UserEntityBuilder userEntityBuilder) {
@@ -17,6 +19,8 @@ public class UserEntity {
         this.name = userEntityBuilder.name;
         this.surname = userEntityBuilder.surname;
         this.roleEntity = userEntityBuilder.roleEntity;
+        this.teamId = userEntityBuilder.teamId;
+        this.isCaptain = userEntityBuilder.isCaptain;
     }
 
     public static UserEntityBuilder builder(){
@@ -43,8 +47,16 @@ public class UserEntity {
         return surname;
     }
 
+    public Long getTeamId() {
+        return teamId;
+    }
+
     public RoleEntity getRoleEntity() {
         return roleEntity;
+    }
+
+    public Boolean getCaptain() {
+        return isCaptain;
     }
 
     public static class UserEntityBuilder {
@@ -53,6 +65,8 @@ public class UserEntity {
         private String password;
         private String name;
         private String surname;
+        private Boolean isCaptain;
+        private Long teamId;
         private RoleEntity roleEntity;
 
         private UserEntityBuilder(){
@@ -64,6 +78,21 @@ public class UserEntity {
 
         public UserEntityBuilder withId(Long id) {
             this.id = id;
+            return this;
+        }
+
+        public UserEntityBuilder withTeamId(Long teamId) {
+            this.teamId = teamId;
+            return this;
+        }
+
+        public UserEntityBuilder withCaptain(Boolean captain) {
+            isCaptain = captain;
+            return this;
+        }
+
+        public UserEntityBuilder withRoleEntity(RoleEntity roleEntity) {
+            this.roleEntity = roleEntity;
             return this;
         }
 
@@ -101,28 +130,33 @@ public class UserEntity {
         if (!(o instanceof UserEntity)) {
             return false;
         }
-        UserEntity userEntity = (UserEntity) o;
-        return id.equals(userEntity.id) &&
-                Objects.equals(email, userEntity.email) &&
-                Objects.equals(password, userEntity.password) &&
-                Objects.equals(name, userEntity.name) &&
-                Objects.equals(surname, userEntity.surname) &&
-                roleEntity == userEntity.roleEntity;
+        UserEntity that = (UserEntity) o;
+        return id.equals(that.id) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(surname, that.surname) &&
+                Objects.equals(isCaptain, that.isCaptain) &&
+                Objects.equals(teamId, that.teamId) &&
+                roleEntity == that.roleEntity;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, name, surname, roleEntity);
+        return Objects.hash(id, email, password, name, surname, isCaptain, teamId, roleEntity);
     }
 
     @Override
     public String toString() {
-        return  "id=" + id +
+        return "UserEntity{" +
+                "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", role=" + roleEntity +
+                ", isCaptain=" + isCaptain +
+                ", teamId=" + teamId +
+                ", roleEntity=" + roleEntity +
                 '}';
     }
 }

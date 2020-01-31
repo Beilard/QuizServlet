@@ -6,9 +6,13 @@ import java.util.Set;
 
 public interface CrudDao<T, ID> {
     void save(T item);
+
     Optional<T> findById(ID id);
-    List<T> findAll();
+
+    List<T> findAll(Long startFrom, Long rowCount);
+
+    Long countEntries();
+
     void update(T item);
-    void deleteById(ID id);
-    void deleteAllById(Set<ID> ids);
+
 }

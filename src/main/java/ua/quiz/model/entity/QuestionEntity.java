@@ -1,28 +1,22 @@
 package ua.quiz.model.entity;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 public class QuestionEntity {
     private final Long id;
     private final String body;
-    private final List<String> answers;
+    private final String correctAnswer;
     private final String hint;
-    private final LocalDate startTime;
-    private final LocalDate endTime;
 
-    public QuestionEntity(QuestionBuilder questionBuilder) {
-        this.id = questionBuilder.id;
-        this.body = questionBuilder.body;
-        this.answers = questionBuilder.answers;
-        this.hint = questionBuilder.hint;
-        this.startTime = questionBuilder.startTime;
-        this.endTime = questionBuilder.endTime;
+    public QuestionEntity(QuestionEntityBuilder questionEntityBuilder) {
+        this.id = questionEntityBuilder.id;
+        this.body = questionEntityBuilder.body;
+        this.hint = questionEntityBuilder.hint;
+        this.correctAnswer = questionEntityBuilder.correctAnswer;
     }
 
-    public static QuestionBuilder builder(){
-        return new QuestionBuilder();
+    public static QuestionEntityBuilder builder() {
+        return new QuestionEntityBuilder();
     }
 
     public Long getId() {
@@ -33,64 +27,44 @@ public class QuestionEntity {
         return body;
     }
 
-    public List<String> getAnswers() {
-        return answers;
-    }
-
     public String getHint() {
         return hint;
     }
 
-    public LocalDate getStartTime() {
-        return startTime;
+    public String getCorrectAnswer() {
+        return correctAnswer;
     }
 
-    public LocalDate getEndTime() {
-        return endTime;
-    }
-
-    public static class QuestionBuilder {
+    public static class QuestionEntityBuilder {
         private Long id;
         private String body;
-        private List<String> answers;
+        private String correctAnswer;
         private String hint;
-        private LocalDate startTime;
-        private LocalDate endTime;
 
-        private QuestionBuilder() {
+        private QuestionEntityBuilder() {
         }
 
-        public QuestionEntity build(){
+        public QuestionEntity build() {
             return new QuestionEntity(this);
         }
 
-        public QuestionBuilder withId(Long id) {
+        public QuestionEntityBuilder withId(Long id) {
             this.id = id;
             return this;
         }
 
-        public QuestionBuilder withBody(String body) {
+        public QuestionEntityBuilder withBody(String body) {
             this.body = body;
             return this;
         }
 
-        public QuestionBuilder withAnswers(List<String> answers) {
-            this.answers = answers;
+        public QuestionEntityBuilder withCorrectAnswer(String correctAnswer) {
+            this.correctAnswer = correctAnswer;
             return this;
         }
 
-        public QuestionBuilder withHint(String hint) {
+        public QuestionEntityBuilder withHint(String hint) {
             this.hint = hint;
-            return this;
-        }
-
-        public QuestionBuilder withStartTime(LocalDate startTime) {
-            this.startTime = startTime;
-            return this;
-        }
-
-        public QuestionBuilder withEndTime(LocalDate endTime) {
-            this.endTime = endTime;
             return this;
         }
     }
@@ -103,28 +77,25 @@ public class QuestionEntity {
         if (!(o instanceof QuestionEntity)) {
             return false;
         }
-        QuestionEntity questionEntity = (QuestionEntity) o;
-        return id.equals(questionEntity.id) &&
-                Objects.equals(body, questionEntity.body) &&
-                Objects.equals(answers, questionEntity.answers) &&
-                Objects.equals(hint, questionEntity.hint) &&
-                Objects.equals(startTime, questionEntity.startTime) &&
-                Objects.equals(endTime, questionEntity.endTime);
+        QuestionEntity that = (QuestionEntity) o;
+        return id.equals(that.id) &&
+                Objects.equals(body, that.body) &&
+                Objects.equals(correctAnswer, that.correctAnswer) &&
+                Objects.equals(hint, that.hint);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, body, answers, hint, startTime, endTime);
+        return Objects.hash(id, body, correctAnswer, hint);
     }
 
     @Override
     public String toString() {
-        return  "id=" + id +
+        return "QuestionEntity{" +
+                "id=" + id +
                 ", body='" + body + '\'' +
-                ", answers=" + answers +
+                ", correctAnswer='" + correctAnswer + '\'' +
                 ", hint='" + hint + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
                 '}';
     }
 }
