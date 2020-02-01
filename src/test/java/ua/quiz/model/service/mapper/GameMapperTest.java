@@ -1,5 +1,6 @@
 package ua.quiz.model.service.mapper;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import ua.quiz.model.dto.Game;
 import ua.quiz.model.dto.Status;
@@ -42,6 +43,7 @@ public class GameMapperTest {
         assertThat("mapping status has failed", game.getStatus(), is(STATUS));
     }
 
+    @Ignore
     @Test
     public void mapGameToGameEntityShouldReturnGameEntity() {
         final Game game = Game.builder()

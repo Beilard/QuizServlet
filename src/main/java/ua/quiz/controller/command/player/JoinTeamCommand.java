@@ -28,8 +28,7 @@ public class JoinTeamCommand implements Command {
         User user = (User) request.getSession().getAttribute("user");
 
         try {
-            final Team foundTeam = teamService.findTeamByName(teamName);
-            teamService.joinTeam(user, foundTeam.getId());
+            teamService.joinTeam(user, teamService.findTeamByName(teamName).getId());
             request.getSession().setAttribute("user", userService.findByEmail(user.getEmail()));
         } catch (IllegalArgumentException | EntityNotFoundException e) {
             LOGGER.info("Failed to join");

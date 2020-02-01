@@ -55,6 +55,7 @@ public class UserMapperTest {
                 .withName(NAME)
                 .withSurname(SURNAME)
                 .withRole(Role.PLAYER)
+                .withTeamId(TEAM_ID)
                 .build();
 
         final UserEntity userEntity = USER_MAPPER.mapUserToUserEntity(user);
@@ -64,6 +65,6 @@ public class UserMapperTest {
         assertThat("mapping email has failed", userEntity.getEmail(), is(EMAIL));
         assertThat("mapping password has failed", userEntity.getPassword(), is(PASSWORD));
         assertThat("mapping teamId has failed", userEntity.getTeamId(), is(TEAM_ID));
-        assertThat("mapping roles has failed", userEntity.getRoleEntity(), is(Role.PLAYER));
+        assertThat("mapping roles has failed", userEntity.getRoleEntity(), is(RoleEntity.PLAYER));
     }
 }

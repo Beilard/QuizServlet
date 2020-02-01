@@ -36,6 +36,7 @@ public class UserValidatorTest {
         expectedException.expectMessage("Password not validated");
 
         userValidator.validate(User.builder()
+                .withEmail("Vova@ukr.net")
                 .withPassword("123")
                 .build());
     }
