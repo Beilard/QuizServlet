@@ -146,8 +146,9 @@
   justify-content: space-between;" class="flex">
     <c:import url="header.jsp"/>
 
-    <div style="background: red; " class="container">
-        <p>
+    <div style= "border: 2px solid orange " class="container">
+        <p style="                font-size: 20px;
+                font-style: oblique;">
             <fmt:message key="configuration.welcome"/>
         </p>
 
@@ -165,7 +166,7 @@
                 <option value="90">90</option>
                 <option value="120">120</option>
             </select>
-            <input type="submit" value=<fmt:message key="configuration.start"/>>
+            <input style="width: 10%; margin-top: 10px;" type="submit" class="btn btn-warning" value=<fmt:message key="configuration.start"/>>
         </form>
 
     </div>

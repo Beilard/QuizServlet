@@ -34,7 +34,7 @@
             </ul>
 
         </div>
-        <form method="post">
+        <form method="post" style="margin: 0">
             <select class="form-control select-size" id="language" name="language"
                     onchange="submit()" style="width: 120px;">
                 <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>

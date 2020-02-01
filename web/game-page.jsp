@@ -188,8 +188,10 @@
                 </form>
             </div>
             <div class="content" style=" display: flex; margin: 10px; flex-direction: column ; width: 100%">
+<%--                Блок Таймера можно удалить--%>
                 <div id="demo" class="timer" style=" color: white; width: 150px; height:50px;  background: blue;">
                 </div>
+<%--                --%>
 
                 <c:if test="${hintUsed == false}">
                     <form action="/game" style="margin-top: 10px; ">
