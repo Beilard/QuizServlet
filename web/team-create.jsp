@@ -161,7 +161,7 @@
         <input name="teamName" id="teamName" type="text">
         <div style="margin-top:10px;text-align: center;width: 100%; ">
             <input type="hidden" name="command" value="player-createTeam">
-            <input type="submit" value="submit">
+            <input type="submit" class="btn btn-warning" value="submit">
         </div>
         </form>
 
@@ -174,7 +174,7 @@
         <input name="teamNameForJoin" id="teamNameForJoin" type="text">
         <div style="margin-top:10px;text-align: center;width: 100%; ">
             <input type="hidden" name="command" value="player-joinTeam">
-            <input type="submit" value="submit">
+            <input type="submit" class="btn btn-warning"  value="submit">
         </div>
         </form>
     </div>

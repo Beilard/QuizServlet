@@ -72,80 +72,83 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
-<div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading"><fmt:message key="player.profile.header"/></div>
-    <div class="list-group list-group-flush">
-        <c:if test="${user.getTeamId() == 0}">
-            <a href="/game?command=player-createTeamForm"
-               class="list-group-item list-group-item-action bg-light"><fmt:message key="player.createTeam"/></a>
-        </c:if>
-        <c:if test="${user.getTeamId() != 0}">
-            <a href="/game?command=player-checkTeam"
-               class="list-group-item list-group-item-action bg-light"><fmt:message
-                    key="player.checkTeam"/></a>
-        </c:if>
-        <c:if test="${user.getCaptain() == true}">
-            <a href="/game?command=player-configureGameForm"
-               class="list-group-item list-group-item-action bg-light"><fmt:message key="player.startGame"/></a>
-        </c:if>
-        <c:if test="${user.getRole().ordinal() == 1}">
-            <a href="/game?command=judge-viewAllGames&page=1"
-               class="list-group-item list-group-item-action bg-light"><fmt:message key="judge.viewAllGames"/></a>
-        </c:if>
+<div class="flex" STYLE=" display: flex;">
+    <div style="width: 20%;" class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading"><fmt:message key="player.profile.header"/></div>
+        <div class="list-group list-group-flush">
+            <c:if test="${user.getTeamId() == 0}">
+                <a href="/game?command=player-createTeamForm"
+                   class="list-group-item list-group-item-action bg-light"><fmt:message key="player.createTeam"/></a>
+            </c:if>
+            <c:if test="${user.getTeamId() != 0}">
+                <a href="/game?command=player-checkTeam"
+                   class="list-group-item list-group-item-action bg-light"><fmt:message
+                        key="player.checkTeam"/></a>
+            </c:if>
+            <c:if test="${user.getCaptain() == true}">
+                <a href="/game?command=player-configureGameForm"
+                   class="list-group-item list-group-item-action bg-light"><fmt:message key="player.startGame"/></a>
+            </c:if>
+            <c:if test="${user.getRole().ordinal() == 1}">
+                <a href="/game?command=judge-viewAllGames&page=1"
+                   class="list-group-item list-group-item-action bg-light"><fmt:message key="judge.viewAllGames"/></a>
+            </c:if>
+        </div>
+    </div>
+    <div class="flex" style="display: flex;flex-direction:column; width:100%;margin-right: 30px;text-align: center;">
+        <form  action="#" style="display: flex;flex-direction: column;margin-right: 30px;text-align: center;">
+            <label for="joinGameId">
+                <p>
+                    <fmt:message key="profile.join.game"/>
+                </p>
+            </label>
+            <input style="width: 20%; margin:  0 auto" name="joinGameId" id="joinGameId" type="text">
+            <div style="margin-top:10px;text-align: center;width: 100%; ">
+                <input type="hidden" name="command" value="player-joinGame">
+                <input type="submit" class="btn btn-warning" style="width: 10%;" value="Join">
+            </div>
+        </form>
+        <table  class="table table-striped table-responsive-md btn-table">
+            <thead>
+            <tr>
+                <th><fmt:message key="profile.pagination.gameId"/></th>
+                <th><fmt:message key="profile.pagination.currentPhase"/></th>
+                <th><fmt:message key="profile.pagination.status"/></th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <c:forEach items="${allGamesOfTeam}" var="game">
+
+                <tr>
+                    <td> ${game.id}</td>
+                    <td> ${game.currentPhase}</td>
+                    <td> ${game.status}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+        <table cellpadding="5" cellspacing="5">
+            <tr>
+                <c:forEach begin="1" end="${countOfElements}" var="i">
+                    <c:choose>
+                        <c:when test="${currentPage eq i}">
+                            <td><p class="btn btn-primary">${i}</p></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><a class="btn btn-outline-success " style="color: black;"
+                                   href="/game?command=player-profilePageForm&page=${i}">${i}</a>
+                            </td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </tr>
+        </table>
     </div>
 </div>
-<form action="#" style="margin-right: 30px">
-    <label for="joinGameId">
-        <p>
-            <fmt:message key="profile.join.game"/>
-        </p>
-    </label>
-    <input name="joinGameId" id="joinGameId" type="text">
-    <div style="margin-top:10px;text-align: center;width: 100%; ">
-        <input type="hidden" name="command" value="player-joinGame">
-        <input type="submit" value="Join">
-    </div>
-</form>
-
-<table class="table table-striped table-responsive-md btn-table">
-    <thead>
-    <tr>
-        <th><fmt:message key="profile.pagination.gameId"/></th>
-        <th><fmt:message key="profile.pagination.currentPhase"/></th>
-        <th><fmt:message key="profile.pagination.status"/></th>
-
-    </tr>
-    </thead>
-
-    <tbody>
-    <c:forEach items="${allGamesOfTeam}" var="game">
-
-        <tr>
-            <td> ${game.id}</td>
-            <td> ${game.currentPhase}</td>
-            <td> ${game.status}</td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-<table cellpadding="5" cellspacing="5">
-    <tr>
-        <c:forEach begin="1" end="${countOfElements}" var="i">
-            <c:choose>
-                <c:when test="${currentPage eq i}">
-                    <td><p class="btn btn-primary">${i}</p></td>
-                </c:when>
-                <c:otherwise>
-                    <td><a class="btn btn-outline-success " style="color: black;"
-                           href="/game?command=player-profilePageForm&page=${i}">${i}</a>
-                    </td>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-    </tr>
-</table>
-
 <c:import url="footer.jsp"/>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
