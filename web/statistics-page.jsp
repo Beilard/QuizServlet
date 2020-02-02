@@ -141,10 +141,10 @@
   justify-content: space-between;" class="flex">
     <c:import url="header.jsp"/>
 
-    <div style="background: red; "class="container">
+    <div class="container">
 
-        <p>
-            <fmt:message key="statistics.count" /> ${correctAnswersCount} / ${numberOfQuestions}
+        <p style="font-size: 40px;text-align: center;" style="font-size: 40px;">
+            <fmt:message key="statistics.count" /> <span style="color: red;">${correctAnswersCount} / ${numberOfQuestions}</span>
         </p>
 
     </div>
