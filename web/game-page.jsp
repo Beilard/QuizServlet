@@ -180,7 +180,7 @@
             <div class="content" style="width: 100%;  margin: 10px;">
                 <p style=" width: 80%; height: 100px; text-align:center;color: black;font-size: 20px;border: 1px solid #dcd8d8;background: #00000014;">
                     ${question.body}
-                <form style="text-align: start" action="/game">
+                <form style="text-align: start" action="/game" method="post">
                     <input type="hidden" name="command" value="player-finishPhase">
                     <%--                    Field for answer --%>
                     <input style="width: 60%;" type="text" name="givenAnswer">
