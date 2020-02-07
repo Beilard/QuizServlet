@@ -25,6 +25,12 @@ public class ChangeCaptainsCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         final User user = (User) request.getSession().getAttribute("user");
         final String newCaptainEmail = request.getParameter("newCaptainEmail");
+
+        if (newCaptainEmail.length() <=0 || newCaptainEmail.length() >= 63) {
+            LOGGER.info("User " + user + " tried to change captaincy with an invalid argument");
+            return "/game?command=player-profilePageForm";
+        }
+
         try {
             teamService.changeCaptain(userService.findByEmail(newCaptainEmail), user);
         } catch (EntityNotFoundException | IllegalArgumentException e) {

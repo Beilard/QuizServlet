@@ -126,28 +126,28 @@
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right"><fmt:message key="register.email"/></label>
                                 <div class="col-md-6">
-                                    <input type="text" id="email" class="form-control" name="email">
+                                    <input type="text" id="email" class="form-control" name="email" required pattern="^(?=.{4,31}$)\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}$">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right"><fmt:message key="register.name"/></label>
                                 <div class="col-md-6">
-                                    <input type="text" id="name" class="form-control" name="name">
+                                    <input type="text" id="name" class="form-control" name="name" required pattern="^[a-zA-Zа-яА-Яієї']{2,31}">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="surname" class="col-md-4 col-form-label text-md-right"><fmt:message key="register.surname"/></label>
                                 <div class="col-md-6">
-                                    <input type="text" id="surname" class="form-control" name="surname">
+                                    <input type="text" id="surname" class="form-control" name="surname" required pattern="^[a-zA-Zа-яА-Яієї']{2,31}">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right"><fmt:message key="register.password"/></label>
                                 <div class="col-md-6">
-                                    <input type="password" id="password" class="form-control" name="password">
+                                    <input type="password" id="password" class="form-control" name="password" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})">
                                 </div>
                             </div>
 
@@ -155,7 +155,7 @@
                                 <label for=confirmPassword class="col-md-4 col-form-label text-md-right">
                                     <fmt:message key="register.confirmPassword"/></label>
                                 <div class="col-md-6">
-                                    <input type="password" id="confirmPassword" class="form-control" name="confirmPassword">
+                                    <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})">
                                 </div>
                             </div>
 
@@ -165,6 +165,12 @@
                                 </button>
                             </div>
                     </form>
+                        <c:if test="${not empty registrationMessage}">
+                            <div style="background: rgba(251, 213, 217, 0.5);width: 25%;height: 40px;border: 1px solid #00000029;margin: auto;"
+                                 class="registrationMessage">
+                                <c:out value="${registrationMessage}"/>
+                            </div>
+                        </c:if>
                 </div>
             </div>
         </div>

@@ -151,7 +151,6 @@
                 font-style: oblique;">
             <fmt:message key="configuration.welcome"/>
         </p>
-
         <form action="/game">
             <input type="hidden" name="command" value="player-startGame">
             <p><fmt:message key="configuration.numberOfpage"/></p>
@@ -168,7 +167,6 @@
             </select>
             <input style="width: 10%; margin-top: 10px;" type="submit" class="btn btn-warning" value=<fmt:message key="configuration.start"/>>
         </form>
-
     </div>
 
     <c:import url="footer.jsp"/>

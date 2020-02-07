@@ -3,7 +3,6 @@ package ua.quiz.model.context;
 import ua.quiz.controller.command.Command;
 import ua.quiz.controller.command.DefaultCommand;
 import ua.quiz.controller.command.authentication.*;
-import ua.quiz.controller.command.error.PageNotFoundFormCommand;
 import ua.quiz.controller.command.game.*;
 import ua.quiz.controller.command.judge.*;
 import ua.quiz.controller.command.player.*;
@@ -73,11 +72,7 @@ public class ContextInjector {
 
     private static final LogOutCommand LOG_OUT_COMMAND = new LogOutCommand();
 
-    private static final PageNotFoundFormCommand PAGE_NOT_FOUND_FORM_COMMAND = new PageNotFoundFormCommand();
-
     private static final PlayerPageFormCommand PLAYER_PAGE_FORM = new PlayerPageFormCommand();
-
-    private static final JudgePageFormCommand JUDGE_PAGE_FORM = new JudgePageFormCommand();
 
     private static final ProfilePageFormCommand PROFILE_PAGE_FORM = new ProfilePageFormCommand(GAME_SERVICE);
 
@@ -166,7 +161,6 @@ public class ContextInjector {
         commandToCommandMap.put("logout", LOG_OUT_COMMAND);
         commandToCommandMap.put("loginForm", LOG_IN_FORM_COMMAND);
         commandToCommandMap.put("registrationForm", REGISTRATION_FORM_COMMAND);
-        commandToCommandMap.put("pageNotFoundForm", PAGE_NOT_FOUND_FORM_COMMAND);
         commandToCommandMap.put("player-PageForm", PLAYER_PAGE_FORM);
         commandToCommandMap.put("judge-PageForm", PLAYER_PAGE_FORM);
         commandToCommandMap.put("player-profilePageForm", PROFILE_PAGE_FORM);

@@ -89,7 +89,7 @@
         font-weight: 400;
         line-height: 1.6;
         color: #212529;
-        text-align: left;
+        text-align: center;
         background-color: #f5f8fa;
     }
 
@@ -160,7 +160,11 @@
                     </div>
                 </form>
             </div>
-
+            <c:if test="${loginInvalid == true}">
+            <div style="background: rgba(251, 213, 217, 0.5);width: 50%;height: 50px;border: 1px solid #00000029;margin: auto;" class="loginInvalid">
+                <fmt:message key="login.wrong"/>
+            </div>
+            </c:if>
             <div class="mt-4">
                 <div class="d-flex justify-content-center links">
                     <fmt:message key="login.forgot"/> <a href="/game?command=registrationForm" class="ml-2"><fmt:message key="login.signup"/></a>
@@ -170,9 +174,6 @@
     </div>
 </div>
 
-<c:if test="${loginMessage == true}" >
-    <fmt:message key="login.wrong"/>
-</c:if>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

@@ -146,20 +146,20 @@
 </head>
 <body>
 <div style="display: flex;
-  flex-direction: column;
-  height: 100vh;
-  justify-content: space-between;" class="flex">
+flex-direction: column;
+height: 100vh;
+justify-content: space-between;" class="flex">
     <c:import url="header.jsp"/>
 
     <div class="container">
 
         <p style="font-size: 80px">
-            Добро пожаловать в игру
+            <fmt:message key="index.welcome.first"/>
             <span style="
-    color: red;
+    color: orangered;
     text-align: left;
     margin-left: 450px;
-">Что?Где?Когда?</span>
+    "> <fmt:message key="index.welcome.second"/></span>
         </p>
         <%--   Main content --%>
 

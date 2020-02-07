@@ -25,8 +25,8 @@ public class CreateTeamCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String teamName = request.getParameter("teamName");
         User user = (User) request.getSession().getAttribute("user");
+        String teamName = request.getParameter("teamName");
 
         try {
             teamService.createTeam(teamName);

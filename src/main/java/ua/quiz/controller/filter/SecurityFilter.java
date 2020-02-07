@@ -3,7 +3,6 @@ package ua.quiz.controller.filter;
 import ua.quiz.model.dto.User;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Objects;
@@ -18,8 +17,8 @@ public class SecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String command = request.getParameter("command");
-        User user = (User) request.getSession().getAttribute("user");
+        final String command = request.getParameter("command");
+        final User user = (User) request.getSession().getAttribute("user");
 
         String accessModifier = urlSplitter(command);
 
@@ -37,8 +36,8 @@ public class SecurityFilter implements Filter {
     }
 
     private String urlSplitter(String command) {
-        if (command == null) {
-            return "/game?command=pageNotFoundForm";
+        if (Objects.isNull(command)) {
+            command = "";
         }
         String[] strings = command.split("-");
         return strings[FIRST_ELEMENT_OF_ARRAY];

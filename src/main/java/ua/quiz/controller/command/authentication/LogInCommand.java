@@ -1,5 +1,6 @@
 package ua.quiz.controller.command.authentication;
 
+import org.apache.log4j.Logger;
 import ua.quiz.controller.command.Command;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.exception.EntityNotFoundException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class LogInCommand implements Command {
+    private static final Logger LOGGER = Logger.getLogger(LogInCommand.class);
 
     private final UserService userService;
 
@@ -22,13 +24,20 @@ public class LogInCommand implements Command {
         final String email = request.getParameter("email");
         final String password = request.getParameter("password");
 
+        if (email == null || password == null
+        || email.length() > 63 || password.length() > 63) {
+            LOGGER.info("User tried logging in with invalid credential length");
+            request.setAttribute("loginInvalid", true);
+            return "/game?command=loginForm";
+        }
+
         User user;
 
         try {
             user = userService.login(email, password);
         } catch (InvalidCredentialsException | EntityNotFoundException e) {
-            request.setAttribute("loginMessage", true);
-            return "/game?command=login";
+            request.setAttribute("loginInvalid", true);
+            return "/game?command=loginForm";
         }
 
         User userWithoutPassword = removePassword(user);
