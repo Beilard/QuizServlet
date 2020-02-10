@@ -107,7 +107,7 @@
                 <input style="width: 20%; margin:  0 auto" name="joinGameId" id="joinGameId" type="text">
                 <div style="margin-top:10px;text-align: center;width: 100%; ">
                     <input type="hidden" name="command" value="player-joinGame">
-                    <input type="submit" class="btn btn-warning" style="width: 10%;" value="Join">
+                    <input type="submit" class="btn btn-warning" style="width: 10%;" value=<fmt:message key="player.profile.join.button"/>>
                 </div>
                 <c:if test="${incorrectId == true}">
                     <div style="background: rgba(251, 213, 217, 0.5);width: 25%;height: 40px;border: 1px solid #00000029;margin: auto;"

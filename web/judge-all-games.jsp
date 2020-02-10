@@ -156,7 +156,7 @@
         <input style="width: 20%; margin: 0 auto" name="gameIdToReview" id="gameIdToReview" type="text">
         <div style="margin-top:10px;text-align: center;width: 100%; ">
             <input type="hidden" name="command" value="judge-startReview">
-            <input type="submit" class="btn btn-warning" style="width: 10%" value="Review">
+            <input type="submit" class="btn btn-warning" style="width: 10%" value=<fmt:message key="judge.start.button"/>>
         </div>
         <c:if test="${incorrectId == true}">
             <div style="background: rgba(251, 213, 217, 0.5);width: 25%;height: 40px;border: 1px solid #00000029;margin: auto;"

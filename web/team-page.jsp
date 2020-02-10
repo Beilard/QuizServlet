@@ -153,10 +153,10 @@
                 <fmt:message key="team.change.captain"/>
             </p>
         </label>
-        <input style="margin: 0 auto; width: 20%" name="newCaptainEmail" id="newCaptainEmail" type="text">
+        <input style="margin: 0 auto; width: 20%" name="newCaptainEmail" id="newCaptainEmail" type="text" placeholder="Email">
         <div style="margin-top:10px;text-align: center;width: 100%; ">
             <input type="hidden" name="command" value="player-changeCaptain">
-            <input type="submit" style="width: 10%; align-content: center" class="btn btn-warning" value="submit">
+            <input type="submit" style="width: 10%; align-content: center" class="btn btn-warning" value=<fmt:message key="team.change.button"/>>
         </div>
     </form>
     </c:if>
@@ -164,7 +164,7 @@
     <form action="#" style="margin-right: 30px">
         <div style="margin-top: -40px; width:100%; text-align: center ">
             <input type="hidden" name="command" value="player-leaveTeam">
-            <input type="submit" style="width: 10%;" class="btn btn-warning" value="Leave">
+            <input type="submit" style="width: 10%;" class="btn btn-warning" value=<fmt:message key="team.leave.button"/>>
         </div>
     </form>
 
