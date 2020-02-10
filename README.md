@@ -22,6 +22,9 @@ The quiz game project. The system consists of players and judges. Players reply 
 9. Mockito;
 10. MySQL
 #
+### Schema: 
+![](https://i.imgur.com/WE98wjO.png)
+#
 ### How to deploy the project:
 1. Clone the git repository to your PC.
 2. Run the DB deployment scripts from the resources folder. 
