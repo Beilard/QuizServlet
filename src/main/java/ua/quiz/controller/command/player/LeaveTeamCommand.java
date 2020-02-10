@@ -25,9 +25,11 @@ public class LeaveTeamCommand implements Command {
             request.setAttribute("isCaptainText", true);
             return "/game?command=player-checkTeamForm";
         }
-        User userWithPassword = userService.findByEmail(user.getEmail());
-        teamService.leaveTeam(userWithPassword);
-        request.getSession().setAttribute("user", removePassword(userWithPassword));
+        final User userForUpdate = userService.findByEmail(user.getEmail());
+        teamService.leaveTeam(userForUpdate);
+
+        final User updatedUserWithPassword = userService.findByEmail(user.getEmail());
+        request.getSession().setAttribute("user", removePassword(updatedUserWithPassword));
 
         return "/game?command=player-profilePageForm";
     }

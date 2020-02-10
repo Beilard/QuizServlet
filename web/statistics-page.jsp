@@ -143,7 +143,7 @@
 
     <div class="container">
 
-        <p style="font-size: 40px;text-align: center;" style="font-size: 40px;">
+        <p style="font-size: 40px;text-align: center;">
             <fmt:message key="statistics.count" /> <span style="color: red;">${correctAnswersCount} / ${numberOfQuestions}</span>
         </p>
 

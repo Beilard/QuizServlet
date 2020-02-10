@@ -13,6 +13,7 @@ import ua.quiz.model.service.encoder.PasswordEncoder;
 import ua.quiz.model.service.mapper.UserMapper;
 import ua.quiz.model.service.validator.Validator;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         if (user == null) {
             LOGGER.warn("User passed to update is null");
-            throw new InvalidCredentialsException("User passed to update is null");
+            throw new IllegalArgumentException("User passed to update is null");
         }
 
         userDao.update(userMapper.mapUserToUserEntity(user));
@@ -88,8 +89,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         if (email == null) {
-            LOGGER.warn("email passed is null");
-            throw new InvalidCredentialsException("email passed is null");
+            LOGGER.warn("Email passed is null");
+            throw new IllegalArgumentException("Email passed is null");
         }
 
         return userDao.findByEmail(email)
@@ -100,8 +101,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findByTeamId(Long teamId) {
         if (teamId == null) {
-            LOGGER.warn("team ID passed is null");
-            throw new IllegalArgumentException("team ID passed is null");
+            LOGGER.warn("Team ID passed is null");
+            throw new IllegalArgumentException("Team ID passed is null");
         }
 
         final List<UserEntity> entities = userDao.findAllByTeamId(teamId);
@@ -110,7 +111,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private List<User> mapUserEntityListToUserList(List<UserEntity> entities) {
-        return entities.stream()
+        return entities == null ? Collections.emptyList() : entities.stream()
                 .map(userMapper::mapUserEntityToUser)
                 .collect(Collectors.toList());
     }

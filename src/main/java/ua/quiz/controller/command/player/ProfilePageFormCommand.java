@@ -39,7 +39,7 @@ public class ProfilePageFormCommand implements Command {
         if (currentPage == null) {
             return DEFAULT_PAGE_NUMBER;
         }
-        return Long.parseLong(currentPage);
+        return Long.parseLong(currentPage) <= 0 ? DEFAULT_PAGE_NUMBER : Long.parseLong(currentPage);
     }
 
     private Long getCountElement(Long countRow) {

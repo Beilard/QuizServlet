@@ -137,7 +137,7 @@
 
         }
     </style>
-    <title>Game Page</title>
+    <title>Review Page</title>
 </head>
 <body>
 <div style="display: flex;
@@ -171,7 +171,7 @@
                 </div>
             </div>
             <div class="content" style=" display: flex; margin: 10px; flex-direction: column ; width: 100%">
-                <c:if test="${hintUsed == false}">
+                <c:if test="${hintUsed == true}">
                     <fmt:message key="review.hint.used"/>
                 </c:if>
                 <div style="background: rgba(58, 146, 255, 0.35);width: 100%; font-style:oblique; border: 1px solid #00000029;"
@@ -182,13 +182,13 @@
                 </div>
             </div>
             <div style="width: 20%"></div>
-
         </div>
     </div>
 
     <c:import url="footer.jsp"/>
 
 </div>
+
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

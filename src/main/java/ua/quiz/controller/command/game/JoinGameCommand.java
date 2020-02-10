@@ -23,14 +23,38 @@ public class JoinGameCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         final User user = (User) request.getSession().getAttribute("user");
-        final Long gameId = Long.parseLong(request.getParameter("joinGameId"));
+        final String gameIdString = request.getParameter("joinGameId");
+
+        Long gameId;
+
+        try {
+            gameId = Long.parseLong(gameIdString);
+        } catch (NumberFormatException e) {
+            LOGGER.info("User passed a character in gameId to join game");
+            request.setAttribute("incorrectId", true);
+            return "/game?command=player-PageForm";
+        }
+
+        if (gameId <= 0 || gameId >= Long.MAX_VALUE) {
+            LOGGER.info("User passed an incorrect gameId to join game");
+            request.setAttribute("incorrectId", true);
+            return "/game?command=player-PageForm";
+        }
+
         Game foundGame;
 
         try {
             foundGame = gameService.findById(gameId);
         } catch (EntityNotFoundException e) {
             LOGGER.info("Game with ID " + gameId + "not found");
+            request.setAttribute("incorrectId", true);
             return "/game?command=player-PageForm";
+        }
+
+        if (!foundGame.getTeamId().equals(user.getTeamId())) {
+            LOGGER.info("User tried to join not his team's game. User ID: " + user.getId());
+            request.setAttribute("incorrectId", true);
+            return "/game?command=playerPageForm";
         }
 
         if (foundGame.getStatus() == Status.REVIEWED) {
@@ -39,10 +63,6 @@ public class JoinGameCommand implements Command {
             return "/game?command=player-PageForm";
         }
 
-        if (!foundGame.getTeamId().equals(user.getTeamId())) {
-            LOGGER.info("User tried to join not his team's game. User ID: " + user.getId());
-            return "/game?command=playerPageForm";
-        }
         request.getSession().setAttribute("game", foundGame);
         request.getSession().setAttribute("question", getQuestion(foundGame));
         request.setAttribute("hintUsed", getQuestion(foundGame).getHint());

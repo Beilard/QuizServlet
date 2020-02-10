@@ -4,6 +4,7 @@ import ua.quiz.controller.command.Command;
 import ua.quiz.model.dto.Role;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.exception.EmailAlreadyTakenException;
+import ua.quiz.model.exception.InvalidCredentialsException;
 import ua.quiz.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +25,9 @@ public class RegistrationCommand implements Command {
         final String passwordConfirm = request.getParameter("confirmPassword");
         final String name = request.getParameter("name");
         final String surname = request.getParameter("surname");
-        request.setAttribute("role", "player");
 
         if (!Objects.equals(password, passwordConfirm)) {
-            request.setAttribute("registrationMessage", "Password should match");
+            request.setAttribute("registrationMessage", "Passwords should match");
             return "/game?command=registrationForm";
         }
 
@@ -41,8 +41,11 @@ public class RegistrationCommand implements Command {
 
         try {
             userService.register(user);
-        }  catch (EmailAlreadyTakenException e) {
+        } catch (EmailAlreadyTakenException e) {
             request.setAttribute("registrationMessage", "Email is taken");
+            return "game?command=registrationForm";
+        } catch (InvalidCredentialsException e) {
+            request.setAttribute("registrationMessage", "Invalid email or password form");
             return "game?command=registrationForm";
         }
         return "/game?command=loginForm";

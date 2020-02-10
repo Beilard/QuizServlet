@@ -137,7 +137,7 @@
 
         }
     </style>
-    <title>Homepage</title>
+    <title>All Games</title>
 </head>
 <body>
 <div style="display: flex;
@@ -146,7 +146,8 @@
   justify-content: space-between;" class="flex">
     <c:import url="header.jsp"/>
 
-    <form style="display: flex;flex-direction: column;margin-right: 30px;text-align: center;" action="#" style="margin-right: 30px">
+    <form style="display: flex;flex-direction: column;margin-right: 30px;text-align: center;" action="#"
+          style="margin-right: 30px">
         <label for="gameIdToReview">
             <p>
                 <fmt:message key="judge.start.review"/>
@@ -155,8 +156,14 @@
         <input style="width: 20%; margin: 0 auto" name="gameIdToReview" id="gameIdToReview" type="text">
         <div style="margin-top:10px;text-align: center;width: 100%; ">
             <input type="hidden" name="command" value="judge-startReview">
-            <input type="submit"  class="btn btn-warning" style="width: 10%" value="Review">
+            <input type="submit" class="btn btn-warning" style="width: 10%" value="Review">
         </div>
+        <c:if test="${incorrectId == true}">
+            <div style="background: rgba(251, 213, 217, 0.5);width: 25%;height: 40px;border: 1px solid #00000029;margin: auto;"
+                 class="incorrectId">
+                <fmt:message key="profile.wrongId"/>
+            </div>
+        </c:if>
     </form>
     <table class="table table-striped table-responsive-md btn-table">
         <thead>

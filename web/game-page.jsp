@@ -180,7 +180,7 @@
             <div class="content" style="width: 100%;  margin: 10px;">
                 <p style=" width: 80%; height: 100px; text-align:center;color: black;font-size: 20px;border: 1px solid #dcd8d8;background: #00000014;">
                     ${question.body}
-                <form style="text-align: start" action="/game">
+                <form style="text-align: start" action="/game" method="post">
                     <input type="hidden" name="command" value="player-finishPhase">
                     <%--                    Field for answer --%>
                     <input style="width: 60%;" type="text" name="givenAnswer">
@@ -199,12 +199,12 @@
                         <input class="btn btn-warning" type="submit" value="Hint">
                     </form>
                 </c:if>
+    <c:if test="${hintUsed == true}">
                 <div style="background: rgba(251, 213, 217, 0.5);width: 100%;height: 50px;border: 1px solid #00000029;"
                      class="hintBody">
-                    <c:if test="${hintUsed == true}">
                         ${question.hint}
-                    </c:if>
                 </div>
+    </c:if>
             </div>
             <div style="width: 20%"></div>
         </div>

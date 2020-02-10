@@ -35,15 +35,15 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void createTeam(String teamName) {
-        if (teamName.length() < MIN_TEAM_NAME_LENGTH || teamName.length() > MAX_TEAM_NAME_LENGTH) {
-            LOGGER.warn("Provided arguments are incorrect: " + teamName);
-            throw new IllegalArgumentException("Provided arguments are incorrect: ");
+        if (teamName == null || teamName.length() < MIN_TEAM_NAME_LENGTH || teamName.length() > MAX_TEAM_NAME_LENGTH) {
+            LOGGER.warn("Team name length is out of bounds");
+            throw new IllegalArgumentException("Team name length is out of bounds");
         }
         Optional<TeamEntity> teamFoundByName = teamDao.findByTeamName(teamName);
 
         if (teamFoundByName.isPresent()) {
-            LOGGER.info("Team with name found " + teamName);
-            throw new EntityAlreadyExistsException("Team with name found " + teamName);
+            LOGGER.info("User tried to create a team with reserved name: " + teamName);
+            throw new EntityAlreadyExistsException("User tried to create a team with reserved name: " + teamName);
         }
         final TeamEntity team = new TeamEntity(teamName);
         teamDao.save(team);
@@ -54,8 +54,8 @@ public class TeamServiceImpl implements TeamService {
         if (newCaptain == null || oldCaptain == null
                 || !Objects.equals(newCaptain.getTeamId(), oldCaptain.getTeamId())
                 || newCaptain.getCaptain()) {
-            LOGGER.warn("New captain or teamId passed were null");
-            throw new IllegalArgumentException("New captain or teamId passed were null");
+            LOGGER.warn("New captain or old captain passed were null or illegal");
+            throw new IllegalArgumentException("New captain or old captain passed were null or illegal");
         }
 
         User oldCaptainWithEmail = getOldCaptainWithEmail(oldCaptain);
@@ -88,8 +88,8 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team findTeamByName(String name) {
         if (name == null) {
-            LOGGER.warn("String provided for findByName was null");
-            throw new IllegalArgumentException("String provided for findByName was null");
+            LOGGER.warn("String provided for findTeamByName was null");
+            throw new IllegalArgumentException("String provided for findTeamByName was null");
         }
         final TeamEntity teamEntity = teamDao.findByTeamName(name).orElseThrow(EntityNotFoundException::new);
 
@@ -97,11 +97,6 @@ public class TeamServiceImpl implements TeamService {
     }
 
     private User changeCaptainStatus(User user, boolean isCaptain) {
-        if (user == null) {
-            LOGGER.warn("User passed to change captaincy is null");
-            throw new IllegalArgumentException("User passed to change captaincy is null");
-        }
-
         return User.builder(user)
                 .withCaptain(isCaptain)
                 .build();

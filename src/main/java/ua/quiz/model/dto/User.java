@@ -23,7 +23,7 @@ public class User {
         this.isCaptain = userBuilder.isCaptain;
     }
 
-    public static UserBuilder builder(){
+    public static UserBuilder builder() {
         return new UserBuilder();
     }
 
@@ -73,7 +73,7 @@ public class User {
         private Long teamId;
         private Role role;
 
-        private UserBuilder(){
+        private UserBuilder() {
         }
 
         private UserBuilder(User user) {
@@ -87,7 +87,7 @@ public class User {
             this.isCaptain = user.isCaptain;
         }
 
-        public User build(){
+        public User build() {
             return new User(this);
         }
 

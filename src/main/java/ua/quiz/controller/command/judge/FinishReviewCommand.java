@@ -2,7 +2,6 @@ package ua.quiz.controller.command.judge;
 
 import ua.quiz.controller.command.Command;
 import ua.quiz.model.dto.Game;
-import ua.quiz.model.dto.User;
 import ua.quiz.model.service.GameService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,9 @@ public class FinishReviewCommand implements Command {
 
         gameService.finishReview(reviewedGame);
 
-        request.getSession().setAttribute("reviewedGame", null);
+        request.getSession().removeAttribute("reviewedPhase");
+        request.getSession().removeAttribute("reviewedQuestion");
+        request.getSession().removeAttribute("gameForReview");
 
         return "/game?command=playerPageForm";
     }

@@ -19,7 +19,24 @@ public class StartReviewCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final Long gameIdToReview = Long.parseLong(request.getParameter("gameIdToReview"));
+        final String gameIdString = request.getParameter("gameIdToReview");
+
+        Long gameIdToReview;
+
+        try {
+            gameIdToReview = Long.parseLong(gameIdString);
+        } catch (NumberFormatException e) {
+            LOGGER.info("User passed an character in gameId to judge game");
+            request.setAttribute("incorrectId", true);
+            return "/game?command=judge-viewAllGamesForm";
+        }
+
+        if (gameIdToReview <= 0 || gameIdToReview >= Long.MAX_VALUE) {
+            LOGGER.info("User passed an incorrect gameId to judge game");
+            request.setAttribute("incorrectId", true);
+            return "/game?command=judge-viewAllGamesForm";
+        }
+
         Game gamePreparedForReview;
 
         try {

@@ -18,7 +18,8 @@ public class FinishGameCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         Game game = (Game) request.getSession().getAttribute("game");
         gameService.finishGame(game);
-        request.getSession().setAttribute("game", null);
+        request.getSession().removeAttribute("game");
+        request.getSession().removeAttribute("question");
         return "/game?command=playerPageForm";
     }
 }

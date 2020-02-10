@@ -169,7 +169,7 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
 
     private LocalDateTime mapResultSetToLocalDatetime(ResultSet resultSet, String columnLabel) throws SQLException {
         Timestamp timestamp = resultSet.getTimestamp(columnLabel);
-        return  timestamp == null ? null : timestamp.toLocalDateTime();
+        return timestamp == null ? null : timestamp.toLocalDateTime();
     }
 
 

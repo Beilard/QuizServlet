@@ -96,7 +96,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
         return countEntriesByQuery(countQuery);
     }
 
-    protected Long countEntriesByQuery(String query){
+    protected Long countEntriesByQuery(String query) {
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -108,7 +108,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
         }
     }
 
-        @Override
+    @Override
     public void update(E entity) {
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
@@ -129,10 +129,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
 
     protected Optional<E> findByStringParam(String param, String query) {
         return findByParam(param, query, STRING_CONSUMER);
-    }
-
-    protected List<E> findListByStringParam(String param, String query) {
-        return findListByParam(param, query, STRING_CONSUMER);
     }
 
     protected List<E> findListByLongParam(Long param, String query) {

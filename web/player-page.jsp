@@ -95,57 +95,66 @@
             </c:if>
         </div>
     </div>
-    <div class="flex" style="display: flex;flex-direction:column; width:100%;margin-right: 30px;text-align: center;">
-        <form  action="#" style="display: flex;flex-direction: column;margin-right: 30px;text-align: center;">
-            <label for="joinGameId">
-                <p>
-                    <fmt:message key="profile.join.game"/>
-                </p>
-            </label>
-            <input style="width: 20%; margin:  0 auto" name="joinGameId" id="joinGameId" type="text">
-            <div style="margin-top:10px;text-align: center;width: 100%; ">
-                <input type="hidden" name="command" value="player-joinGame">
-                <input type="submit" class="btn btn-warning" style="width: 10%;" value="Join">
-            </div>
-        </form>
-        <table  class="table table-striped table-responsive-md btn-table">
-            <thead>
-            <tr>
-                <th><fmt:message key="profile.pagination.gameId"/></th>
-                <th><fmt:message key="profile.pagination.currentPhase"/></th>
-                <th><fmt:message key="profile.pagination.status"/></th>
-
-            </tr>
-            </thead>
-
-            <tbody>
-            <c:forEach items="${allGamesOfTeam}" var="game">
-
+    <c:if test="${user.getTeamId() != 0}">
+        <div class="flex"
+             style="display: flex;flex-direction:column; width:100%;margin-right: 30px;text-align: center;">
+            <form action="#" style="display: flex;flex-direction: column;margin-right: 30px;text-align: center;">
+                <label for="joinGameId">
+                    <p>
+                        <fmt:message key="profile.join.game"/>
+                    </p>
+                </label>
+                <input style="width: 20%; margin:  0 auto" name="joinGameId" id="joinGameId" type="text">
+                <div style="margin-top:10px;text-align: center;width: 100%; ">
+                    <input type="hidden" name="command" value="player-joinGame">
+                    <input type="submit" class="btn btn-warning" style="width: 10%;" value="Join">
+                </div>
+                <c:if test="${incorrectId == true}">
+                    <div style="background: rgba(251, 213, 217, 0.5);width: 25%;height: 40px;border: 1px solid #00000029;margin: auto;"
+                         class="incorrectId">
+                        <fmt:message key="profile.wrongId"/>
+                    </div>
+                </c:if>
+            </form>
+            <table class="table table-striped table-responsive-md btn-table">
+                <thead>
                 <tr>
-                    <td> ${game.id}</td>
-                    <td> ${game.currentPhase}</td>
-                    <td> ${game.status}</td>
+                    <th><fmt:message key="profile.pagination.gameId"/></th>
+                    <th><fmt:message key="profile.pagination.currentPhase"/></th>
+                    <th><fmt:message key="profile.pagination.status"/></th>
+
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <table cellpadding="5" cellspacing="5">
-            <tr>
-                <c:forEach begin="1" end="${countOfElements}" var="i">
-                    <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <td><p class="btn btn-primary">${i}</p></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><a class="btn btn-outline-success " style="color: black;"
-                                   href="/game?command=player-profilePageForm&page=${i}">${i}</a>
-                            </td>
-                        </c:otherwise>
-                    </c:choose>
+                </thead>
+
+                <tbody>
+                <c:forEach items="${allGamesOfTeam}" var="game">
+
+                    <tr>
+                        <td> ${game.id}</td>
+                        <td> ${game.currentPhase}</td>
+                        <td> ${game.status}</td>
+                    </tr>
                 </c:forEach>
-            </tr>
-        </table>
-    </div>
+                </tbody>
+            </table>
+            <table cellpadding="5" cellspacing="5">
+                <tr>
+                    <c:forEach begin="1" end="${countOfElements}" var="i">
+                        <c:choose>
+                            <c:when test="${currentPage eq i}">
+                                <td><p class="btn btn-primary">${i}</p></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td><a class="btn btn-outline-success " style="color: black;"
+                                       href="/game?command=player-profilePageForm&page=${i}">${i}</a>
+                                </td>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </tr>
+            </table>
+        </div>
+    </c:if>
 </div>
 <c:import url="footer.jsp"/>
 
