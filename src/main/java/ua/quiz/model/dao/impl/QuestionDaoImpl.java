@@ -28,11 +28,11 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<QuestionEntity> impleme
     @Override
     protected Optional<QuestionEntity> mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return Optional.ofNullable(QuestionEntity.builder()
-        .withId(resultSet.getLong("question_id"))
-        .withBody(resultSet.getString("body"))
-        .withCorrectAnswer(resultSet.getString("correct_answer"))
-        .withHint(resultSet.getString("hint"))
-        .build());
+                .withId(resultSet.getLong("question_id"))
+                .withBody(resultSet.getString("body"))
+                .withCorrectAnswer(resultSet.getString("correct_answer"))
+                .withHint(resultSet.getString("hint"))
+                .build());
     }
 
     @Override

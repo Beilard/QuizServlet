@@ -5,8 +5,10 @@ import ua.quiz.model.dao.PhaseDao;
 import ua.quiz.model.entity.PhaseEntity;
 import ua.quiz.model.entity.QuestionEntity;
 
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +56,7 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
 
     private LocalDateTime mapResultSetToLocalDatetime(ResultSet resultSet, String columnLabel) throws SQLException {
         Timestamp timestamp = resultSet.getTimestamp(columnLabel);
-        return  timestamp == null ? null : timestamp.toLocalDateTime();
+        return timestamp == null ? null : timestamp.toLocalDateTime();
     }
 
     @Override

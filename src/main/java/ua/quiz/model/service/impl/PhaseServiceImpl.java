@@ -21,50 +21,44 @@ public class PhaseServiceImpl implements PhaseService {
     }
 
     @Override
-    public Phase initiatePhase(Phase phase, Integer timePerQuestion) {
-        if (phase == null) {
-            LOGGER.warn("Passed phase is null");
-            throw  new IllegalArgumentException("Passed phase is null");
+    public void initiatePhase(Phase phase, Integer timePerQuestion) {
+        if (phase == null || timePerQuestion == null) {
+            LOGGER.warn("Passed phase is null or timePerQuestion is invalid");
+            throw new IllegalArgumentException("Passed phase is null or timePerQuestion is invalid");
         }
         Phase initiatedPhase = setDeadlines(phase, timePerQuestion);
 
-        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(initiatedPhase));
-
-        return initiatedPhase;
+        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(initiatedPhase));;
     }
 
     @Override
-    public Phase finishPhase(Phase phase, String givenAnswer) {
+    public void finishPhase(Phase phase, String givenAnswer) {
         if (phase == null) {
             LOGGER.warn("Passed phase is null");
-            throw  new IllegalArgumentException("Passed phase is null");
+            throw new IllegalArgumentException("Passed phase is null");
         }
         final Phase finishedPhase = setEndTimeAndAnswer(phase, givenAnswer);
         phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(finishedPhase));
-
-        return finishedPhase;
     }
 
     @Override
     public void reviewPhasePositively(Phase phase) {
         if (phase == null) {
-            LOGGER.warn("Passed phase is null");
-            throw  new IllegalArgumentException("Passed phase is null");
+            LOGGER.warn("Passed phase to positively review is null");
+            throw new IllegalArgumentException("Passed phase to positively review is null");
         }
         Phase updatedPhase = changeToCorrect(phase);
         phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(updatedPhase));
     }
 
     @Override
-    public Phase useHint(Phase phase) {
+    public void useHint(Phase phase) {
         if (phase == null) {
-            LOGGER.warn("Passed phase is null");
-            throw new IllegalArgumentException("Passed phase is null");
+            LOGGER.warn("Passed phase to turn on hint is null");
+            throw new IllegalArgumentException("Passed phase to turn on hint is null");
         }
         Phase phaseWithHint = enableHint(phase);
-        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(phaseWithHint));
-
-        return phaseWithHint;
+        phaseDao.update(phaseMapper.mapPhaseToPhaseEntity(phaseWithHint));;
     }
 
     private Phase setDeadlines(Phase phase, Integer timePerQuestion) {

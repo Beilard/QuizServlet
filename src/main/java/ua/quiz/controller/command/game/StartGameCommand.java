@@ -22,8 +22,8 @@ public class StartGameCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final Integer numberOfQuestions = Integer.parseInt(request.getParameter("numberOfQuestions"));
-        final Integer timePerQuestion = Integer.parseInt(request.getParameter("timePerQuestion"));
+        final int numberOfQuestions = Integer.parseInt(request.getParameter("numberOfQuestions"));
+        final int timePerQuestion = Integer.parseInt(request.getParameter("timePerQuestion"));
         final Long teamId = ((User)(request.getSession().getAttribute("user"))).getTeamId();
         final Game game = gameService.startGame(teamId, numberOfQuestions, timePerQuestion);
 

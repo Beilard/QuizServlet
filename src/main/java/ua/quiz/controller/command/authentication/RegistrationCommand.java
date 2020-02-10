@@ -41,7 +41,7 @@ public class RegistrationCommand implements Command {
 
         try {
             userService.register(user);
-        }  catch (EmailAlreadyTakenException e) {
+        } catch (EmailAlreadyTakenException e) {
             request.setAttribute("registrationMessage", "Email is taken");
             return "game?command=registrationForm";
         } catch (InvalidCredentialsException e) {

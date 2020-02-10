@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import ua.quiz.controller.command.Command;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.exception.EntityNotFoundException;
-import ua.quiz.model.service.TeamService;
 import ua.quiz.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,7 @@ public class CheckTeamCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final User user = (User)request.getSession().getAttribute("user");
+        final User user = (User) request.getSession().getAttribute("user");
 
         try {
             List<User> usersOfTeam = userService.findByTeamId(user.getTeamId());

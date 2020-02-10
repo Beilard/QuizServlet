@@ -31,7 +31,7 @@ public class TeamEntity {
             return false;
         }
         TeamEntity that = (TeamEntity) o;
-        return id.equals(that.id) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(teamName, that.teamName);
     }
 

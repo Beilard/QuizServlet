@@ -163,8 +163,8 @@ public class ContextInjector {
         commandToCommandMap.put("registrationForm", REGISTRATION_FORM_COMMAND);
         commandToCommandMap.put("player-PageForm", PLAYER_PAGE_FORM);
         commandToCommandMap.put("judge-PageForm", PLAYER_PAGE_FORM);
-        commandToCommandMap.put("player-profilePageForm", PROFILE_PAGE_FORM);
         commandToCommandMap.put("indexPageForm", INDEX_PAGE_FORM_COMMAND);
+        commandToCommandMap.put("player-profilePageForm", PROFILE_PAGE_FORM);
         commandToCommandMap.put("player-createTeamForm", CREATE_TEAM_FORM_COMMAND);
         commandToCommandMap.put("player-createTeam", CREATE_TEAM_COMMAND);
         commandToCommandMap.put("player-configureGameForm", CONFIGURE_GAME_FORM_COMMAND);
@@ -178,18 +178,18 @@ public class ContextInjector {
         commandToCommandMap.put("player-checkTeam", CHECK_TEAM_COMMAND);
         commandToCommandMap.put("player-checkTeamForm", CHECK_TEAM_FORM_COMMAND);
         commandToCommandMap.put("player-leaveTeam", LEAVE_TEAM_COMMAND);
+        commandToCommandMap.put("player-getStatistics", GET_STATISTICS_COMMAND);
+        commandToCommandMap.put("player-getStatisticsForm", GET_STATISTICS_FORM_COMMAND);
+        commandToCommandMap.put("player-joinGame", JOIN_GAME_COMMAND);
+        commandToCommandMap.put("player-changeCaptain", CHANGE_CAPTAINS_COMMAND);
         commandToCommandMap.put("judge-viewAllGames", VIEW_ALL_GAMES_COMMAND);
         commandToCommandMap.put("judge-viewAllGamesForm", VIEW_ALL_GAMES_FORM_COMMAND);
-        commandToCommandMap.put("player-changeCaptain", CHANGE_CAPTAINS_COMMAND);
         commandToCommandMap.put("judge-reviewForm", REVIEW_FORM_COMMAND);
         commandToCommandMap.put("judge-startReview", START_REVIEW_COMMAND);
         commandToCommandMap.put("judge-preparePhase", PREPARE_PHASE_FOR_REVIEW_COMMAND);
         commandToCommandMap.put("judge-rightAnswer", RIGHT_ANSWER_COMMAND);
         commandToCommandMap.put("judge-wrongAnswer", WRONG_ANSWER_COMMAND);
         commandToCommandMap.put("judge-finishReview", FINISH_REVIEW_COMMAND);
-        commandToCommandMap.put("player-getStatistics", GET_STATISTICS_COMMAND);
-        commandToCommandMap.put("player-getStatisticsForm", GET_STATISTICS_FORM_COMMAND);
-        commandToCommandMap.put("player-joinGame", JOIN_GAME_COMMAND);
 
         commandToCommandMap.put("default", DEFAULT_COMMAND);
 

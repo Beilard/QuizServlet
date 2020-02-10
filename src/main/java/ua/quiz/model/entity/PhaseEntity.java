@@ -80,7 +80,7 @@ public class PhaseEntity {
         private PhaseEntityBuilder() {
         }
 
-        public PhaseEntity build(){
+        public PhaseEntity build() {
             return new PhaseEntity(this);
         }
 

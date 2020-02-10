@@ -5,8 +5,6 @@ import ua.quiz.model.dto.User;
 import ua.quiz.model.entity.RoleEntity;
 import ua.quiz.model.entity.UserEntity;
 
-import java.util.Optional;
-
 public class UserMapper {
     public User mapUserEntityToUser(UserEntity userEntity) {
         if (userEntity == null) {

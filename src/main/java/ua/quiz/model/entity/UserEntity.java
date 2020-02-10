@@ -23,7 +23,7 @@ public class UserEntity {
         this.isCaptain = userEntityBuilder.isCaptain;
     }
 
-    public static UserEntityBuilder builder(){
+    public static UserEntityBuilder builder() {
         return new UserEntityBuilder();
     }
 
@@ -69,10 +69,10 @@ public class UserEntity {
         private Long teamId;
         private RoleEntity roleEntity;
 
-        private UserEntityBuilder(){
+        private UserEntityBuilder() {
         }
 
-        public UserEntity build(){
+        public UserEntity build() {
             return new UserEntity(this);
         }
 
@@ -124,14 +124,10 @@ public class UserEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof UserEntity)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
         UserEntity that = (UserEntity) o;
-        return id.equals(that.id) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(password, that.password) &&
                 Objects.equals(name, that.name) &&

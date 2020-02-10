@@ -2,7 +2,6 @@ package ua.quiz.controller.command.player;
 
 import org.apache.log4j.Logger;
 import ua.quiz.controller.command.Command;
-import ua.quiz.model.dto.Team;
 import ua.quiz.model.dto.User;
 import ua.quiz.model.exception.EntityNotFoundException;
 import ua.quiz.model.service.TeamService;

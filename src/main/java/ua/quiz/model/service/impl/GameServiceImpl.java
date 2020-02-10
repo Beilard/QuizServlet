@@ -16,7 +16,10 @@ import ua.quiz.model.service.mapper.PhaseMapper;
 import ua.quiz.model.service.mapper.QuestionMapper;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class GameServiceImpl implements GameService {
@@ -92,9 +95,9 @@ public class GameServiceImpl implements GameService {
             LOGGER.warn("Null id passed to find a game");
             throw new IllegalArgumentException("Null id passed to find a game");
         }
-        final Optional<GameEntity> foundGameEntity = gameDao.findById(id);
 
-        return gameMapper.mapGameEntityToGame(foundGameEntity.orElseThrow(EntityNotFoundException::new));
+        return gameMapper.mapGameEntityToGame(gameDao.findById(id)
+                .orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
@@ -123,8 +126,8 @@ public class GameServiceImpl implements GameService {
     @Override
     public Long getCorrectAnswersCount(Game game) {
         if (game == null) {
-            LOGGER.warn("Null id passed to get correct answers from the game");
-            throw new IllegalArgumentException("Null id passed to get correct answers from the game");
+            LOGGER.warn("Null game passed to get correct amount of answers");
+            throw new IllegalArgumentException("Null game passed to get correct amount of answers");
         }
         return game.getPhases()
                 .stream()
@@ -135,8 +138,8 @@ public class GameServiceImpl implements GameService {
     @Override
     public void updateGame(Game game) {
         if (game == null) {
-            LOGGER.warn("Null id passed to update a game");
-            throw new IllegalArgumentException("Null id passed to update a game");
+            LOGGER.warn("Null game passed to update a game");
+            throw new IllegalArgumentException("Null game passed to update a game");
         }
         gameDao.update(gameMapper.mapGameToGameEntity(game));
     }
@@ -204,7 +207,7 @@ public class GameServiceImpl implements GameService {
     private List<Long> generateIds(Integer numberOfPhases, Long amountOfQuestionsInDb) {
         final Random random = new Random();
         return random
-                .longs(1, amountOfQuestionsInDb)
+                .longs(1, amountOfQuestionsInDb + 1)
                 .distinct()
                 .limit(numberOfPhases)
                 .boxed()

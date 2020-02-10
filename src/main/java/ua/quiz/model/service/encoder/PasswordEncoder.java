@@ -34,12 +34,10 @@ public class PasswordEncoder {
     }
 
     public String decrypt(String strToDecrypt) {
-        try
-        {
+        try {
             Cipher cipher = getCipher("AES/CBC/PKCS5PADDING", Cipher.DECRYPT_MODE);
             return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error("Error while decrypting: " + e.toString());
         }
         return null;

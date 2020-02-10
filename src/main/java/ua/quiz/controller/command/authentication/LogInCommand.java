@@ -25,7 +25,7 @@ public class LogInCommand implements Command {
         final String password = request.getParameter("password");
 
         if (email == null || password == null
-        || email.length() > 63 || password.length() > 63) {
+                || email.length() > 63 || password.length() > 63) {
             LOGGER.info("User tried logging in with invalid credential length");
             request.setAttribute("loginInvalid", true);
             return "/game?command=loginForm";
