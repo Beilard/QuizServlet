@@ -164,6 +164,7 @@ public class ContextInjector {
         commandToCommandMap.put("player-PageForm", PLAYER_PAGE_FORM);
         commandToCommandMap.put("judge-PageForm", PLAYER_PAGE_FORM);
         commandToCommandMap.put("indexPageForm", INDEX_PAGE_FORM_COMMAND);
+
         commandToCommandMap.put("player-profilePageForm", PROFILE_PAGE_FORM);
         commandToCommandMap.put("player-createTeamForm", CREATE_TEAM_FORM_COMMAND);
         commandToCommandMap.put("player-createTeam", CREATE_TEAM_COMMAND);
@@ -182,6 +183,7 @@ public class ContextInjector {
         commandToCommandMap.put("player-getStatisticsForm", GET_STATISTICS_FORM_COMMAND);
         commandToCommandMap.put("player-joinGame", JOIN_GAME_COMMAND);
         commandToCommandMap.put("player-changeCaptain", CHANGE_CAPTAINS_COMMAND);
+
         commandToCommandMap.put("judge-viewAllGames", VIEW_ALL_GAMES_COMMAND);
         commandToCommandMap.put("judge-viewAllGamesForm", VIEW_ALL_GAMES_FORM_COMMAND);
         commandToCommandMap.put("judge-reviewForm", REVIEW_FORM_COMMAND);

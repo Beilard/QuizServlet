@@ -1,6 +1,5 @@
 package ua.quiz.controller.servlet;
 
-import org.apache.log4j.Logger;
 import ua.quiz.controller.command.Command;
 import ua.quiz.model.context.ContextInjector;
 
@@ -14,8 +13,6 @@ import java.util.Map;
 
 @WebServlet("/game")
 public class MainServlet extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(MainServlet.class);
-
     private final Map<String, Command> commandNameToCommand;
     private final Command defaultCommand;
 
@@ -23,7 +20,6 @@ public class MainServlet extends HttpServlet {
     public MainServlet() {
         final ContextInjector injector = ContextInjector.getInstance();
         commandNameToCommand = injector.getCommandsMap();
-
         defaultCommand = injector.getDefaultCommand();
     }
 

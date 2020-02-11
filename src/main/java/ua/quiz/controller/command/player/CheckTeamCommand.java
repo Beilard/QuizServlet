@@ -27,8 +27,8 @@ public class CheckTeamCommand implements Command {
             List<User> usersOfTeam = userService.findByTeamId(user.getTeamId());
             request.getSession().setAttribute("usersOfTeam", usersOfTeam);
         } catch (IllegalArgumentException | EntityNotFoundException e) {
-            LOGGER.info("Failed to create user list");
-            return "/game?command=playerPageForm";
+            LOGGER.info("Failed to create user list for team page");
+            return "/game?command=player-PageForm";
         }
 
         return "/game?command=player-checkTeamForm";

@@ -35,7 +35,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
         }
     };
 
-    protected final DBConnector dbConnector;
+    final DBConnector dbConnector;
     private final String saveQuery;
     private final String findByIdQuery;
     private final String findAllQuery;
@@ -96,7 +96,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
         return countEntriesByQuery(countQuery);
     }
 
-    protected Long countEntriesByQuery(String query) {
+    private Long countEntriesByQuery(String query) {
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -123,15 +123,15 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
     }
 
 
-    protected Optional<E> findByLongParam(Long id, String query) {
+    private Optional<E> findByLongParam(Long id, String query) {
         return findByParam(id, query, LONG_CONSUMER);
     }
 
-    protected Optional<E> findByStringParam(String param, String query) {
+    Optional<E> findByStringParam(String param, String query) {
         return findByParam(param, query, STRING_CONSUMER);
     }
 
-    protected List<E> findListByLongParam(Long param, String query) {
+    List<E> findListByLongParam(Long param, String query) {
         return findListByParam(param, query, LONG_CONSUMER);
     }
 

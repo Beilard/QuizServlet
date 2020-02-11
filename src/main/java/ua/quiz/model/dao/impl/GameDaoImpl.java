@@ -46,7 +46,7 @@ public class GameDaoImpl extends AbstractCrudDaoImpl<GameEntity> implements Game
 
     @Override
     public Long saveAndReturnId(GameEntity gameEntity) {
-        Long idToReturn = 0L;
+        long idToReturn = 0L;
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 

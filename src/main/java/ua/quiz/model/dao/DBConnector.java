@@ -13,7 +13,6 @@ public class DBConnector {
     private static final Logger LOGGER = Logger.getLogger(DBConnector.class);
     private static final BasicDataSource dataSource = new BasicDataSource();
 
-
     public DBConnector(String configurationFileName) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(configurationFileName);
 
@@ -25,7 +24,6 @@ public class DBConnector {
         dataSource.setMaxIdle(Integer.parseInt(resourceBundle.getString("db.maxIdle")));
         dataSource.setMaxOpenPreparedStatements(Integer.parseInt(resourceBundle.getString("db.maxPreparedStatements")));
     }
-
 
     public Connection getConnection() {
         try {

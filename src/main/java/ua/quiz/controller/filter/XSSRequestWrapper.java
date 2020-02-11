@@ -26,7 +26,7 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
             Pattern.compile("onload(.*?)=", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL)
     };
 
-    public XSSRequestWrapper(HttpServletRequest servletRequest) {
+    XSSRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
     }
 
