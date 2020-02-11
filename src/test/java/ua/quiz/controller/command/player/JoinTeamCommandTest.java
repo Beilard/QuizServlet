@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import ua.quiz.model.dto.Team;
 import ua.quiz.model.dto.User;
-import ua.quiz.model.exception.EntityAlreadyExistsException;
 import ua.quiz.model.exception.EntityNotFoundException;
 import ua.quiz.model.service.TeamService;
 import ua.quiz.model.service.UserService;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)

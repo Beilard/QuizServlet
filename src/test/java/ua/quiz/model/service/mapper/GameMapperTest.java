@@ -1,14 +1,18 @@
 package ua.quiz.model.service.mapper;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import ua.quiz.model.dto.Game;
+import ua.quiz.model.dto.Phase;
 import ua.quiz.model.dto.Status;
 import ua.quiz.model.entity.GameEntity;
+import ua.quiz.model.entity.PhaseEntity;
 import ua.quiz.model.entity.StatusEntity;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class GameMapperTest {
     private static final Long ID = 0L;
@@ -23,6 +27,10 @@ public class GameMapperTest {
 
     private static final StatusEntity STATUS_ENTITY = StatusEntity.ONGOING;
 
+    private static final List<Phase> PHASES = Collections.singletonList(Phase.builder().build());
+
+    private static final List<PhaseEntity> PHASE_ENTITIES = Collections.singletonList(PhaseEntity.builder().build());
+
     private final GameMapper gameMapper = new GameMapper();
 
     @Test
@@ -33,6 +41,7 @@ public class GameMapperTest {
                 .withTimePerQuestion(TIME_PER_QUESTION)
                 .withTeamId(TEAM_ID)
                 .withStatusEntity(StatusEntity.valueOf(STATUS.name()))
+                .withPhaseEntities(PHASE_ENTITIES)
                 .build();
 
         final Game game = gameMapper.mapGameEntityToGame(gameEntity);
@@ -41,9 +50,10 @@ public class GameMapperTest {
         assertThat("mapping time per question has failed", game.getTimePerQuestion(), is(TIME_PER_QUESTION));
         assertThat("mapping teamId has failed", game.getTeamId(), is(TEAM_ID));
         assertThat("mapping status has failed", game.getStatus(), is(STATUS));
+        assertThat("mapping phaseList has failed", game.getPhases(), is(PHASES));
     }
 
-    @Ignore
+
     @Test
     public void mapGameToGameEntityShouldReturnGameEntity() {
         final Game game = Game.builder()
@@ -52,6 +62,7 @@ public class GameMapperTest {
                 .withTimePerQuestion(TIME_PER_QUESTION)
                 .withTeamId(TEAM_ID)
                 .withStatus(Status.valueOf(STATUS.name()))
+                .withPhases(PHASES)
                 .build();
 
         final GameEntity gameEntity = gameMapper.mapGameToGameEntity(game);
@@ -60,5 +71,6 @@ public class GameMapperTest {
         assertThat("mapping time per question has failed", gameEntity.getTimePerQuestion(), is(TIME_PER_QUESTION));
         assertThat("mapping teamId has failed", gameEntity.getTeamId(), is(TEAM_ID));
         assertThat("mapping status has failed", gameEntity.getStatusEntity(), is(STATUS_ENTITY));
+        assertThat("mapping phaseList has failed", gameEntity.getPhaseEntities(), is(PHASE_ENTITIES));
     }
 }

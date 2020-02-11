@@ -7,8 +7,11 @@ import ua.quiz.model.entity.GameEntity;
 import ua.quiz.model.entity.PhaseEntity;
 import ua.quiz.model.entity.StatusEntity;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.*;
 
 public class GameMapper {
     private final PhaseMapper phaseMapper = new PhaseMapper();
@@ -46,13 +49,13 @@ public class GameMapper {
     }
 
     private List<Phase> mapPhaseEntitiesToPhase(List<PhaseEntity> phaseEntities) {
-        return phaseEntities.stream()
+        return phaseEntities == null ? emptyList() : phaseEntities.stream()
                 .map(phaseMapper::mapPhaseEntityToPhase)
                 .collect(Collectors.toList());
     }
 
     private List<PhaseEntity> mapPhaseToPhaseEntities(List<Phase> phases) {
-        return phases.stream()
+        return phases == null ? emptyList() : phases.stream()
                 .map(phaseMapper::mapPhaseToPhaseEntity)
                 .collect(Collectors.toList());
     }

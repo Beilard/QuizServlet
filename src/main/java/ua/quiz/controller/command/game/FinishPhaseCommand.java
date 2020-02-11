@@ -22,7 +22,7 @@ public class FinishPhaseCommand implements Command {
         Game game = (Game) request.getSession().getAttribute("game");
         String givenAnswer = request.getParameter("givenAnswer");
 
-        if (givenAnswer == null) {
+        if (givenAnswer.length() >= 300) {
             return "/game?command=player-viewPhase";
         }
 

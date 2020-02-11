@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class StartReviewCommand implements Command {
     private static Logger LOGGER = Logger.getLogger(StartReviewCommand.class);
+
     private final GameService gameService;
 
     public StartReviewCommand(GameService gameService) {
@@ -26,7 +27,7 @@ public class StartReviewCommand implements Command {
         try {
             gameIdToReview = Long.parseLong(gameIdString);
         } catch (NumberFormatException e) {
-            LOGGER.info("User passed an character in gameId to judge game");
+            LOGGER.info("User passed a character in gameId to judge game");
             request.setAttribute("incorrectId", true);
             return "/game?command=judge-viewAllGamesForm";
         }

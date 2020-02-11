@@ -10,7 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CreateTeamFormCommandTest {
@@ -30,5 +30,4 @@ public class CreateTeamFormCommandTest {
 
         assertThat(actual, Is.is(expected));
     }
-
 }

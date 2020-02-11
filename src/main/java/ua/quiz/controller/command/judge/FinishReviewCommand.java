@@ -24,6 +24,6 @@ public class FinishReviewCommand implements Command {
         request.getSession().removeAttribute("reviewedQuestion");
         request.getSession().removeAttribute("gameForReview");
 
-        return "/game?command=playerPageForm";
+        return "/game?command=player-PageForm";
     }
 }

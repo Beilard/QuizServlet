@@ -7,7 +7,7 @@ import ua.quiz.model.entity.RoleEntity;
 import ua.quiz.model.entity.UserEntity;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class UserMapperTest {
     private static final Long ID = 0L;

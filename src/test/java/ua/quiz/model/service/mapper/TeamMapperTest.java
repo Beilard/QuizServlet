@@ -5,7 +5,7 @@ import ua.quiz.model.dto.Team;
 import ua.quiz.model.entity.TeamEntity;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class TeamMapperTest {
     private static final Long ID = 0L;

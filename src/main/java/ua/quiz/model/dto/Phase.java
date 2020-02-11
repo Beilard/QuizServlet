@@ -155,7 +155,7 @@ public class Phase {
             return false;
         }
         Phase phase = (Phase) o;
-        return id.equals(phase.id) &&
+        return Objects.equals(id, phase.id) &&
                 Objects.equals(question, phase.question) &&
                 Objects.equals(hintUsed, phase.hintUsed) &&
                 Objects.equals(isCorrect, phase.isCorrect) &&

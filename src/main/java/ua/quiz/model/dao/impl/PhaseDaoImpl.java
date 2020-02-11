@@ -68,9 +68,12 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
     @Override
     protected void mapForUpdateStatement(PreparedStatement preparedStatement, PhaseEntity entity) throws SQLException {
         mapForInsertStatement(preparedStatement, entity);
-        preparedStatement.setTimestamp(3, Timestamp.valueOf(entity.getStartTime()));
-        preparedStatement.setTimestamp(4, Timestamp.valueOf(entity.getEndTime()));
-        preparedStatement.setTimestamp(5, Timestamp.valueOf(entity.getDeadline()));
+        preparedStatement.setTimestamp(3, entity.getStartTime() == null ? null
+                : Timestamp.valueOf(entity.getStartTime()));
+        preparedStatement.setTimestamp(4, entity.getEndTime() == null ? null
+                : Timestamp.valueOf(entity.getEndTime()));
+        preparedStatement.setTimestamp(5, entity.getDeadline() == null ? null
+                : Timestamp.valueOf(entity.getDeadline()));
         preparedStatement.setBoolean(6, entity.getHintUsed());
         preparedStatement.setBoolean(7, entity.getCorrect());
         preparedStatement.setString(8, entity.getGivenAnswer());

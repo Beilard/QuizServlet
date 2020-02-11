@@ -20,6 +20,6 @@ public class FinishGameCommand implements Command {
         gameService.finishGame(game);
         request.getSession().removeAttribute("game");
         request.getSession().removeAttribute("question");
-        return "/game?command=playerPageForm";
+        return "/game?command=player-PageForm";
     }
 }

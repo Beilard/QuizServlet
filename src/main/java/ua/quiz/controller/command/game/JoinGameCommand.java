@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class JoinGameCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(JoinGameCommand.class);
+
     private final GameService gameService;
 
     public JoinGameCommand(GameService gameService) {

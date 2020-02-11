@@ -132,10 +132,14 @@ public class PhaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PhaseEntity)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PhaseEntity)) {
+            return false;
+        }
         PhaseEntity that = (PhaseEntity) o;
-        return id.equals(that.id) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(question, that.question) &&
                 Objects.equals(hintUsed, that.hintUsed) &&
                 Objects.equals(isCorrect, that.isCorrect) &&

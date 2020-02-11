@@ -17,8 +17,8 @@ public class GetStatisticsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        Long gameId = Long.parseLong(request.getParameter("joinGameId"));
-        Game game = gameService.findById(gameId);
+        final Long gameId = Long.parseLong(request.getParameter("joinGameId"));
+        final Game game = gameService.findById(gameId);
 
         if (game.getStatus() != Status.REVIEWED) {
             return "/game?command=player-PageForm";

@@ -5,7 +5,7 @@ import ua.quiz.model.dto.Question;
 import ua.quiz.model.entity.QuestionEntity;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class QuestionMapperTest {
     private static final Long ID = 0L;

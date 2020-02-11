@@ -1,4 +1,4 @@
-package ua.quiz.controller.command.player;
+package ua.quiz.controller.command.game;
 
 import org.hamcrest.core.Is;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PlayerPageFormCommandTest {
+public class ViewPhaseFormCommandTest {
     @Mock
     private HttpServletRequest request;
 
@@ -21,13 +21,14 @@ public class PlayerPageFormCommandTest {
     private HttpServletResponse response;
 
     @InjectMocks
-    private PlayerPageFormCommand playerPageFormCommand;
+    private ViewPhaseFormCommand viewPhaseFormCommand;
 
     @Test
     public void executeShouldHaveNormalBehaviour() {
-        final String actual = playerPageFormCommand.execute(request, response);
-        final String expected = "player-page.jsp";
+        final String actual = viewPhaseFormCommand.execute(request, response);
+        final String expected = "game-page.jsp";
 
         assertThat(actual, Is.is(expected));
     }
+
 }

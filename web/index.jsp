@@ -153,10 +153,10 @@ justify-content: space-between;" class="flex">
 
     <div class="container">
 
-        <p style="font-size: 80px">
+        <p style="color: whitesmoke; font-size: 80px">
             <fmt:message key="index.welcome.first"/>
             <span style="
-    color: orangered;
+    color: orange;
     text-align: left;
     margin-left: 450px;
     "> <fmt:message key="index.welcome.second"/></span>
