@@ -54,11 +54,6 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
                 .build());
     }
 
-    private LocalDateTime mapResultSetToLocalDatetime(ResultSet resultSet, String columnLabel) throws SQLException {
-        Timestamp timestamp = resultSet.getTimestamp(columnLabel);
-        return timestamp == null ? null : timestamp.toLocalDateTime();
-    }
-
     @Override
     protected void mapForInsertStatement(PreparedStatement preparedStatement, PhaseEntity entity) throws SQLException {
         preparedStatement.setLong(1, entity.getQuestion().getId());
@@ -78,6 +73,11 @@ public class PhaseDaoImpl extends AbstractCrudDaoImpl<PhaseEntity> implements Ph
         preparedStatement.setBoolean(7, entity.getCorrect());
         preparedStatement.setString(8, entity.getGivenAnswer());
         preparedStatement.setLong(9, entity.getId());
+    }
+
+    private LocalDateTime mapResultSetToLocalDatetime(ResultSet resultSet, String columnLabel) throws SQLException {
+        Timestamp timestamp = resultSet.getTimestamp(columnLabel);
+        return timestamp == null ? null : timestamp.toLocalDateTime();
     }
 
     private QuestionEntity mapResultSetToQuestionEntity(ResultSet resultSet) throws SQLException {

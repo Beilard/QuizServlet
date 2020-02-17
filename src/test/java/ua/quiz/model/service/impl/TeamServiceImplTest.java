@@ -81,7 +81,6 @@ public class TeamServiceImplTest {
     @Mock
     private TeamMapper teamMapper;
 
-
     @Test
     public void createTeamShouldThrowExceptionInvalidNameLength() {
         expectedException.expect(IllegalArgumentException.class);

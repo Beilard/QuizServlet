@@ -43,7 +43,7 @@ public class CheckTeamCommandTest {
     public void executeShouldReturnToProfileDueToAbsentTeam() {
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute("user")).thenReturn(USER);
-        when(userService.findByTeamId(anyLong())).thenThrow(EntityNotFoundException.class);
+        when(userService.findAllByTeamId(anyLong())).thenThrow(EntityNotFoundException.class);
 
         final String actual = checkTeamCommand.execute(request, response);
         final String expected = "/game?command=player-PageForm";
@@ -55,7 +55,7 @@ public class CheckTeamCommandTest {
     public void executeShouldHaveNormalBehaviour() {
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute("user")).thenReturn(USER);
-        when(userService.findByTeamId(1L)).thenReturn(Collections.singletonList(USER));
+        when(userService.findAllByTeamId(1L)).thenReturn(Collections.singletonList(USER));
 
         final String actual = checkTeamCommand.execute(request, response);
         final String expected = "/game?command=player-checkTeamForm";

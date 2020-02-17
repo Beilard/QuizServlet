@@ -137,7 +137,7 @@ public class ContextInjector {
     private static final Map<String, Command> COMMAND_NAME_TO_COMMAND = mapCommands();
 
 
-    private static ContextInjector contextInjector;
+    private static volatile ContextInjector contextInjector;
 
     private ContextInjector() {
     }

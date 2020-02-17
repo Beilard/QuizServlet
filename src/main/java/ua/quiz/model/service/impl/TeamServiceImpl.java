@@ -16,6 +16,12 @@ import ua.quiz.model.service.mapper.UserMapper;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * @author Vladyslav Khurtin
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class TeamServiceImpl implements TeamService {
     private static final Logger LOGGER = Logger.getLogger(TeamServiceImpl.class);
     private static final int MAX_TEAM_NAME_LENGTH = 31;
@@ -33,6 +39,10 @@ public class TeamServiceImpl implements TeamService {
         this.userMapper = userMapper;
     }
 
+    /**
+     * Method creates a team and saves it in DB
+     * @param teamName name of the team to create
+     */
     @Override
     public void createTeam(String teamName) {
         if (teamName == null || teamName.length() < MIN_TEAM_NAME_LENGTH || teamName.length() > MAX_TEAM_NAME_LENGTH) {
@@ -49,6 +59,11 @@ public class TeamServiceImpl implements TeamService {
         teamDao.save(team);
     }
 
+    /**
+     * Method changes captaincy status between two users
+     * @param newCaptain user about to become a captain
+     * @param oldCaptain previous captain of the team
+     */
     @Override
     public void changeCaptain(User newCaptain, User oldCaptain) {
         if (newCaptain == null || oldCaptain == null
@@ -63,6 +78,11 @@ public class TeamServiceImpl implements TeamService {
         userDao.update(userMapper.mapUserToUserEntity(changeCaptainStatus(newCaptain, true)));
     }
 
+    /**
+     * Method allows user to join a team
+     * @param user user attempting to join a team
+     * @param teamId ID of a team user tries to join
+     */
     @Override
     public void joinTeam(User user, Long teamId) {
         if (user == null || teamId == null || teamId <= 0) {
@@ -75,6 +95,10 @@ public class TeamServiceImpl implements TeamService {
         userDao.update(modifiedUserEntity);
     }
 
+    /**
+     * Method allows the user leave his team, if he is not a captain
+     * @param user player to leave the team
+     */
     @Override
     public void leaveTeam(User user) {
         if (user == null || user.getCaptain()) {
@@ -85,6 +109,11 @@ public class TeamServiceImpl implements TeamService {
         userDao.update(userMapper.mapUserToUserEntity(removeTeam(user)));
     }
 
+    /**
+     * Method finds a team in the DB by name parameter
+     * @param name name of the searched team
+     * @return returns the found team
+     */
     @Override
     public Team findTeamByName(String name) {
         if (name == null) {

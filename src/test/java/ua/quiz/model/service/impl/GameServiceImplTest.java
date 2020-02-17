@@ -312,5 +312,4 @@ public class GameServiceImplTest {
         verify(gameDao).findAllByTeamId(anyLong(), anyLong(), anyLong());
         assertEquals(emptyList(), actual);
     }
-
 }

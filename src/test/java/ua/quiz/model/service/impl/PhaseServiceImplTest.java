@@ -26,7 +26,7 @@ public class PhaseServiceImplTest {
 
     private static final String ANSWER = "Answer";
 
-    private static final Phase phaseExample = Phase.builder()
+    private static final Phase PHASE_EXAMPLE = Phase.builder()
             .withId(ID)
             .withGameId(GAME_ID)
             .build();
@@ -60,7 +60,7 @@ public class PhaseServiceImplTest {
                 .build();
 
         when(phaseMapper.mapPhaseToPhaseEntity(any())).thenReturn(entity);
-        phaseService.initiatePhase(phaseExample, DEFAULT_TIME_PER_QUESTION);
+        phaseService.initiatePhase(PHASE_EXAMPLE, DEFAULT_TIME_PER_QUESTION);
 
         verify(phaseDao).update(entity);
     }
@@ -82,7 +82,7 @@ public class PhaseServiceImplTest {
                 .build();
 
         when(phaseMapper.mapPhaseToPhaseEntity(any())).thenReturn(entity);
-        phaseService.finishPhase(phaseExample, ANSWER);
+        phaseService.finishPhase(PHASE_EXAMPLE, ANSWER);
 
         verify(phaseDao).update(entity);
     }
@@ -102,7 +102,7 @@ public class PhaseServiceImplTest {
                 .build();
 
         when(phaseMapper.mapPhaseToPhaseEntity(any())).thenReturn(entity);
-        phaseService.reviewPhasePositively(phaseExample);
+        phaseService.reviewPhasePositively(PHASE_EXAMPLE);
 
         verify(phaseDao).update(entity);
     }
@@ -122,9 +122,8 @@ public class PhaseServiceImplTest {
                 .build();
 
         when(phaseMapper.mapPhaseToPhaseEntity(any())).thenReturn(entity);
-        phaseService.useHint(phaseExample);
+        phaseService.useHint(PHASE_EXAMPLE);
 
         verify(phaseDao).update(entity);
     }
-
 }

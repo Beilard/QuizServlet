@@ -24,7 +24,7 @@ public class CheckTeamCommand implements Command {
         final User user = (User) request.getSession().getAttribute("user");
 
         try {
-            List<User> usersOfTeam = userService.findByTeamId(user.getTeamId());
+            List<User> usersOfTeam = userService.findAllByTeamId(user.getTeamId());
             request.getSession().setAttribute("usersOfTeam", usersOfTeam);
         } catch (IllegalArgumentException | EntityNotFoundException e) {
             LOGGER.info("Failed to create user list for team page");

@@ -146,13 +146,13 @@
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" name="email" class="form-control input_user" value="" placeholder=<fmt:message key="login.email"/>>
+                        <input type="text" name="email" class="form-control input_user" value="" placeholder=<fmt:message key="login.email"/> required pattern="^(?=.{4,31}$)\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}$">
                     </div>
                     <div class="input-group mb-2">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" name="password" class="form-control input_pass" value="" placeholder=<fmt:message key="login.password"/>>
+                        <input type="password" name="password" class="form-control input_pass" value="" placeholder=<fmt:message key="login.password"/> required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})">
                     </div>
 
                     <div class="d-flex justify-content-center mt-3 login_container">

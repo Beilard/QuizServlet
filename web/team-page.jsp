@@ -153,7 +153,7 @@
                 <fmt:message key="team.change.captain"/>
             </p>
         </label>
-        <input style="margin: 0 auto; width: 20%" name="newCaptainEmail" id="newCaptainEmail" type="text" placeholder="Email">
+        <input style="margin: 0 auto; width: 20%" name="newCaptainEmail" id="newCaptainEmail" type="text" placeholder="Email" required pattern="^(?=.{4,31}$)\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}$">
         <div style="margin-top:10px;text-align: center;width: 100%; ">
             <input type="hidden" name="command" value="player-changeCaptain">
             <input type="submit" style="width: 10%; align-content: center" class="btn btn-warning" value=<fmt:message key="team.change.button"/>>

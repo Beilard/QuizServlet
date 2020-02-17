@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findByTeamId(Long teamId) {
+    public List<User> findAllByTeamId(Long teamId) {
         if (teamId == null) {
             LOGGER.warn("Team ID passed is null");
             throw new IllegalArgumentException("Team ID passed is null");

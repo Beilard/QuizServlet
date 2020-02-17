@@ -196,7 +196,7 @@ public class UserServiceImplTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Team ID passed is null");
 
-        userService.findByTeamId(null);
+        userService.findAllByTeamId(null);
     }
 
 
@@ -205,7 +205,7 @@ public class UserServiceImplTest {
         when(userDao.findAllByTeamId(TEAM_ID)).thenReturn(singletonList(USER_ENTITY));
         when(userMapper.mapUserEntityToUser(USER_ENTITY)).thenReturn(USER);
 
-        final List<User> actual = userService.findByTeamId(TEAM_ID);
+        final List<User> actual = userService.findAllByTeamId(TEAM_ID);
 
         assertThat(actual, CoreMatchers.hasItem(USER));
     }

@@ -9,7 +9,7 @@ public interface UserService {
 
     User login(String email, String password);
 
-    List<User> findByTeamId(Long teamId);
+    List<User> findAllByTeamId(Long teamId);
 
     User findByEmail(String email);
 
